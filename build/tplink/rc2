@@ -1,0 +1,32 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/bin:/usr/bin ; export PATH
+
+mkdir -p /var/run
+mkdir -p /var/run/hostapd
+
+echo "*** Starting wlan0"
+ifconfig wlan0 create wlandev ath0 wlanmode hostap
+ifconfig wlan0 ssid CACHEBOY_TESTING channel 6
+ifconfig wlan0 txpower 20
+ifconfig wlan0 up
+
+echo "*** Starting hostapd"
+/usr/sbin/hostapd -B -t -P /var/run/hostapd.pid /etc/hostapd.conf
+
+echo "*** Starting arge0"
+ifconfig arge0 up
+
+echo "*** Starting bridge0"
+ifconfig bridge0 create
+ifconfig bridge0 up
+ifconfig bridge0 addm arge0 addm wlan0
+ifconfig bridge0 inet 10.61.8.6 netmask 255.255.255.0 up
+
+echo "*** Routing"
+route add default 10.61.8.1
+
+while true; do
+	echo "Shell time!"
+	/bin/sh
+done

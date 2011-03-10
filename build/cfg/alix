@@ -1,0 +1,7 @@
+TARGET=i386
+MAKEOBJDIRPREFIX=/data/freebsd/mips/head/obj-alix ; export MAKEOBJDIRPREFIX
+DESTDIR=/data/freebsd/mips/head/root-alix
+BUILD_FLAGS="NO_CLEAN=1 -j2"
+#BUILD_FLAGS=""
+KERNCONF=ALIX.CF
+LOCAL_DIRS="tools/tools/ath"

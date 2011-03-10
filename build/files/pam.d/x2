@@ -1,0 +1,11 @@
+pam_deny.so
+pam_group.so
+pam_lastlog.so
+pam_login_access.so
+pam_nologin.so
+pam_permit.so
+pam_rhosts.so
+pam_rootok.so
+pam_securetty.so
+pam_self.so
+pam_unix.so

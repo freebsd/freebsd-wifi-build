@@ -1,0 +1,51 @@
+#!/bin/sh
+
+#
+# This is a simple wrapper around the FreeBSD build framework
+# to automate building and installing the base system.
+
+# It takes care of setting the target arch flags, setting the
+# kernel configuration filename, destination directory, and
+# adding whichever local directories will also be built.
+
+# The script is desigend to be run inside a src directory.
+
+# In addition, it (helpfully!) sets the root and obj dirs
+# in a directory above the current (src) directory.
+
+# To facilitate building multiple kernel configurations
+# for the same architecture, BUILDNAME determines what the
+# obj and root directory will be named. Multiple platforms
+# using the same architecture (but different kernels)
+# can thus just use the same BUILDNAME.
+
+# Finally, this is designed to be used for building FreeBSD-HEAD
+# after Warner's "tbemd" build framework changes.
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+CFGNAME=$1
+shift
+
+. ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+
+# override obj/destdir
+MAKEOBJDIRPREFIX="${CUR_DIR}/../obj/${BUILDNAME}/" ; export MAKEOBJDIRPREFIX
+DESTDIR="${CUR_DIR}/../root/${BUILDNAME}"
+
+echo "MAKEOBJDIRPREFIX: ${MAKEOBJDIRPREFIX}"
+
+mkdir -p ${MAKEOBJDIRPREFIX} || exit 1
+mkdir -p ${DESTDIR} || exit 1
+
+while [ "x$1" != "x" ]; do
+	env=MAKEOBJDIRPREFIX=${MAKEOBJDIRPREFIX} make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} TARGET_CPUTYPE=${TARGET_CPUTYPE} KERNCONF=${KERNCONF} DESTDIR=${DESTDIR} LOCAL_DIRS="${LOCAL_DIRS}" $1 || exit 1
+	if [ "$1" = "installkernel" ]; then
+		echo "*** Copying kernel to /tftpboot/kernel.${KERNCONF}"
+		cp ${DESTDIR}/boot/kernel/kernel /tftpboot/kernel.${KERNCONF}
+	fi
+	shift
+done
+

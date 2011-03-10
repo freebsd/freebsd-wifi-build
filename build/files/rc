@@ -1,0 +1,13 @@
+#!/bin/sh
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin ; export PATH
+
+# mount a small /etc, /var and /tmp
+mount_mfs -s 1m md /tmp
+mount_mfs -s 1m md /var
+mount_mfs -s 1m md /etc
+
+# copy the contents of /c/etc into /etc; including /etc/rc2
+cp -a /c/etc/ /etc
+
+exec /etc/rc2

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/bin:/usr/bin ; export PATH
+
+# bring up /tmp and /var
+/sbin/mount_mfs -s 512k md /tmp
+/sbin/mount_mfs -s 512k md /var
+/sbin/mount_mfs -s 512k md /etc
+/bin/cp -a /c/etc/ /etc
+exec /etc/rc2

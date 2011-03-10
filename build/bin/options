@@ -1,0 +1,22 @@
+# These options SHOULD be generated from the information available
+# in the per-device config file; with some generous default paths
+# for things.
+
+# These can be overriden per-device
+# XXX these should eventually take into account the name of the buildscript!
+# XXX so multiple trees are possible!
+
+# A temporary directory to use when creating the filesystem image
+X_STAGING_FSROOT="/tmp/fs"
+
+# Where the MFS image will be built to
+X_FSIMAGE="/tmp/mfs.img"
+
+# How big to make the makefs?
+X_FSSIZE="10240"
+
+# What endian-ness should the makefs FFS be?
+X_MAKEFS_ENDIAN="be"
+
+# what flags to pass to makefs when building the MFS image
+X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"

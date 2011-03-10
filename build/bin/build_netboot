@@ -1,0 +1,34 @@
+#!/bin/sh
+
+. ./options
+
+get_mfs_size()
+{
+	kernel=$1
+	set 0 0 # reset variables
+	# $1 takes the offset of the MFS filesystem
+	set `strings -at d $kernel | grep "MFS Filesystem goes here"`
+	mfs_start=$1
+	set 0 0 # reset variables
+	set `strings -at d $kernel | grep "MFS Filesystem had better"`
+	mfs_end=$1
+	mfs_size="$((${mfs_end} - ${mfs_start}))"
+	mfs_ofs=$((${mfs_start}))
+	echo "start: $mfs_start ; end: $mfs_end; size: $mfs_size"
+	echo "offset for mfs in kernel: $mfs_ofs"
+}
+
+
+# get the kernel MFS size
+# this sets mfs_ofs, mfs_end, mfs_start, mfs_size
+cp ${X_KERNEL} ${X_KERNEL}.netboot
+get_mfs_size ${X_KERNEL}.netboot
+
+# add it to the kernel
+echo "*** copying the mfsroot into the kernel image"
+dd if=${X_FSIMAGE}.uzip ibs=8192 iseek=0 of=${X_KERNEL}.netboot obs=${mfs_ofs} oseek=1 conv=notrunc
+
+echo "*** generate md5 for ${X_KERNEL}.netboot"
+md5 -q ${X_KERNEL}.netboot > ${X_KERNEL}.netboot.md5
+
+echo "*** Complete."

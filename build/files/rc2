@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# This is run once rc has setup /tmp, /etc and /var; it's our
+# responsibility to set things up to run.
+
+# Directories
+echo "*** Populating /var .."
+
+mkdir -p /var/run/hostapd
+mkdir -p /var/log
+mkdir -p /var/tmp
+mkdir -p /var/db
+mkdir -p /var/empty
+mkdir -p /var/cron
+mkdir -p /var/cron/tabs
+
+# Bring up loopback
+echo "*** bringing up loopback .."
+/sbin/ifconfig lo0 inet 127.0.0.1/8 up
+
+echo "*** Password/login databases .."
+/usr/sbin/pwd_mkdb /etc/master.passwd
+/usr/bin/cap_mkdb /etc/login.conf
+
+echo "*** bringing up bridge .."
+/sbin/ifconfig bridge0 create 
+/sbin/ifconfig bridge0 addm arge0
+/sbin/ifconfig bridge0 inet 10.61.8.9/24
+/sbin/ifconfig bridge0 up
+
+echo "*** bringing up arge0 .."
+/sbin/ifconfig arge0 up
+
+echo "*** bringing up hostapd .. "
+/sbin/ifconfig wlan0 create wlandev ath0 wlanmode ap
+/sbin/ifconfig wlan0 country 36
+/sbin/ifconfig wlan0 channel 6
+/sbin/ifconfig wlan0 up
+/usr/sbin/hostapd -B /etc/hostapd.conf
+/sbin/ifconfig bridge0 addm wlan0 -stp wlan0
+
+echo "*** inetd"
+/usr/sbin/inetd 
+
+echo "*** Done!"
+exit 0

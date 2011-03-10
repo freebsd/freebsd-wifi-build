@@ -1,0 +1,10 @@
+# arge0 is wired direct to a PHY; no switch PHY is involved.
+hint.arge.0.phymask=0x02
+
+# arge1 has no phy; leave it unconfigured.
+
+# RF led
+hint.gpioled.0.at="gpiobus0"
+hint.gpioled.0.name="rf"
+# pin 2
+hint.gpioled.0.pins=0x0004

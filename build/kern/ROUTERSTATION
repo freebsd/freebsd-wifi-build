@@ -1,0 +1,12 @@
+#
+# AR71XX -- Kernel configuration file for FreeBSD/mips for Atheros 71xx systems
+#
+# $FreeBSD: head/sys/mips/conf/AR71XX 202172 2010-01-12 20:55:12Z rpaulo $
+#
+
+include		"UBNT_AR71XX_BASE"
+ident		"ROUTERSTATION"
+hints		"ROUTERSTATION.hints"
+
+# Boot path - redboot MFS
+options		ROOTDEVNAME=\"ufs:redboot/rootfs.uzip\"
