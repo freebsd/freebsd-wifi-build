@@ -69,10 +69,12 @@ install ${X_DESTROOT}/bin/cp ${X_STAGING_FSROOT}/bin/
 install ${X_DESTROOT}/bin/cat ${X_STAGING_FSROOT}/bin/
 install ${X_DESTROOT}/bin/dd ${X_STAGING_FSROOT}/bin/
 install ${X_DESTROOT}/bin/ps ${X_STAGING_FSROOT}/bin/
+install ${X_DESTROOT}/bin/hostname ${X_STAGING_FSROOT}/bin/
 install ${X_DESTROOT}/bin/mkdir ${X_STAGING_FSROOT}/bin/
 install ${X_DESTROOT}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTROOT}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTROOT}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTROOT}/usr/bin/uptime ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTROOT}/usr/libexec/getty ${X_STAGING_FSROOT}/usr/libexec/
 
 # libraries are for grep
@@ -93,6 +95,9 @@ install ${X_DESTROOT}/usr/local/bin/athkey ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTROOT}/usr/local/bin/athpoke ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTROOT}/usr/local/bin/athrd ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTROOT}/usr/local/bin/athstats ${X_STAGING_FSROOT}/usr/bin/
+
+# wlan tools
+install ${X_DESTROOT}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
 
 # login and pam
 install -m 4711 ${X_DESTROOT}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin/
