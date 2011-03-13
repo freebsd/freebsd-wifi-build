@@ -14,6 +14,9 @@ mkdir -p /var/empty
 mkdir -p /var/cron
 mkdir -p /var/cron/tabs
 
+echo "*** setting up hostname"
+/bin/hostname TEST_AP
+
 # Bring up loopback
 echo "*** bringing up loopback .."
 /sbin/ifconfig lo0 inet 127.0.0.1/8 up
