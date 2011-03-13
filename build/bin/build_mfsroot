@@ -12,12 +12,12 @@ CFGNAME=$1
 shift
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 
-# calculate basedir
-X_BASEDIR=${SCRIPT_DIR}/../
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-# override obj/destdir
-MAKEOBJDIRPREFIX="${CUR_DIR}/../obj/${BUILDNAME}/" ; export MAKEOBJDIRPREFIX
-X_DESTROOT="${CUR_DIR}/../root/${BUILDNAME}"
+# calculate basedir
+# XXX this should be generated in cfg.pm!
+X_BASEDIR=${SCRIPT_DIR}/../
 
 echo "*** Deleting old file system.."
 chflags -R noschg ${X_STAGING_FSROOT}
@@ -46,80 +46,80 @@ mkdir -p ${X_STAGING_FSROOT}/usr/sbin
 echo "*** Populating filesystem..."
 
 # MFS tools
-install ${X_DESTROOT}/sbin/mount ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/mount_mfs ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/umount ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/mdconfig ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/newfs ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/lib/libgeom.so.5 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libufs.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/sbin/mount ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/mount_mfs ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/umount ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/mdconfig ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/newfs ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/lib/libgeom.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libufs.so.5 ${X_STAGING_FSROOT}/lib/
 
 # base
-install ${X_DESTROOT}/sbin/init ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/reboot ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/sbin/sysctl ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/sbin/dmesg ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/usr/bin/true ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/usr/bin/false ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/sh ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/ls ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/df ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/cp ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/cat ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/dd ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/ps ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/hostname ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/bin/mkdir ${X_STAGING_FSROOT}/bin/
-install ${X_DESTROOT}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/bin/uptime ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/libexec/getty ${X_STAGING_FSROOT}/usr/libexec/
+install ${X_DESTDIR}/sbin/init ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/reboot ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/sbin/sysctl ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/sbin/dmesg ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/usr/bin/true ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/usr/bin/false ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/sh ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/ls ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/df ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/cat ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/dd ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/ps ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/hostname ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/mkdir ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/uptime ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/libexec/getty ${X_STAGING_FSROOT}/usr/libexec/
 
 # libraries are for grep
-install ${X_DESTROOT}/usr/bin/grep ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/lib/libgnuregex.so.5 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/usr/lib/libbz2.so.4 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/lib/libz.so.6 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/usr/bin/grep ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/lib/libgnuregex.so.5 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libbz2.so.4 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/lib/libz.so.6 ${X_STAGING_FSROOT}/lib/
 
 # ath tools
-install ${X_DESTROOT}/usr/local/bin/ath_ee_v14_print ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/ath_prom_read ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athdecode ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athpeek ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athregs ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/ath_ee_v4k_print ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athdebug ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athkey ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athpoke ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athrd ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/local/bin/athstats ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/ath_ee_v14_print ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/ath_prom_read ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athdecode ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athpeek ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athregs ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/ath_ee_v4k_print ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athdebug ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athkey ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athpoke ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athrd ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athstats ${X_STAGING_FSROOT}/usr/bin/
 
 # wlan tools
-install ${X_DESTROOT}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
 
 # login and pam
-install -m 4711 ${X_DESTROOT}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/sbin/pwd_mkdb ${X_STAGING_FSROOT}/usr/sbin/
-install ${X_DESTROOT}/usr/bin/cap_mkdb ${X_STAGING_FSROOT}/usr/bin/
+install -m 4711 ${X_DESTDIR}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/sbin/pwd_mkdb ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/bin/cap_mkdb ${X_STAGING_FSROOT}/usr/bin/
 
-install ${X_DESTROOT}/usr/lib/libpam.so.5 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/usr/lib/libbsm.so.3 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/usr/lib/pam_deny.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_group.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_lastlog.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_login_access.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_nologin.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_permit.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_rhosts.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_rootok.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_securetty.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_self.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/pam_unix.so ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
+install ${X_DESTDIR}/usr/lib/libpam.so.5 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libbsm.so.3 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/pam_deny.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_group.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_lastlog.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_login_access.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_nologin.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_permit.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_rhosts.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_rootok.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_securetty.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_self.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/pam_unix.so ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
 install ${X_BASEDIR}/files/pam.d/atrun ${X_STAGING_FSROOT}/c/etc/pam.d
 install ${X_BASEDIR}/files/pam.d/cron ${X_STAGING_FSROOT}/c/etc/pam.d
 install ${X_BASEDIR}/files/pam.d/ftp ${X_STAGING_FSROOT}/c/etc/pam.d
@@ -138,56 +138,56 @@ install ${X_BASEDIR}/files/pam.d/other ${X_STAGING_FSROOT}/c/etc/pam.d
 install ${X_BASEDIR}/files/pam.d/system ${X_STAGING_FSROOT}/c/etc/pam.d
 
 # remote access
-install -m 4711 ${X_DESTROOT}/usr/bin/su ${X_STAGING_FSROOT}/usr/bin/
+install -m 4711 ${X_DESTDIR}/usr/bin/su ${X_STAGING_FSROOT}/usr/bin/
 
-install ${X_DESTROOT}/usr/bin/telnet ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/telnet ${X_STAGING_FSROOT}/usr/bin/
 # kerberos libraries needed for telnet/telnetd
-install ${X_DESTROOT}/usr/lib/libkrb5.so.10 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/libhx509.so.10 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/libasn1.so.10 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/libcom_err.so.5 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTROOT}/usr/lib/libroken.so.10 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libkrb5.so.10 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libhx509.so.10 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libasn1.so.10 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libcom_err.so.5 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libroken.so.10 ${X_STAGING_FSROOT}/usr/lib
 
-install ${X_DESTROOT}/usr/sbin/inetd ${X_STAGING_FSROOT}/usr/sbin/
-install ${X_DESTROOT}/usr/lib/libwrap.so.6 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/sbin/inetd ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/lib/libwrap.so.6 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_BASEDIR}/files/inetd.conf ${X_STAGING_FSROOT}/c/etc/
-install ${X_DESTROOT}/usr/libexec/telnetd ${X_STAGING_FSROOT}/usr/libexec/
+install ${X_DESTDIR}/usr/libexec/telnetd ${X_STAGING_FSROOT}/usr/libexec/
 
 # networking
-install ${X_DESTROOT}/sbin/ifconfig ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/route ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/sbin/ping ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTROOT}/usr/bin/netstat ${X_STAGING_FSROOT}/usr/bin/
-install ${X_DESTROOT}/usr/sbin/arp ${X_STAGING_FSROOT}/usr/sbin/
-install ${X_DESTROOT}/usr/sbin/tcpdump ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/sbin/ifconfig ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/route ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/ping ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/usr/bin/netstat ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/sbin/arp ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/tcpdump ${X_STAGING_FSROOT}/usr/sbin/
 
 
-install ${X_DESTROOT}/usr/sbin/hostapd ${X_STAGING_FSROOT}/usr/sbin/
-install ${X_DESTROOT}/usr/sbin/wpa_supplicant ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/hostapd ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/wpa_supplicant ${X_STAGING_FSROOT}/usr/sbin/
 
-install ${X_DESTROOT}/libexec/ld-elf.so.1 ${X_STAGING_FSROOT}/libexec/
+install ${X_DESTDIR}/libexec/ld-elf.so.1 ${X_STAGING_FSROOT}/libexec/
 
-install ${X_DESTROOT}/lib/libc.so.7 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libedit.so.7 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libncurses.so.8 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libgcc_s.so.1 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libbsdxml.so.4 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libsbuf.so.5 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libipx.so.5 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libkvm.so.5 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libpcap.so.7 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libcrypto.so.6 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libm.so.5 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTROOT}/lib/libjail.so.1 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libc.so.7 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libedit.so.7 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libncurses.so.8 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libgcc_s.so.1 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libbsdxml.so.4 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libsbuf.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libipx.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libkvm.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libpcap.so.7 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libcrypto.so.6 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libm.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libjail.so.1 ${X_STAGING_FSROOT}/lib/
 
-install ${X_DESTROOT}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/usr/lib/libssl.so.6 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTROOT}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libssl.so.6 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
 
 
 # RC script
@@ -198,16 +198,16 @@ install ${X_BASEDIR}/files/rc2 ${X_STAGING_FSROOT}/c/etc/
 
 # local etc stuff - eg local password file
 install ${X_BASEDIR}/files/ttys ${X_STAGING_FSROOT}/c/etc/
-install ${X_DESTROOT}/etc/login.conf ${X_STAGING_FSROOT}/c/etc/
+install ${X_DESTDIR}/etc/login.conf ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/gettytab ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/passwd ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/master.passwd ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/group ${X_STAGING_FSROOT}/c/etc/
 
 # stuff that goes into /c/etc
-install ${X_DESTROOT}/etc/regdomain.xml ${X_STAGING_FSROOT}/c/etc/
-install ${X_DESTROOT}/etc/services ${X_STAGING_FSROOT}/c/etc/
-install ${X_DESTROOT}/etc/protocols ${X_STAGING_FSROOT}/c/etc/
+install ${X_DESTDIR}/etc/regdomain.xml ${X_STAGING_FSROOT}/c/etc/
+install ${X_DESTDIR}/etc/services ${X_STAGING_FSROOT}/c/etc/
+install ${X_DESTDIR}/etc/protocols ${X_STAGING_FSROOT}/c/etc/
 # this is needed for inetd
-install ${X_DESTROOT}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
+install ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/hostapd.conf ${X_STAGING_FSROOT}/c/etc/

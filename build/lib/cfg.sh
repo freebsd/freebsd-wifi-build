@@ -45,8 +45,3 @@ X_STAGING_FSROOT="/tmp/fs"
 
 # X_KERNEL
 X_KERNEL="/tftpboot/kernel.${KERNCONF}"
-
-# Stuff that may be duplicates
-
-# X_DESTROOT
-

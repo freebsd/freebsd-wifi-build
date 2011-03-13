@@ -31,21 +31,19 @@ shift
 
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 
-# override obj/destdir
-MAKEOBJDIRPREFIX="${CUR_DIR}/../obj/${BUILDNAME}/" ; export MAKEOBJDIRPREFIX
-DESTDIR="${CUR_DIR}/../root/${BUILDNAME}"
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-echo "MAKEOBJDIRPREFIX: ${MAKEOBJDIRPREFIX}"
+echo "MAKEOBJDIRPREFIX: ${X_MAKEOBJDIRPREFIX}"
 
-mkdir -p ${MAKEOBJDIRPREFIX} || exit 1
-mkdir -p ${DESTDIR} || exit 1
+mkdir -p ${X_MAKEOBJDIRPREFIX} || exit 1
+mkdir -p ${X_DESTDIR} || exit 1
 
 while [ "x$1" != "x" ]; do
-	env=MAKEOBJDIRPREFIX=${MAKEOBJDIRPREFIX} make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} TARGET_CPUTYPE=${TARGET_CPUTYPE} KERNCONF=${KERNCONF} DESTDIR=${DESTDIR} LOCAL_DIRS="${LOCAL_DIRS}" $1 || exit 1
+	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX} make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} TARGET_CPUTYPE=${TARGET_CPUTYPE} KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR} LOCAL_DIRS="${LOCAL_DIRS}" $1 || exit 1
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${KERNCONF}"
-		cp ${DESTDIR}/boot/kernel/kernel /tftpboot/kernel.${KERNCONF}
+		cp ${X_DESTDIR}/boot/kernel/kernel /tftpboot/kernel.${KERNCONF}
 	fi
 	shift
 done
-

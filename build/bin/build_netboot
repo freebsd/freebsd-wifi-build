@@ -1,7 +1,5 @@
 #!/bin/sh
 
-. ./options
-
 get_mfs_size()
 {
 	kernel=$1
@@ -18,6 +16,18 @@ get_mfs_size()
 	echo "offset for mfs in kernel: $mfs_ofs"
 }
 
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+# suck in the per-device options
+CFGNAME=$1
+shift
+. ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
 # get the kernel MFS size
 # this sets mfs_ofs, mfs_end, mfs_start, mfs_size

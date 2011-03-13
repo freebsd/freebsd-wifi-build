@@ -4,13 +4,13 @@ SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="`dirname $0`"
 CUR_DIR="`pwd`"
 
-# suck in default options
-. ${SCRIPT_DIR}/options
-
 # suck in the per-device options
 CFGNAME=$1
 shift
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
 echo "*** Running makefs to build compressed image .. "
 makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FLAGS} -s ${X_FSSIZE} -f 1000 ${X_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
