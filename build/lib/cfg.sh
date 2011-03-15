@@ -5,6 +5,25 @@
 # in the build system.
 
 # Configuration variables which need to be set
+
+CFGVARS="CFGNAME BUILDNAME KERNCONF TARGET TARGET_ARCH TARGET_CPUTYPE BUILD_FLAGS LOCAL_DIRS"
+UBNT_VARS="UBNT_ARCH UBNT_VERSION"
+
+DOEXIT="NO"
+
+for i in ${CFGVARS}; do
+	eval _value=\$${i}
+	if [ "x${_value}" = "x" ]; then
+		echo "ERROR: ${i} needs to be set in the configuration file."
+		DOEXIT="YES"
+	fi
+done
+
+if [ "x${DOEXIT}" = "xYES" ]; then
+	echo "ERROR: fatal errors found; exiting."
+	exit 127
+fi
+
 # CFGNAME
 # BUILDNAME
 # UBNT_ARCH
