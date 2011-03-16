@@ -1,0 +1,58 @@
+#!/bin/sh
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+CFGNAME=$1
+shift
+
+. ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+
+echo "*** Configuration file	: $CFGNAME"
+echo "*** Platform		: $BUILDNAME"
+
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
+
+while [ "x$1" != "x" ]; do
+	echo "*** Target		: $1"
+	BUILD_TARGET=$1
+	shift
+
+	case $BUILD_TARGET in
+		'buildworld')
+			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET || exit 1
+		;;
+		'buildkernel')
+			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
+		;;
+		'installworld')
+			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
+		;;
+		'installkernel')
+			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
+		;;
+		'distribution')
+			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
+		;;
+		'ubnt')
+			${SCRIPT_DIR}/build_ubnt ${CFGNAME} || exit 1
+		;;
+		'fsimage')
+			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
+		;;
+		'mfsroot')
+			${SCRIPT_DIR}/build_mfsroot ${CFGNAME} || exit 1
+		;;
+		*)
+			echo "*** ERROR: Unknown target: $BUILD_TARGET"
+		;;
+	esac
+
+
+
+	echo "*** Target Done."
+done
+
+echo "*** Build Completed."
