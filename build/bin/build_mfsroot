@@ -74,6 +74,7 @@ install ${X_DESTDIR}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/uptime ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/head ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tail ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/uname ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/libexec/getty ${X_STAGING_FSROOT}/usr/libexec/
 
 # libraries are for grep
