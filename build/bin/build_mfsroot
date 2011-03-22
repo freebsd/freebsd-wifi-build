@@ -53,9 +53,9 @@ install ${X_DESTDIR}/lib/libufs.so.5 ${X_STAGING_FSROOT}/lib/
 
 # base
 install ${X_DESTDIR}/sbin/init ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTDIR}/sbin/reboot ${X_STAGING_FSROOT}/bin/
-install ${X_DESTDIR}/sbin/sysctl ${X_STAGING_FSROOT}/bin/
-install ${X_DESTDIR}/sbin/dmesg ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/sbin/reboot ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/sysctl ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/dmesg ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/usr/bin/true ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/usr/bin/false ${X_STAGING_FSROOT}/bin/
