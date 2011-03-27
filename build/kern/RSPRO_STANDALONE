@@ -70,6 +70,7 @@ options		ALQ
 device		ath_hal
 option		AH_SUPPORT_AR5416
 device		ath_rate_sample
+option		AH_RXCFG_SDMAMW_4BYTES
 
 device		mii
 device		arge
