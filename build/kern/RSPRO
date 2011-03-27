@@ -60,12 +60,14 @@ device		ath             # Atheros interface support
 # device		ath_pci		# Atheros PCI/Cardbus bus
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
+options		ATH_ENABLE_11N
 options		AH_DEBUG
 options		AH_DEBUG_ALQ
 options		ALQ
 device		ath_hal
 option		AH_SUPPORT_AR5416
 device		ath_rate_sample
+option		AH_RXCFG_SDMAMW_4BYTES
 
 device		mii
 device		arge
