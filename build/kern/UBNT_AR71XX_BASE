@@ -67,7 +67,7 @@ device		ath             # Atheros interface support
 # device		ath_pci		# Atheros PCI/Cardbus bus
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
-options		AH_ENABLE_11N
+options		ATH_ENABLE_11N
 options		AH_DEBUG
 options		AH_DEBUG_ALQ
 options		ALQ
