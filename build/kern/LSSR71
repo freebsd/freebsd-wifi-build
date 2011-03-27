@@ -18,4 +18,4 @@ hints		"LSSR71.hints"
 options		ROOTDEVNAME=\"ufs:redboot/rootfs.uzip\"
 
 # Override the memory probed via redboot; it returns 16mb rather than 32mb.
-options		MIPS_REALMEM=32*1024*1024
+options		AR71XX_REALMEM=32*1024*1024
