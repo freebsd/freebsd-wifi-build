@@ -56,8 +56,7 @@ device		wlan_tkip       # 802.11 TKIP support
 device		wlan_xauth	# 802.11 hostap support
 
 device		ath             # Atheros interface support
-# XXX not yet -adrian
-# device		ath_pci		# Atheros PCI/Cardbus bus
+device		ath_pci		# Atheros PCI/Cardbus bus
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
 options		ATH_ENABLE_11N
@@ -68,6 +67,7 @@ device		ath_hal
 option		AH_SUPPORT_AR5416
 device		ath_rate_sample
 option		AH_RXCFG_SDMAMW_4BYTES
+option		AH_AR5416_INTERRUPT_MITIGATION
 
 device		mii
 device		arge

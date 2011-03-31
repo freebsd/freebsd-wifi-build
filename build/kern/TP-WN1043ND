@@ -55,17 +55,18 @@ device		wlan_tkip       # 802.11 TKIP support
 device		wlan_xauth	# 802.11 hostap support
 
 # This will come later -adrian
-#device		ath             # Atheros pci/cardbus NIC's
-#options 	ATH_DEBUG
-#options		ATH_DIAGAPI
-#options		AH_DEBUG
-#device		ath_hal
-#option		AH_SUPPORT_AR5416
-#option		AH_RXCFG_SDMAMW_4BYTES  # See NOTES for details of this WAR
-# option		AH_NEED_DESC_SWAP	# ?
-#device		ath_rate_sample
-#device		ath_pci
-#device		ath_ahb
+device		ath             # Atheros pci/cardbus NIC's
+options 	ATH_DEBUG
+options		ATH_DIAGAPI
+options		AH_DEBUG
+device		ath_hal
+option		AH_SUPPORT_AR5416
+option		AH_RXCFG_SDMAMW_4BYTES  # See NOTES for details of this WAR
+option		AH_NEED_DESC_SWAP	# ?
+device		ath_rate_sample
+device		ath_ahb
+option		AH_AR5416_INTERRUPT_MITIGATION
+
 
 device		mii
 device		arge

@@ -75,6 +75,7 @@ device		ath_hal
 option		AH_SUPPORT_AR5416
 device		ath_rate_sample
 option          AH_RXCFG_SDMAMW_4BYTES
+option		AH_AR5416_INTERRUPT_MITIGATION
 
 device		mii
 device		arge
