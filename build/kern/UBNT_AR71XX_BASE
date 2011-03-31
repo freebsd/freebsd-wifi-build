@@ -22,7 +22,7 @@ makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
 
 # Don't build any modules for now; the consumers of this file can override
 # this again to build modules specific for the given board.
-makeoptions	MODULES_OVERRIDE=""
+makeoptions	MODULES_OVERRIDE="wlan wlan_xauth wlan_acl wlan_wep wlan_tkip wlan_ccmp ath ath_ahb ath_pci"
 
 options		DDB
 options		KDB
@@ -63,8 +63,7 @@ device		wlan_xauth	# 802.11 hostap support
 
 # Atheros wireless NICs
 device		ath             # Atheros interface support
-# XXX not yet -adrian
-# device		ath_pci		# Atheros PCI/Cardbus bus
+device		ath_pci		# Atheros PCI/Cardbus bus
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
 options		ATH_ENABLE_11N
