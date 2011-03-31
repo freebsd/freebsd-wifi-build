@@ -1,9 +1,9 @@
-BUILDNAME=rspro_head
+BUILDNAME=mipseb
 TARGET=mips
 TARGET_ARCH=mipseb
 TARGET_CPUTYPE=mips32
 KERNCONF=RSPRO_STANDALONE
-LOCAL_DIRS="tools/tools/ath"
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
 
 UBNT_ARCH="RSPRO"
 UBNT_VERSION="RSPRO.ar7100pro.V1"

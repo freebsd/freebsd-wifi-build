@@ -1,4 +1,4 @@
-BUILDNAME=rspro_head
+BUILDNAME=mipseb
 TARGET=mips
 TARGET_ARCH=mipseb
 TARGET_CPUTYPE=mips32
