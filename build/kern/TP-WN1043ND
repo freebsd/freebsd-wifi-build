@@ -4,21 +4,21 @@
 # $FreeBSD: head/sys/mips/conf/AR71XX 202172 2010-01-12 20:55:12Z rpaulo $
 #
 
+machine         mips mipseb
 ident		TP-WN1043ND
 cpu		CPU_MIPS4KC
 options 	ISA_MIPS32
-makeoptions	TARGET_BIG_ENDIAN
 makeoptions	KERNLOADADDR=0x80050000
 options		HZ=1000
 
 # I'm a 1043ND!
-options		ATHEROS_BOARD_WN_TR1043ND
+#options		ATHEROS_BOARD_WN_TR1043ND
 
 files		"../atheros/files.ar71xx"
 hints		"TP-WN1043ND.hints"
 
 makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
-makeoptions	MODULES_OVERRIDE="ath"
+makeoptions	MODULES_OVERRIDE="wlan wlan_ccmp wlan_tkip wlan_xauth wlan_wep ath ath_ahb"
 
 options		DDB
 options		KDB
@@ -48,25 +48,24 @@ options         UFS_DIRHASH             #Improve performance on big directories
 options		IEEE80211_DEBUG
 options		IEEE80211_SUPPORT_MESH
 options		IEEE80211_SUPPORT_TDMA
-device		wlan            # 802.11 support
-device		wlan_wep        # 802.11 WEP support
-device		wlan_ccmp       # 802.11 CCMP support
-device		wlan_tkip       # 802.11 TKIP support
-device		wlan_xauth	# 802.11 hostap support
+#device		wlan            # 802.11 support
+#device		wlan_wep        # 802.11 WEP support
+#device		wlan_ccmp       # 802.11 CCMP support
+#device		wlan_tkip       # 802.11 TKIP support
+#device		wlan_xauth	# 802.11 hostap support
 
 # This will come later -adrian
-device		ath             # Atheros pci/cardbus NIC's
+#device		ath             # Atheros pci/cardbus NIC's
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
 options		AH_DEBUG
-device		ath_hal
+#device		ath_hal
 option		AH_SUPPORT_AR5416
 option		AH_RXCFG_SDMAMW_4BYTES  # See NOTES for details of this WAR
 option		AH_NEED_DESC_SWAP	# ?
-device		ath_rate_sample
-device		ath_ahb
+#device		ath_rate_sample
+#device		ath_ahb
 option		AH_AR5416_INTERRUPT_MITIGATION
-
 
 device		mii
 device		arge
