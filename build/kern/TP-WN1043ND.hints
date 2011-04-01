@@ -15,11 +15,11 @@ hint.uart.0.irq=3
 #hint.ohci.0.msize=0x01000000
 #hint.ohci.0.irq=6
 
-#ehci
-#hint.ehci.0.at="nexus0"
-#hint.ehci.0.maddr=0x1b000100
-#hint.ehci.0.msize=0x00ffff00
-#hint.ehci.0.irq=1
+#ehci - note the 0x100 offset for the AR913x/AR724x
+hint.ehci.0.at="nexus0"
+hint.ehci.0.maddr=0x1b000100
+hint.ehci.0.msize=0x00ffff00
+hint.ehci.0.irq=1
 
 # pci
 #hint.pcib.0.at="nexus0"
