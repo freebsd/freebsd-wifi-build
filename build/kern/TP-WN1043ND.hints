@@ -33,11 +33,9 @@ hint.arge.0.irq=2
 hint.arge.0.phymask=0x000c
 hint.arge.0.media=1000
 hint.arge.0.fduplex=1
-# Where is the MAC address stored in memory?
+# Where is the MAC address stored in flash for
+# this particular unit.
 hint.arge.0.eeprommac=0x1f01fc00
-# Uncomment this hint for RS (not PRO)
-# PHY20 = 1 << 20
-# hint.arge.0.phymask=0x100000
 
 hint.arge.1.at="nexus0"
 hint.arge.1.maddr=0x1a000000
@@ -68,10 +66,3 @@ hint.mx25l.0.cs=0
 # Watchdog
 hint.ar71xx_wdog.0.at="nexus0"
 
-# nvram2env for uboot
-hint.nvram.0.base=0x1f030000
-hint.nvram.0.maxsize=0x2000
-hint.nvram.0.flags=3 # 1 = No check, 2 = Format Generic
-hint.nvram.1.base=0x1f032000
-hint.nvram.1.maxsize=0x4000
-hint.nvram.1.flags=3 # 1 = No check, 2 = Format Generic

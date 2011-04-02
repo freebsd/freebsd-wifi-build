@@ -87,7 +87,6 @@ device		da
 device		spibus
 device		ar71xx_spi
 device		mx25l
-device		geom_redboot
 device		ar71xx_wdog
 
 device		uart
@@ -112,5 +111,3 @@ options		MD_ROOT_SIZE=5120
 device		geom_uzip
 options		GEOM_UZIP
 options		ROOTDEVNAME=\"ufs:/dev/md0.uzip\"
-
-device		nvram2env
