@@ -14,6 +14,9 @@ options		HZ=1000
 # I'm a 1043ND!
 #options		ATHEROS_BOARD_WN_TR1043ND
 
+# Override memory - there's no hooks in uboot just yet
+options		AR71XX_REALMEM=32*1024*1024
+
 files		"../atheros/files.ar71xx"
 hints		"TP-WN1043ND.hints"
 
@@ -105,7 +108,9 @@ options		GEOM_PART_MBR
 #options		ROOTDEVNAME=\"ufs:da0a\"
 # MD root, because! -adrian
 options		MD_ROOT
-options		MD_ROOT_SIZE=3072
+options		MD_ROOT_SIZE=5120
 device		geom_uzip
 options		GEOM_UZIP
 options		ROOTDEVNAME=\"ufs:/dev/md0.uzip\"
+
+device		nvram2env
