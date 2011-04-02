@@ -28,9 +28,14 @@ mkdir -p ${X_STAGING_FSROOT}/c/etc
 mkdir -p ${X_STAGING_FSROOT}/etc
 mkdir -p ${X_STAGING_FSROOT}/lib/
 mkdir -p ${X_STAGING_FSROOT}/bin
+mkdir -p ${X_STAGING_FSROOT}/data/1
+mkdir -p ${X_STAGING_FSROOT}/data/2
+mkdir -p ${X_STAGING_FSROOT}/data/3
+mkdir -p ${X_STAGING_FSROOT}/data/4
 mkdir -p ${X_STAGING_FSROOT}/dev
 mkdir -p ${X_STAGING_FSROOT}/tmp
 mkdir -p ${X_STAGING_FSROOT}/mnt
+mkdir -p ${X_STAGING_FSROOT}/proc
 mkdir -p ${X_STAGING_FSROOT}/var
 mkdir -p ${X_STAGING_FSROOT}/sbin
 mkdir -p ${X_STAGING_FSROOT}/libexec
@@ -56,7 +61,10 @@ install ${X_DESTDIR}/sbin/init ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/reboot ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/sysctl ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/dmesg ${X_STAGING_FSROOT}/sbin/
+
 install ${X_DESTDIR}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
+
 install ${X_DESTDIR}/usr/bin/true ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/usr/bin/false ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/sh ${X_STAGING_FSROOT}/bin/
@@ -76,6 +84,10 @@ install ${X_DESTDIR}/usr/bin/head ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tail ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/uname ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/libexec/getty ${X_STAGING_FSROOT}/usr/libexec/
+
+# vmstat is useful
+install ${X_DESTDIR}/usr/bin/vmstat ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/lib/libdevstat.so.7 ${X_STAGING_FSROOT}/lib/
 
 # libraries are for grep
 install ${X_DESTDIR}/usr/bin/grep ${X_STAGING_FSROOT}/usr/bin/
@@ -98,6 +110,8 @@ install ${X_DESTDIR}/usr/local/bin/athstats ${X_STAGING_FSROOT}/usr/bin/
 
 # wlan tools
 install ${X_DESTDIR}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/local/bin/wlanstats ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/wlanwatch ${X_STAGING_FSROOT}/usr/bin/
 
 # login and pam
 install -m 4711 ${X_DESTDIR}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin/

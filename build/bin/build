@@ -45,6 +45,9 @@ while [ "x$1" != "x" ]; do
 		'mfsroot')
 			${SCRIPT_DIR}/build_mfsroot ${CFGNAME} || exit 1
 		;;
+		'netboot')
+			${SCRIPT_DIR}/build_netboot ${CFGNAME} || exit 1
+		;;
 		*)
 			echo "*** ERROR: Unknown target: $BUILD_TARGET"
 		;;
