@@ -1,8 +1,9 @@
-
-TARGET_BIG_ENDIAN=true
+BUILDNAME=mipseb
 TARGET=mips
-MAKEOBJDIRPREFIX=/data/freebsd/mips/head/obj-tplink ; export MAKEOBJDIRPREFIX
-DESTDIR=/data/freebsd/mips/head/root-tplink
-BUILD_FLAGS="NO_CLEAN=1"
+TARGET_ARCH=mipseb
+TARGET_CPUTYPE=mips32
 KERNCONF=TP-WN1043ND
+LOCAL_DIRS="tools/tools/ath"
 
+# UBNT_ARCH="LS-SR71"
+# UBNT_VERSION="LS-SR71.ar7100"
