@@ -68,7 +68,9 @@ install ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/usr/bin/true ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/usr/bin/false ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/sh ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/rm ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/ls ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/df ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/cat ${X_STAGING_FSROOT}/bin/
