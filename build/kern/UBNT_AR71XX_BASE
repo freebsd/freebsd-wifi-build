@@ -117,4 +117,4 @@ device		if_bridge
 device		gif		# ip[46] in ip[46] tunneling protocol
 device		gre		# generic encapsulation - only for IPv4 in IPv4 though atm
 
-
+options		ARGE_DEBUG	# Enable if_arge debugging for now

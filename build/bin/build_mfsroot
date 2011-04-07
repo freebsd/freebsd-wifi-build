@@ -227,3 +227,4 @@ install ${X_DESTDIR}/etc/protocols ${X_STAGING_FSROOT}/c/etc/
 # this is needed for inetd
 install ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/hostapd.conf ${X_STAGING_FSROOT}/c/etc/
+install ${X_BASEDIR}/files/hostapd.wlan1.conf ${X_STAGING_FSROOT}/c/etc/

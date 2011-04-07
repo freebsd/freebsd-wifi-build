@@ -34,13 +34,20 @@ echo "*** bringing up bridge .."
 echo "*** bringing up arge0 .."
 /sbin/ifconfig arge0 up
 
-echo "*** bringing up hostapd .. "
+echo "*** bringing up wlan0/hostapd .. "
 /sbin/ifconfig wlan0 create wlandev ath0 wlanmode ap
 /sbin/ifconfig wlan0 country Australia
+
+# HT/20 - just so I can test 11a coexistance without things
+# getting too fruity.
 /sbin/ifconfig wlan0 channel 157:ht/20
+
 # disable ampdutx - we just don't support it
 # disable amsdu - again, just to be safe
 /sbin/ifconfig wlan0 -ampdutx -amsdu
+
+# Allow larger RX A-MPDU burst sizes in hostap mode
+/sbin/ifconfig wlan0 ampdulimit 64k
 
 # set the age queue a bit lower, so I get some real performance.
 # Figuring out why ampdu_age kills performance when it should
@@ -49,7 +56,17 @@ echo "*** bringing up hostapd .. "
 
 /sbin/ifconfig wlan0 up
 /usr/sbin/hostapd -B /etc/hostapd.conf
+
 /sbin/ifconfig bridge0 addm wlan0 -stp wlan0
+
+# Bring up wlan1 - channel 149:a for testing
+/sbin/ifconfig wlan1 create wlandev ath1 wlanmode ap
+/sbin/ifconfig wlan1 country Australia
+/sbin/ifconfig wlan1 channel 149:a
+/sbin/ifconfig wlan1 up
+/usr/sbin/hostapd -B /etc/hostapd.wlan1.conf
+
+/sbin/ifconfig bridge0 addm wlan1 -stp wlan1
 
 echo "*** inetd"
 /usr/sbin/inetd 
