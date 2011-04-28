@@ -1,11 +1,10 @@
 #
-# AR71XX -- Kernel configuration file for FreeBSD/mips for Atheros 71xx systems
+# TP-1043ND -- Kernel configuration file for the TP-Link WR-1043ND
 #
-# $FreeBSD: head/sys/mips/conf/AR71XX 202172 2010-01-12 20:55:12Z rpaulo $
+# $FreeBSD$
 #
 
-# It should include AR91XX and add the local stuff, but then I'd miss out
-# on all the default stuff I need (eg redboot/geom modules)
+# Include the default AR913x parameters common to all AR913x SoC users.
 include         "AR91XX_BASE"
 
 ident           TP-WN1043ND
@@ -23,7 +22,7 @@ options		GEOM_PART_MBR
 
 # Just make sure the thing boots off of the first attached SCSI device for now!
 #options		ROOTDEVNAME=\"ufs:da0a\"
-# MD root, because! -adrian
+# Or an MDROOT for testing.
 options		MD_ROOT
 options		MD_ROOT_SIZE=5120
 device		geom_uzip

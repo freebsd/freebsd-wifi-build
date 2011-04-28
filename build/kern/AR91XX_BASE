@@ -1,7 +1,13 @@
 #
-# AR71XX -- Kernel configuration file for FreeBSD/mips for Atheros 71xx systems
+# AR91XX -- Kernel configuration base file for the Atheros AR913x SoC.
 #
-# $FreeBSD: head/sys/mips/conf/AR71XX 202172 2010-01-12 20:55:12Z rpaulo $
+# This file (and the hints file accompanying it) are not designed to be
+# used by themselves. Instead, users of this file should create a kernel
+# config file which includes this file (which gets the basic hints), then
+# override the default options (adding devices as needed) and adding
+# hints as needed (for example, the GPIO and LAN PHY.)
+#
+# $FreeBSD$
 #
 
 machine         mips mipseb
@@ -11,14 +17,11 @@ options 	ISA_MIPS32
 makeoptions	KERNLOADADDR=0x80050000
 options		HZ=1000
 
-# I'm a 1043ND!
-#options		ATHEROS_BOARD_WN_TR1043ND
-
 files		"../atheros/files.ar71xx"
 hints		"AR91XX_BASE.hints"
 
 makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
-makeoptions	MODULES_OVERRIDE="wlan wlan_ccmp wlan_tkip wlan_xauth wlan_wep ath ath_ahb"
+makeoptions	MODULES_OVERRIDE=""
 
 options		DDB
 options		KDB
@@ -46,24 +49,27 @@ options         UFS_DIRHASH             #Improve performance on big directories
 options		IEEE80211_DEBUG
 options		IEEE80211_SUPPORT_MESH
 options		IEEE80211_SUPPORT_TDMA
-#device		wlan            # 802.11 support
-#device		wlan_wep        # 802.11 WEP support
-#device		wlan_ccmp       # 802.11 CCMP support
-#device		wlan_tkip       # 802.11 TKIP support
-#device		wlan_xauth	# 802.11 hostap support
+device		wlan            # 802.11 support
+device		wlan_wep        # 802.11 WEP support
+device		wlan_ccmp       # 802.11 CCMP support
+device		wlan_tkip       # 802.11 TKIP support
+device		wlan_xauth	# 802.11 hostap support
 
 # This will come later -adrian
-#device		ath             # Atheros pci/cardbus NIC's
+device		ath             # Atheros pci/cardbus NIC's
+device		ath_rate_sample
+device		ath_ahb
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
+option		ATH_ENABLE_11N
+
+device		ath_hal
+
 options		AH_DEBUG
-#device		ath_hal
 option		AH_SUPPORT_AR5416
-option		AH_RXCFG_SDMAMW_4BYTES  # See NOTES for details of this WAR
-option		AH_NEED_DESC_SWAP	# ?
-#device		ath_rate_sample
-#device		ath_ahb
-option		AH_AR5416_INTERRUPT_MITIGATION
+option		AH_SUPPORT_AR9130	# Makes other chipsets not function!
+# interrupt mitigation not possible on AR9130
+# option		AH_AR5416_INTERRUPT_MITIGATION
 
 device		mii
 device		arge

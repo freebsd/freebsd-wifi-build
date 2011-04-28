@@ -1,4 +1,9 @@
-# PHY4 = 1 << 4
+#
+# This file adds to the values in AR91XX_BASE.hints.
+#
+# $FreeBSD$
+
+# Hard-code the PHY for now, until there's switch phy support.
 hint.arge.0.phymask=0x000c
 hint.arge.0.media=1000
 hint.arge.0.fduplex=1
@@ -8,10 +13,7 @@ hint.arge.0.eeprommac=0x1f01fc00
 # This isn't used, but configure it anyway.
 # This should eventually just not be configured, but the if then
 # needs to be properly disabled or spurious interrupts occur.
-hint.arge.1.at="nexus0"
-hint.arge.1.maddr=0x1a000000
-hint.arge.1.msize=0x1000
-hint.arge.1.irq=3
-# PHY1, PHY2, PHY3
-hint.arge.1.phymask=0x0e
+hint.arge.1.phymask=0x0
 
+# Where the ART is
+hint.ath.0.eepromaddr=0x1fff1000
