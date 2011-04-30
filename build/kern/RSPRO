@@ -43,6 +43,7 @@ options         UFS_DIRHASH             #Improve performance on big directories
 options         ROOTDEVNAME=\"ufs:redboot/rootfs.uzip\"
 
 device		pci
+device		ar71xx_pci
 
 # Wireless NIC cards
 options		IEEE80211_DEBUG

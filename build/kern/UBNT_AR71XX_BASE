@@ -22,7 +22,7 @@ makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
 
 # Don't build any modules for now; the consumers of this file can override
 # this again to build modules specific for the given board.
-makeoptions	MODULES_OVERRIDE="wlan wlan_xauth wlan_acl wlan_wep wlan_tkip wlan_ccmp ath ath_ahb ath_pci"
+makeoptions	MODULES_OVERRIDE="wlan wlan_xauth wlan_acl wlan_wep wlan_tkip wlan_ccmp ath ath_pci"
 
 options		DDB
 options		KDB
@@ -49,9 +49,11 @@ options         FFS                     #Berkeley Fast Filesystem
 options		MSDOSFS			# Read MSDOS filesystems; useful for USB/CF
 
 device		pci
+device		ar71xx_pci
 
 # 802.11 framework
 options		IEEE80211_DEBUG
+options		IEEE80211_ALQ
 options		IEEE80211_SUPPORT_MESH
 options		IEEE80211_SUPPORT_TDMA
 options		IEEE80211_AMPDU_AGE

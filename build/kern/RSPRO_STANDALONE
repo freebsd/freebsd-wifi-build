@@ -45,10 +45,12 @@ options         UFS_DIRHASH             #Improve performance on big directories
 # .. first DOS-partitioned, BSD sliced flash disk
 options		ROOTDEVNAME=\"ufs:da0s1a\"
 
+device		ar71xx_pci
 device		pci
 
 # Wireless NIC cards
 options		IEEE80211_DEBUG
+options		IEEE80211_ALQ
 options		IEEE80211_SUPPORT_MESH
 options		IEEE80211_SUPPORT_TDMA
 options		IEEE80211_AMPDU_AGE
