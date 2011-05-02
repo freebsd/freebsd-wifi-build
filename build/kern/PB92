@@ -1,6 +1,6 @@
 #
 # PB92 -- Kernel configuration file for FreeBSD/mips for Atheros PB92 reference
-#         board (AR724X)
+#         board (AR7242)
 #
 # $FreeBSD$
 #
@@ -24,6 +24,7 @@ options		INET6
 options		NFSCLIENT		#Network Filesystem Client
 options		PSEUDOFS		#Pseudo-filesystem framework
 options		_KPOSIX_PRIORITY_SCHEDULING #Posix P1003_1B real-time extensions
+options		ALQ
 
 # options		NFS_LEGACYRPC
 #options		NFS_DEBUG
@@ -35,9 +36,15 @@ options		INVARIANT_SUPPORT
 options		WITNESS
 options		WITNESS_SKIPSPIN
 options         FFS                     #Berkeley Fast Filesystem
-options         SOFTUPDATES             #Enable FFS soft updates support
-options         UFS_ACL                 #Support for access control lists
-options         UFS_DIRHASH             #Improve performance on big directories
+#options         SOFTUPDATES             #Enable FFS soft updates support
+#options         UFS_ACL                 #Support for access control lists
+#options         UFS_DIRHASH             #Improve performance on big directories
+
+options		MD_ROOT
+options		MD_ROOT_SIZE=5120
+device		geom_uzip
+options		GEOM_UZIP
+options		ROOTDEVNAME=\"ufs:/dev/md0.uzip\"
 
 device		pci
 device		ar724x_pci
@@ -50,13 +57,19 @@ device		wlan            # 802.11 support
 device		wlan_wep        # 802.11 WEP support
 device		wlan_ccmp       # 802.11 CCMP support
 device		wlan_tkip       # 802.11 TKIP support
+device		wlan_xauth	# 802.11 hostap support
 
-device		ath             # Atheros pci/cardbus NIC's
+device		ath		# Atheros pci/cardbus NIC's
 device		ath_pci		# PCI/PCIe bus glue
 options 	ATH_DEBUG
+options		ATH_ENABLE_11N
+options		ATH_DIAGAPI
+
 device		ath_hal
-option		AH_SUPPORT_AR5416
-option		AH_RXCFG_SDMAMW_4BYTES	# See NOTES for details of this WAR
+options		AH_SUPPORT_AR5416
+options		AH_DEBUG
+options		AH_DEBUG_ALQ
+
 device		ath_rate_sample
 
 device		mii
