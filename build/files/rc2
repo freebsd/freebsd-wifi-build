@@ -49,10 +49,9 @@ echo "*** bringing up wlan0/hostapd .. "
 # Allow larger RX A-MPDU burst sizes in hostap mode
 /sbin/ifconfig wlan0 ampdulimit 64k
 
-# set the age queue a bit lower, so I get some real performance.
-# Figuring out why ampdu_age kills performance when it should
-# just be aging out frames is a later problem.
-/sbin/sysctl net.wlan.ampdu_age=5
+# Make sure ampdu-age is set 500 ticks; recent changes to the
+# ath/net80211 code seem to have fixed this.. :)
+/sbin/sysctl net.wlan.ampdu_age=500
 
 /sbin/ifconfig wlan0 up
 /usr/sbin/hostapd -B /etc/hostapd.conf
