@@ -1,0 +1,6 @@
+BUILDNAME=mipseb
+TARGET=mips
+TARGET_ARCH=mipseb
+TARGET_CPUTYPE=mips32
+KERNCONF=RT305X
+LOCAL_DIRS="tools/tools/ath"
