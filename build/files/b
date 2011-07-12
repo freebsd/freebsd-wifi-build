@@ -1,0 +1,9 @@
+#!/bin/sh
+
+FILES="rc2 hostapd.conf hostapd.wlan1.conf"
+MODE=$1
+
+for i in ${FILES}; do
+	echo "${i}.${MODE} -> ${i}"
+	cp ${i}.${MODE} ${i}
+done
