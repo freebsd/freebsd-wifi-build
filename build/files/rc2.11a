@@ -29,7 +29,6 @@ echo "*** bringing up bridge .."
 /sbin/ifconfig bridge0 create 
 /sbin/ifconfig bridge0 addm arge0
 /sbin/ifconfig bridge0 inet 10.61.8.9/24
-# /sbin/ifconfig bridge0 inet 10.61.8.8/24
 /sbin/ifconfig bridge0 up
 
 echo "*** bringing up arge0 .."
