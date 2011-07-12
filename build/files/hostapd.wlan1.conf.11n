@@ -1,0 +1,8 @@
+interface=wlan1
+driver=bsd
+ssid=CACHEBOY_11N_2
+wpa=3
+wpa_key_mgmt=WPA-PSK
+wpa_passphrase=Sysinit891234
+wpa_pairwise=CCMP TKIP
+ctrl_interface=/var/run/hostapd

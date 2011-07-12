@@ -1,0 +1,90 @@
+#!/bin/sh
+
+# This is run once rc has setup /tmp, /etc and /var; it's our
+# responsibility to set things up to run.
+
+# Directories
+echo "*** Populating /var .."
+
+mkdir -p /var/run/hostapd
+mkdir -p /var/log
+mkdir -p /var/tmp
+mkdir -p /var/db
+mkdir -p /var/empty
+mkdir -p /var/cron
+mkdir -p /var/cron/tabs
+
+echo "*** setting up hostname"
+/bin/hostname TEST_AP_11A
+
+# Bring up loopback
+echo "*** bringing up loopback .."
+/sbin/ifconfig lo0 inet 127.0.0.1/8 up
+
+echo "*** Password/login databases .."
+/usr/sbin/pwd_mkdb /etc/master.passwd
+/usr/bin/cap_mkdb /etc/login.conf
+
+echo "*** bringing up bridge .."
+/sbin/ifconfig bridge0 create 
+/sbin/ifconfig bridge0 addm arge0
+/sbin/ifconfig bridge0 inet 10.61.8.9/24
+# /sbin/ifconfig bridge0 inet 10.61.8.8/24
+/sbin/ifconfig bridge0 up
+
+echo "*** bringing up arge0 .."
+/sbin/ifconfig arge0 up
+
+# debugging
+/sbin/sysctl net.wlan.cac_timeout=5
+/sbin/sysctl net.wlan.nol_timeout=30
+
+echo "*** bringing up wlan0/hostapd .. "
+/sbin/ifconfig wlan0 create wlandev ath0 wlanmode ap
+/sbin/ifconfig wlan0 country US regdomain FCC3
+/usr/sbin/wlandebug +state
+
+# newstate + beacon proc
+# /sbin/sysctl dev.ath.0.debug=0x40080
+
+# HT/40 - test interop with HT/20 and 11a
+# /sbin/ifconfig wlan0 channel 157:ht/40
+/sbin/ifconfig wlan0 channel 116:a
+
+# disable ampdutx - we just don't support it
+# disable amsdu - again, just to be safe
+/sbin/ifconfig wlan0 -ampdutx -amsdu
+
+# Allow larger RX A-MPDU burst sizes in hostap mode
+/sbin/ifconfig wlan0 ampdulimit 64k
+
+# atheros NICs require more A-MPDU spacing than '0'
+/sbin/ifconfig wlan0 ampdudensity 8
+
+# Make sure ampdu-age is set 500 ticks; recent changes to the
+# ath/net80211 code seem to have fixed this.. :)
+/sbin/sysctl net.wlan.ampdu_age=500
+
+/sbin/ifconfig wlan0 up
+/usr/sbin/hostapd -B /etc/hostapd.conf
+
+/sbin/ifconfig bridge0 addm wlan0 -stp wlan0
+
+# Bring up wlan1 - channel 149:a for testing
+/sbin/ifconfig wlan1 create wlandev ath1 wlanmode ap
+/sbin/ifconfig wlan1 country US regdomain FCC3
+/sbin/ifconfig wlan1 channel 149:a
+/sbin/ifconfig wlan1 up
+/usr/sbin/hostapd -B /etc/hostapd.wlan1.conf
+
+# disable interference mitigation (ANI) here; doing it too
+# early causes a panic
+/sbin/sysctl dev.ath.0.intmit=0
+
+/sbin/ifconfig bridge0 addm wlan1 -stp wlan1
+
+echo "*** inetd"
+/usr/sbin/inetd 
+
+echo "*** Done!"
+exit 0
