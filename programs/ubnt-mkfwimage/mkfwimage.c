@@ -103,7 +103,7 @@ typedef struct part_data {
 #define DEFAULT_OUTPUT_FILE 	"firmware-image.bin"
 #define DEFAULT_VERSION		"UNKNOWN"
 
-#define OPTIONS "B:hv:o:r:k:"
+#define OPTIONS "B:C:c:hv:o:r:k:"
 
 static int debug = 1;
 
@@ -112,6 +112,10 @@ typedef struct image_info {
 	char outputfile[PATH_MAX];
 	u_int32_t	part_count;
 	part_data_t parts[MAX_SECTIONS];
+	struct {
+		int enable;	/* enable cfgfs? */
+		size_t size;	/* size of config partition */
+	} cfg;
 } image_info_t;
 
 static void write_header(void* mem, const char* version)
@@ -186,6 +190,8 @@ static void usage(const char* progname)
 	     "\t-o <output file>\t - firmware output file, default: %s\n"
 	     "\t-k <kernel file>\t\t - kernel file\n"
 	     "\t-r <rootfs file>\t\t - rootfs file\n"
+	     "\t-C <cfgfs size>\t\t - enable 'cfg' partition; size in bytes\n"
+	     "\t-c <cfgfs file>\t\t - configfs file\n"
 	     "\t-B <board name>\t\t - choose firmware layout for specified board (XS2, XS5, RS, XM)\n"
 	     "\t-h\t\t\t - this help\n", VERSION,
 	     progname, DEFAULT_VERSION, DEFAULT_OUTPUT_FILE);
@@ -227,12 +233,15 @@ static u_int32_t filelength(const char* file)
 	return (ret);
 }
 
-static int create_image_layout(const char* kernelfile, const char* rootfsfile, char* board_name, image_info_t* im)
+static int create_image_layout(const char* kernelfile, const char* rootfsfile,
+    const char *cfgfsfile, char* board_name, image_info_t* im)
 {
 	part_data_t* kernel = &im->parts[0];
 	part_data_t* rootfs = &im->parts[1];
+	part_data_t* cfgfs = &im->parts[2];
 
 	fw_layout_t* p;
+	im->part_count = 0;
 
 	p = &fw_layout_data[0];
 	while ((strlen(p->name) != 0) && (strncmp(p->name, board_name, sizeof(board_name)) != 0))
@@ -250,6 +259,8 @@ static int create_image_layout(const char* kernelfile, const char* rootfsfile, c
 	kernel->partition_memaddr = p->kern_entry;
 	kernel->partition_entryaddr = p->kern_entry;
 	strncpy(kernel->filename, kernelfile, sizeof(kernel->filename));
+	im->part_count++;
+	printf("kernel: %d 0x%08x\n", kernel->partition_length, kernel->partition_baseaddr);
 
 	if (filelength(rootfsfile) + kernel->partition_length > p->firmware_max_length)
 		return (-2);
@@ -261,10 +272,33 @@ static int create_image_layout(const char* kernelfile, const char* rootfsfile, c
 	rootfs->partition_memaddr = 0x00000000;
 	rootfs->partition_entryaddr = 0x00000000;
 	strncpy(rootfs->filename, rootfsfile, sizeof(rootfs->filename));
+	im->part_count++;
 
-printf("kernel: %d 0x%08x\n", kernel->partition_length, kernel->partition_baseaddr);
-printf("root: %d 0x%08x\n", rootfs->partition_length, rootfs->partition_baseaddr);
-	im->part_count = 2;
+
+	/*
+	 * If cfg is enabled, subtract the cfg size from the
+	 * rootfs entry.
+	 */
+	if (im->cfg.enable) {
+
+		rootfs->partition_length -= im->cfg.size;
+
+		strcpy(cfgfs->partition_name, "cfg");
+		cfgfs->partition_index = 3;
+		cfgfs->partition_baseaddr = kernel->partition_baseaddr +
+		    kernel->partition_length + rootfs->partition_length;
+		cfgfs->partition_length = im->cfg.size;
+		cfgfs->partition_memaddr = 0x00000000;
+		cfgfs->partition_entryaddr = 0x00000000;
+		strncpy(cfgfs->filename, cfgfsfile, sizeof(rootfs->filename));
+		im->part_count++;
+	}
+
+	printf("root: %d 0x%08x\n", rootfs->partition_length, rootfs->partition_baseaddr);
+
+	if (im->cfg.enable)
+		printf("cfg: %d 0x%08x\n", cfgfs->partition_length,
+		    cfgfs->partition_baseaddr);
 
 	return 0;
 }
@@ -380,6 +414,7 @@ int main(int argc, char* argv[])
 {
 	char kernelfile[PATH_MAX];
 	char rootfsfile[PATH_MAX];
+	char cfgfsfile[PATH_MAX];
 	char board_name[PATH_MAX];
 	int o, rc;
 	image_info_t im;
@@ -395,6 +430,19 @@ int main(int argc, char* argv[])
 	while ((o = getopt(argc, argv, OPTIONS)) != -1)
 	{
 		switch (o) {
+		case 'C':
+			if (optarg)
+				strncpy(cfgfsfile, optarg, sizeof(cfgfsfile));
+			break;
+		case 'c':
+			if (optarg) {
+				im.cfg.enable = 1;
+				im.cfg.size = atoi(optarg);
+			} else {
+				usage(argv[0]);
+				return -1;
+			}
+			break;
 		case 'v':
 			if (optarg)
 				strncpy(im.version, optarg, sizeof(im.version));
@@ -437,7 +485,8 @@ int main(int argc, char* argv[])
 		return -2;
 	}
 
-	if ((rc = create_image_layout(kernelfile, rootfsfile, board_name, &im)) != 0)
+	if ((rc = create_image_layout(kernelfile, rootfsfile, cfgfsfile,
+	    board_name, &im)) != 0)
 	{
 		ERROR("Failed creating firmware layout description - error code: %d\n", rc);
 		return -3;
