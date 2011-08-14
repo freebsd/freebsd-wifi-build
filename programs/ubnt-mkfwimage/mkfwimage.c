@@ -430,11 +430,11 @@ int main(int argc, char* argv[])
 	while ((o = getopt(argc, argv, OPTIONS)) != -1)
 	{
 		switch (o) {
-		case 'C':
+		case 'c':
 			if (optarg)
 				strncpy(cfgfsfile, optarg, sizeof(cfgfsfile));
 			break;
-		case 'c':
+		case 'C':
 			if (optarg) {
 				im.cfg.enable = 1;
 				im.cfg.size = atoi(optarg);
