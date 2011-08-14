@@ -52,6 +52,7 @@ install ${X_DESTDIR}/sbin/mount ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/mount_mfs ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/umount ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/mdconfig ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/fsck_ffs ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/newfs ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/lib/libgeom.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libufs.so.5 ${X_STAGING_FSROOT}/lib/
@@ -190,7 +191,7 @@ install ${X_DESTDIR}/lib/libncurses.so.8 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libgcc_s.so.1 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libbsdxml.so.4 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTDIR}/lib/libsbuf.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libsbuf.so.6 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libipx.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libkvm.so.5 ${X_STAGING_FSROOT}/lib/

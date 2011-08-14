@@ -28,7 +28,6 @@ echo "*** Password/login databases .."
 echo "*** bringing up bridge .."
 /sbin/ifconfig bridge0 create 
 /sbin/ifconfig bridge0 addm arge0
-# /sbin/ifconfig bridge0 inet 10.61.8.9/24
 /sbin/ifconfig bridge0 inet 10.61.8.8/24
 /sbin/ifconfig bridge0 up
 
@@ -41,15 +40,15 @@ echo "*** bringing up arge0 .."
 
 echo "*** bringing up wlan0/hostapd .. "
 /sbin/ifconfig wlan0 create wlandev ath0 wlanmode ap
-/sbin/ifconfig wlan0 country AU
+# /sbin/ifconfig wlan0 country AU
+/sbin/ifconfig wlan0 country US regdomain FCC3
 /usr/sbin/wlandebug +state
 
 # newstate + beacon proc
 /sbin/sysctl dev.ath.0.debug=0x40080
 
 # HT/40 - test interop with HT/20 and 11a
-/sbin/ifconfig wlan0 channel 157:ht/40
-# /sbin/ifconfig wlan0 channel 116:a
+/sbin/ifconfig wlan0 channel 112:ht/40
 
 # disable ampdutx - we just don't support it
 # disable amsdu - again, just to be safe
@@ -72,7 +71,7 @@ echo "*** bringing up wlan0/hostapd .. "
 
 # Bring up wlan1 - channel 149:a for testing
 /sbin/ifconfig wlan1 create wlandev ath1 wlanmode ap
-/sbin/ifconfig wlan1 country Australia
+/sbin/ifconfig wlan1 country US regdomain FCC3
 /sbin/ifconfig wlan1 channel 149:a
 /sbin/ifconfig wlan1 up
 /usr/sbin/hostapd -B /etc/hostapd.wlan1.conf

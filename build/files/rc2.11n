@@ -28,8 +28,7 @@ echo "*** Password/login databases .."
 echo "*** bringing up bridge .."
 /sbin/ifconfig bridge0 create 
 /sbin/ifconfig bridge0 addm arge0
-/sbin/ifconfig bridge0 inet 10.61.8.9/24
-# /sbin/ifconfig bridge0 inet 10.61.8.8/24
+/sbin/ifconfig bridge0 inet 10.61.8.8/24
 /sbin/ifconfig bridge0 up
 
 echo "*** bringing up arge0 .."
@@ -49,8 +48,7 @@ echo "*** bringing up wlan0/hostapd .. "
 /sbin/sysctl dev.ath.0.debug=0x40080
 
 # HT/40 - test interop with HT/20 and 11a
-# /sbin/ifconfig wlan0 channel 157:ht/40
-/sbin/ifconfig wlan0 channel 116:a
+/sbin/ifconfig wlan0 channel 112:ht/40
 
 # disable ampdutx - we just don't support it
 # disable amsdu - again, just to be safe
