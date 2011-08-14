@@ -12,7 +12,7 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-# This builds an RSPRO system image from the given kernel and MFS.
+# This builds a redboot system image from the given kernel and MFS.
 
 # The kernel file needs to be padded to a 64k boundary or although the
 # mkfwimage tool will accept it, the urescue program in the redboot
