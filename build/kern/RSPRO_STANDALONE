@@ -28,12 +28,16 @@ options		NFSCLIENT		#Network Filesystem Client
 options		PSEUDOFS		#Pseudo-filesystem framework
 options		_KPOSIX_PRIORITY_SCHEDULING #Posix P1003_1B real-time extensions
 
+options HWPMC_HOOKS
+device hwpmc
+
+
 # options		NFS_LEGACYRPC
 # Debugging for use in -current
-# options		INVARIANTS
-# options		INVARIANT_SUPPORT
-# options		WITNESS
-# options		WITNESS_SKIPSPIN
+options		INVARIANTS
+options		INVARIANT_SUPPORT
+options		WITNESS
+options		WITNESS_SKIPSPIN
 options         FFS                     #Berkeley Fast Filesystem
 options         SOFTUPDATES             #Enable FFS soft updates support
 options         UFS_ACL                 #Support for access control lists
@@ -65,6 +69,7 @@ device		ath_pci		# Atheros PCI/Cardbus bus
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
 options		ATH_ENABLE_11N
+options		ATH_ENABLE_DFS
 options		AH_DEBUG
 options		AH_DEBUG_ALQ
 options		ALQ
@@ -115,4 +120,3 @@ device		gre		# generic encapsulation - only for IPv4 in IPv4 though atm
 options		MSDOSFS
 options		GEOM_PART_BSD
 options		GEOM_PART_MBR
-

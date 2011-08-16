@@ -30,17 +30,17 @@ options		KDB
 options		SCHED_4BSD		#4BSD scheduler
 options		INET			#InterNETworking
 
-# options		NFSCLIENT		#Network Filesystem Client
+# options		NFS_CL		#Network Filesystem Client
 
 options		PSEUDOFS		#Pseudo-filesystem framework
 options		_KPOSIX_PRIORITY_SCHEDULING #Posix P1003_1B real-time extensions
 
 # options		NFS_LEGACYRPC
 # Debugging for use in -current
-# options		INVARIANTS
-# options		INVARIANT_SUPPORT
-# options		WITNESS
-# options		WITNESS_SKIPSPIN
+options		INVARIANTS
+options		INVARIANT_SUPPORT
+options		WITNESS
+options		WITNESS_SKIPSPIN
 
 options         FFS                     #Berkeley Fast Filesystem
 # options         SOFTUPDATES             #Enable FFS soft updates support
@@ -77,6 +77,7 @@ option		AH_SUPPORT_AR5416
 device		ath_rate_sample
 option          AH_RXCFG_SDMAMW_4BYTES
 option		AH_AR5416_INTERRUPT_MITIGATION
+options		ATH_ENABLE_DFS
 
 device		mii
 device		arge

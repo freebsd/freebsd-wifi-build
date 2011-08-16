@@ -1,0 +1,12 @@
+include		"ROUTERSTATION"
+ident		"ROUTERSTATION_MFS"
+
+# GEOM modules
+device		geom_redboot	# to get access to the SPI flash partitions
+device		geom_uzip	# compressed in-memory filesystem hackery!
+options		GEOM_UZIP
+
+options		ROOTDEVNAME=\"ufs:md0.uzip\"
+
+options		MD_ROOT
+options		MD_ROOT_SIZE="4096"
