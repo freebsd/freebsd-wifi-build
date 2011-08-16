@@ -17,7 +17,7 @@ hints		"RSPRO.hints"
 
 makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
 # makeoptions	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_tkip wlan_wep"
-makeoptions	MODULES_OVERRIDE="ath ath_pci"
+makeoptions	MODULES_OVERRIDE="if_gif if_gre if_bridge bridgestp wlan wlan_rssadapt wlan_acl wlan_amrr wlan_ccmp wlan_tkip wlan_wep wlan_xauth ath ath_pci"
 
 options		DDB
 options		KDB
@@ -35,9 +35,9 @@ options		INVARIANT_SUPPORT
 options		WITNESS
 options		WITNESS_SKIPSPIN
 options         FFS                     #Berkeley Fast Filesystem
-options         SOFTUPDATES             #Enable FFS soft updates support
-options         UFS_ACL                 #Support for access control lists
-options         UFS_DIRHASH             #Improve performance on big directories
+#options         SOFTUPDATES             #Enable FFS soft updates support
+#options         UFS_ACL                 #Support for access control lists
+#options         UFS_DIRHASH             #Improve performance on big directories
 
 # Boot path - redboot MFS
 options         ROOTDEVNAME=\"ufs:redboot/rootfs.uzip\"
