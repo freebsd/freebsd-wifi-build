@@ -20,6 +20,11 @@ shift
 
 cat ${X_KERNEL} | gzip -9 | dd if=/dev/stdin of=${X_KERNEL}.gz bs=64k conv=sync
 
-# Create a filesystem image
+# Create a 256k (empty) config file image
+dd if=/dev/zero of=/tmp/cfgfs bs=1k count=256
 
-mkfwimage -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_KERNEL}.gz -r ${X_FSIMAGE}.uzip -o /tftpboot/${KERNCONF}.initial.img
+# Filesystem image is created by "build_fsimage"
+
+mkfwimage -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_KERNEL}.gz \
+    -C 262144 -c /tmp/cfgfs -r ${X_FSIMAGE}.uzip \
+    -o /tftpboot/${KERNCONF}.initial.img
