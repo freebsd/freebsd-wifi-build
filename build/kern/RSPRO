@@ -17,23 +17,23 @@ hints		"RSPRO.hints"
 
 makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
 # makeoptions	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_tkip wlan_wep"
-makeoptions	MODULES_OVERRIDE=""
+makeoptions	MODULES_OVERRIDE="ath ath_pci"
 
 options		DDB
 options		KDB
 
 options		SCHED_4BSD		#4BSD scheduler
 options		INET			#InterNETworking
-options		NFSCLIENT		#Network Filesystem Client
+# options		NFSCL			#Network Filesystem Client
 options		PSEUDOFS		#Pseudo-filesystem framework
 options		_KPOSIX_PRIORITY_SCHEDULING #Posix P1003_1B real-time extensions
 
 # options		NFS_LEGACYRPC
 # Debugging for use in -current
-# options		INVARIANTS
-# options		INVARIANT_SUPPORT
-# options		WITNESS
-# options		WITNESS_SKIPSPIN
+options		INVARIANTS
+options		INVARIANT_SUPPORT
+options		WITNESS
+options		WITNESS_SKIPSPIN
 options         FFS                     #Berkeley Fast Filesystem
 options         SOFTUPDATES             #Enable FFS soft updates support
 options         UFS_ACL                 #Support for access control lists
@@ -49,6 +49,7 @@ device		ar71xx_pci
 options		IEEE80211_DEBUG
 options		IEEE80211_SUPPORT_MESH
 options		IEEE80211_SUPPORT_TDMA
+options		IEEE80211_ALQ
 options		IEEE80211_AMPDU_AGE
 device		wlan            # 802.11 support
 device		wlan_wep        # 802.11 WEP support
@@ -61,6 +62,7 @@ device		ath_pci		# Atheros PCI/Cardbus bus
 options 	ATH_DEBUG
 options		ATH_DIAGAPI
 options		ATH_ENABLE_11N
+options		ATH_ENABLE_DFS
 options		AH_DEBUG
 options		AH_DEBUG_ALQ
 options		ALQ
@@ -72,6 +74,7 @@ option		AH_AR5416_INTERRUPT_MITIGATION
 
 device		mii
 device		arge
+options		ARGE_DEBUG
 
 device		usb
 options		USB_EHCI_BIG_ENDIAN_DESC        # handle big-endian byte order
