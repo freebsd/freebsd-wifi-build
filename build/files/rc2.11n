@@ -48,7 +48,8 @@ echo "*** bringing up wlan0/hostapd .. "
 /sbin/sysctl dev.ath.0.debug=0x40080
 
 # HT/40 - test interop with HT/20 and 11a
-/sbin/ifconfig wlan0 channel 112:ht/40
+# Make it a non-DFS channel just so things don't go crazy
+/sbin/ifconfig wlan0 channel 44:ht/40
 
 # disable ampdutx - we just don't support it
 # disable amsdu - again, just to be safe
