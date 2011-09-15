@@ -10,4 +10,6 @@ mount_mfs -s 1m md /etc
 # copy the contents of /c/etc into /etc; including /etc/rc2
 cp -a /c/etc/ /etc
 
+ln -s /usr/share/misc/termcap /etc/
+
 exec /etc/rc2

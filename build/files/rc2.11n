@@ -46,6 +46,7 @@ echo "*** bringing up wlan0/hostapd .. "
 
 # newstate + beacon proc
 /sbin/sysctl dev.ath.0.debug=0x40080
+/sbin/sysctl dev.ath.1.debug=0x40080
 
 # HT/40 - test interop with HT/20 and 11a
 # Make it a non-DFS channel just so things don't go crazy
@@ -70,18 +71,22 @@ echo "*** bringing up wlan0/hostapd .. "
 
 /sbin/ifconfig bridge0 addm wlan0 -stp wlan0
 
-# Bring up wlan1 - channel 149:a for testing
+# Bring up wlan1 - channel 36:ht/40 for testing
+# enable ampdutx/amsdutx for now; this will break on -HEAD.
+# You were warned!
 /sbin/ifconfig wlan1 create wlandev ath1 wlanmode ap
 /sbin/ifconfig wlan1 country US regdomain FCC3
-/sbin/ifconfig wlan1 channel 149:a
+/sbin/ifconfig wlan1 channel 36:ht/40
 /sbin/ifconfig wlan1 up
 /usr/sbin/hostapd -B /etc/hostapd.wlan1.conf
 
-# disable interference mitigation (ANI) here; doing it too
-# early causes a panic
-/sbin/sysctl dev.ath.0.intmit=0
-
 /sbin/ifconfig bridge0 addm wlan1 -stp wlan1
+
+# disable interference mitigation (ANI) here; doing it too
+# early used to cause a panic. I've since fixed -HEAD to
+# not panic in this instance.
+/sbin/sysctl dev.ath.0.intmit=0
+/sbin/sysctl dev.ath.1.intmit=0
 
 echo "*** inetd"
 /usr/sbin/inetd 

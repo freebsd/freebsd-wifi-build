@@ -45,6 +45,8 @@ mkdir -p ${X_STAGING_FSROOT}/usr/libexec
 mkdir -p ${X_STAGING_FSROOT}/usr/lib/
 mkdir -p ${X_STAGING_FSROOT}/usr/bin
 mkdir -p ${X_STAGING_FSROOT}/usr/sbin
+mkdir -p ${X_STAGING_FSROOT}/usr/share/misc/
+mkdir -p ${X_STAGING_FSROOT}/usr/share/tabset/
 
 echo "*** Populating filesystem..."
 
@@ -88,6 +90,9 @@ install ${X_DESTDIR}/usr/bin/uptime ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/head ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tail ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/uname ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/clear ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
+
 # XXX should symlink gzip to gunzip
 install ${X_DESTDIR}/usr/bin/gzip ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/gunzip ${X_STAGING_FSROOT}/usr/bin/
@@ -95,6 +100,7 @@ install ${X_DESTDIR}/usr/libexec/getty ${X_STAGING_FSROOT}/usr/libexec/
 
 # vmstat is useful
 install ${X_DESTDIR}/usr/bin/vmstat ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/systat ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/lib/libdevstat.so.7 ${X_STAGING_FSROOT}/lib/
 
 # libraries are for grep, tar
@@ -146,6 +152,8 @@ install ${X_DESTDIR}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
 install ${X_DESTDIR}/usr/lib/pam_unix.so ${X_STAGING_FSROOT}/usr/lib
 install ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
 install ${X_DESTDIR}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
+install ${X_DESTDIR}/usr/share/misc/termcap ${X_STAGING_FSROOT}/usr/share/misc/
+install ${X_DESTDIR}/usr/share/tabset/vt100 ${X_STAGING_FSROOT}/usr/share/tabset/
 install ${X_BASEDIR}/files/pam.d/atrun ${X_STAGING_FSROOT}/c/etc/pam.d
 install ${X_BASEDIR}/files/pam.d/cron ${X_STAGING_FSROOT}/c/etc/pam.d
 install ${X_BASEDIR}/files/pam.d/ftp ${X_STAGING_FSROOT}/c/etc/pam.d
@@ -196,6 +204,7 @@ install ${X_DESTDIR}/libexec/ld-elf.so.1 ${X_STAGING_FSROOT}/libexec/
 install ${X_DESTDIR}/lib/libc.so.7 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libedit.so.7 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libncurses.so.8 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libncursesw.so.8 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libgcc_s.so.1 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libbsdxml.so.4 ${X_STAGING_FSROOT}/lib/
@@ -214,7 +223,6 @@ install ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libssl.so.6 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
-
 
 # RC script
 install ${X_BASEDIR}/files/rc ${X_STAGING_FSROOT}/etc/
@@ -238,6 +246,7 @@ install ${X_DESTDIR}/usr/lib/libstdc++.so.6 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/etc/regdomain.xml ${X_STAGING_FSROOT}/c/etc/
 install ${X_DESTDIR}/etc/services ${X_STAGING_FSROOT}/c/etc/
 install ${X_DESTDIR}/etc/protocols ${X_STAGING_FSROOT}/c/etc/
+
 # this is needed for inetd
 install ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/hostapd.conf ${X_STAGING_FSROOT}/c/etc/
