@@ -91,6 +91,7 @@ install ${X_DESTDIR}/usr/bin/head ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tail ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/uname ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/clear ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/reset ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
 
 # XXX should symlink gzip to gunzip
