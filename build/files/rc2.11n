@@ -88,6 +88,12 @@ echo "*** bringing up wlan0/hostapd .. "
 /sbin/sysctl dev.ath.0.intmit=0
 /sbin/sysctl dev.ath.1.intmit=0
 
+# Fix the periodic timer - this is needed for correct
+# 11n throughput.
+
+/sbin/sysctl kern.eventtimer.periodic=1
+
+
 echo "*** inetd"
 /usr/sbin/inetd 
 
