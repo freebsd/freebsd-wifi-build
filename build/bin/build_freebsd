@@ -39,8 +39,19 @@ echo "MAKEOBJDIRPREFIX: ${X_MAKEOBJDIRPREFIX}"
 mkdir -p ${X_MAKEOBJDIRPREFIX} || exit 1
 mkdir -p ${X_DESTDIR} || exit 1
 
+# Only set TARGET_CPUTYPE if it's actually set
+X_TARGET_CPUTYPE=""
+if [ "x${TARGET_CPUTYPE}" != "x" ]; then
+    X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
+fi
+
 while [ "x$1" != "x" ]; do
-	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX} make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} TARGET_CPUTYPE=${TARGET_CPUTYPE} KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR} LOCAL_DIRS="${LOCAL_DIRS}" $1 || exit 1
+	env CROSS_BUILD_TESTING=YES MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}	\
+	    make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}	\
+	    ${X_TARGET_CPUTYPE}	KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR}	\
+	    __MAKE_CONF=/dev/null SRCCONF=/dev/null				\
+	    LOCAL_DIRS="${LOCAL_DIRS}" $1					\
+	|| exit 1
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${KERNCONF}"
 		cp ${X_DESTDIR}/boot/kernel/kernel /tftpboot/kernel.${KERNCONF}
