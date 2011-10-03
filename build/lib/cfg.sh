@@ -6,8 +6,10 @@
 
 # Configuration variables which need to be set
 
-CFGVARS="CFGNAME BUILDNAME KERNCONF TARGET TARGET_ARCH TARGET_CPUTYPE LOCAL_DIRS"
+CFGVARS="CFGNAME BUILDNAME KERNCONF TARGET TARGET_ARCH LOCAL_DIRS"
 UBNT_VARS="UBNT_ARCH UBNT_VERSION"
+
+# TARGET_CPUTYPE doesn't have to be set for i386, amd64, etc.
 
 DOEXIT="NO"
 
@@ -45,7 +47,7 @@ X_MAKEFS_ENDIAN="be"
 X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"
 
 # X_FSSIZE - how big to make the makefs?
-X_FSSIZE="10240"
+X_FSSIZE="20971520"
 
 # Variables defined by this script
 
