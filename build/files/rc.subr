@@ -1,0 +1,94 @@
+#!/bin/sh
+
+# ltr str src dst
+#	Change every $src in $str to $dst.
+#	Useful when /usr is not yet mounted and we cannot use tr(1), sed(1) nor
+#	awk(1).
+ltr()
+{
+	local _str _src _dst _out _com
+	_str=$1
+	_src=$2
+	_dst=$3
+	_out=""
+
+	IFS=${_src}
+	for _com in ${_str}; do
+		if [ -z "${_out}" ]; then
+			_out="${_com}"
+		else
+			_out="${_out}${_dst}${_com}"
+		fi
+	done
+	echo "${_out}"
+}
+
+# Creates a list of providers for GELI encryption.
+geli_make_list()
+{
+	local devices devices2
+	local provider mountpoint type options rest
+
+	# Create list of GELI providers from fstab.
+	while read provider mountpoint type options rest ; do
+		case ":${options}" in
+		:*noauto*)
+			noauto=yes
+			;;
+		*)
+			noauto=no
+			;;
+		esac
+
+		case ":${provider}" in
+		:#*)
+			continue
+			;;
+		*.eli)
+			# Skip swap devices.
+			if [ "${type}" = "swap" -o "${options}" = "sw" -o "${noauto}" = "yes" ]; then
+				continue
+			fi
+			devices="${devices} ${provider}"
+			;;
+		esac
+	done < /etc/fstab
+
+	# Append providers from geli_devices.
+	devices="${devices} ${geli_devices}"
+
+	for provider in ${devices}; do
+		provider=${provider%.eli}
+		provider=${provider#/dev/}
+		devices2="${devices2} ${provider}"
+	done
+
+	echo ${devices2}
+}
+# get_if_var if var [default]
+#	Return the value of the pseudo-hash corresponding to $if where
+#	$var is a string containg the sub-string "IF" which will be
+#	replaced with $if after the characters defined in _punct are
+#	replaced with '_'. If the variable is unset, replace it with
+#	$default if given.
+get_if_var()
+{
+	local _if _punct _punct_c _var _default prefix suffix
+
+	if [ $# -ne 2 -a $# -ne 3 ]; then
+		err 3 'USAGE: get_if_var name var [default]'
+	fi
+
+	_if=$1
+	_punct=". - / +"
+	for _punct_c in $_punct; do
+		_if=`ltr ${_if} ${_punct_c} '_'`
+	done
+	_var=$2
+	_default=$3
+
+	prefix=${_var%%IF*}
+	suffix=${_var##*IF}
+	eval echo \${${prefix}${_if}${suffix}-${_default}}
+}
+

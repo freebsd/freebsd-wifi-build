@@ -26,6 +26,9 @@ mkdir -p ${X_STAGING_FSROOT}
 # Create needed directories
 mkdir -p ${X_STAGING_FSROOT}/c/etc/
 mkdir -p ${X_STAGING_FSROOT}/c/etc/cfg/
+mkdir -p ${X_STAGING_FSROOT}/c/etc/rc.d/
+mkdir -p ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+mkdir -p ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 mkdir -p ${X_STAGING_FSROOT}/c/etc/pam.d/
 mkdir -p ${X_STAGING_FSROOT}/etc
 mkdir -p ${X_STAGING_FSROOT}/lib/
@@ -97,6 +100,9 @@ install ${X_DESTDIR}/usr/bin/clear ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/reset ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/passwd ${X_STAGING_FSROOT}/usr/bin/
+
+# editors are useful, honest!
+install ${X_DESTDIR}/usr/bin/ee ${X_STAGING_FSROOT}/usr/bin/
 
 # XXX should symlink gzip to gunzip
 install ${X_DESTDIR}/usr/bin/gzip ${X_STAGING_FSROOT}/usr/bin/
@@ -248,6 +254,12 @@ install ${X_BASEDIR}/files/manifest ${X_STAGING_FSROOT}/c/etc/cfg/
 install ${X_BASEDIR}/files/rc.conf ${X_STAGING_FSROOT}/c/etc/cfg/
 install ${X_BASEDIR}/files/rc.conf.default ${X_STAGING_FSROOT}/c/etc/
 
+# rc stuff
+install ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
+install ${X_BASEDIR}/files/rc.d/base/net ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+install ${X_BASEDIR}/files/rc.d/net/ether ${X_STAGING_FSROOT}/c/etc/rc.d/net/
+
+# config save/load scripts
 install ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin
 install ${X_BASEDIR}/files/cfg_load ${X_STAGING_FSROOT}/bin
 

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# This configures devices in the "network_list" configuration
+# file.
+
+. /etc/rc.subr
+
+# default
+. /etc/rc.conf.default
+
+# local config
+. /etc/cfg/rc.conf
+
+cmd=$1
+shift
+
+for i in ${network_interfaces}; do
+	type=`get_if_var $i netif_IF_type`
+	/etc/rc.d/net/$type $cmd $i
+done
+
+exit 0
