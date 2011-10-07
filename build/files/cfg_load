@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Restore the configuration from the cfg partition.
+
+echo "*** Restoring from /dev/redboot/cfg.."
+cd /
+dd if=/dev/redboot/cfg bs=64k | gunzip | cpio -iudv || exit 1
+
+echo "*** Completed."

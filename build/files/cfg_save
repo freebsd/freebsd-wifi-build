@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# This script creates a tarball based on the contents
+# of /etc/cfg/manifest . This allows the administrator
+# to populate any file in the filesystem.
+
+# The administrator must ensure that /etc/cfg/manifest
+# contains the manifest file itself.
+
+echo "*** Storing configuration files from /etc/cfg/manifest.."
+cd /
+cat /etc/cfg/manifest | cpio -ov | gzip -9 | dd of=/dev/redboot/cfg bs=64k conv=sync || exit 1
+echo "*** Completed."

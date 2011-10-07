@@ -24,7 +24,9 @@ echo "*** Creating new filesystem..."
 mkdir -p ${X_STAGING_FSROOT}
 
 # Create needed directories
-mkdir -p ${X_STAGING_FSROOT}/c/etc
+mkdir -p ${X_STAGING_FSROOT}/c/etc/
+mkdir -p ${X_STAGING_FSROOT}/c/etc/cfg/
+mkdir -p ${X_STAGING_FSROOT}/c/etc/pam.d/
 mkdir -p ${X_STAGING_FSROOT}/etc
 mkdir -p ${X_STAGING_FSROOT}/lib/
 mkdir -p ${X_STAGING_FSROOT}/bin
@@ -94,6 +96,7 @@ install ${X_DESTDIR}/usr/bin/uname ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/clear ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/reset ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/passwd ${X_STAGING_FSROOT}/usr/bin/
 
 # XXX should symlink gzip to gunzip
 install ${X_DESTDIR}/usr/bin/gzip ${X_STAGING_FSROOT}/usr/bin/
@@ -105,8 +108,9 @@ install ${X_DESTDIR}/usr/bin/vmstat ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/systat ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/lib/libdevstat.so.7 ${X_STAGING_FSROOT}/lib/
 
-# libraries are for grep, tar
+# libraries are for grep, tar, cpio
 install ${X_DESTDIR}/usr/bin/tar ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/bin/cpio ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/grep ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/lib/libgnuregex.so.5 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libbz2.so.4 ${X_STAGING_FSROOT}/usr/lib/
@@ -156,22 +160,22 @@ install ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
 install ${X_DESTDIR}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
 install ${X_DESTDIR}/usr/share/misc/termcap ${X_STAGING_FSROOT}/usr/share/misc/
 install ${X_DESTDIR}/usr/share/tabset/vt100 ${X_STAGING_FSROOT}/usr/share/tabset/
-install ${X_BASEDIR}/files/pam.d/atrun ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/cron ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/ftp ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/ftpd ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/imap ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/kde ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/passwd ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/pop3 ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/rsh ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/sshd ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/su ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/xdm ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/login ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/telnetd ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/other ${X_STAGING_FSROOT}/c/etc/pam.d
-install ${X_BASEDIR}/files/pam.d/system ${X_STAGING_FSROOT}/c/etc/pam.d
+install ${X_BASEDIR}/files/pam.d/atrun ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/cron ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/ftp ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/ftpd ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/imap ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/kde ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/passwd ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/pop3 ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/rsh ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/sshd ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/su ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/xdm ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/login ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/telnetd ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/other ${X_STAGING_FSROOT}/c/etc/pam.d/
+install ${X_BASEDIR}/files/pam.d/system ${X_STAGING_FSROOT}/c/etc/pam.d/
 
 # remote access
 install -m 4711 ${X_DESTDIR}/usr/bin/su ${X_STAGING_FSROOT}/usr/bin/
@@ -240,6 +244,10 @@ install ${X_BASEDIR}/files/passwd ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/master.passwd ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/group ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/wpa_supplicant.conf ${X_STAGING_FSROOT}/c/etc/
+install ${X_BASEDIR}/files/manifest ${X_STAGING_FSROOT}/c/etc/cfg/
+
+install ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin
+install ${X_BASEDIR}/files/cfg_load ${X_STAGING_FSROOT}/bin
 
 # iperf - local binary
 install ${X_BASEDIR}/files/iperf ${X_STAGING_FSROOT}/usr/bin/
