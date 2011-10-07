@@ -14,8 +14,16 @@ mkdir -p /var/empty
 mkdir -p /var/cron
 mkdir -p /var/cron/tabs
 
-echo "*** setting up (default) hostname"
-/bin/hostname unknown
+echo "*** Loading configuration files .."
+cfg_load
+
+# At this point a base configuration file exists in /etc/cfg/rc.conf.
+
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+echo "*** setting up hostname"
+/bin/hostname ${system_hostname} 
 
 # Bring up loopback
 echo "*** bringing up loopback .."
@@ -24,9 +32,6 @@ echo "*** bringing up loopback .."
 echo "*** Default password/login databases .."
 /usr/sbin/pwd_mkdb /etc/master.passwd
 /usr/bin/cap_mkdb /etc/login.conf
-
-# At this point, the configuration should be read from the
-# flash partition
 
 echo "*** inetd"
 /usr/sbin/inetd
