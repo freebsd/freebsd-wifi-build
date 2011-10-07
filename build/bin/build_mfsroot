@@ -74,6 +74,7 @@ install ${X_DESTDIR}/usr/bin/false ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/sh ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/rm ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/ls ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/ln ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/df ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
