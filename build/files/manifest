@@ -1,3 +1,4 @@
 etc/cfg/manifest
 etc/master.passwd
 etc/group
+etc/cfg/rc.conf
