@@ -29,6 +29,10 @@ echo "*** setting up hostname"
 echo "*** bringing up loopback .."
 /sbin/ifconfig lo0 inet 127.0.0.1/8 up
 
+# Start network
+echo "*** Starting networking via /etc/rc.d/base/net"
+/etc/rc.d/base/net start
+
 echo "*** Default password/login databases .."
 /usr/sbin/pwd_mkdb /etc/master.passwd
 /usr/bin/cap_mkdb /etc/login.conf
