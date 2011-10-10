@@ -259,6 +259,7 @@ install ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/rc.d/base/net ${X_STAGING_FSROOT}/c/etc/rc.d/base/
 install ${X_BASEDIR}/files/rc.d/net/ether ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 install ${X_BASEDIR}/files/rc.d/net/bridge ${X_STAGING_FSROOT}/c/etc/rc.d/net/
+install ${X_BASEDIR}/files/rc.d/net/wifi ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 
 # config save/load scripts
 install ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin

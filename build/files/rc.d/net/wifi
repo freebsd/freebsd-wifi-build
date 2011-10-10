@@ -1,0 +1,129 @@
+#!/bin/sh
+
+# This configures ye normal ethernet devices
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# variables:
+#
+# netif_IF_type="wifi"
+# netif_IF_enable="yes|no"
+# netif_IF_addrtype="static|dhcp|none"
+# netif_IF_descr="description"
+# netif_IF_name="wlan0"
+#
+# for static addresses:
+# netif_IF_ipv4_address="x.x.x.x"
+# netif_IF_ipv4_netmask="y.y.y.y"
+#
+# Wireless specific configuration:
+#
+# This is a hack to avoid having to try and do wifi specific
+# configuration parameters just at the moment. That'll come
+# later!
+#
+# 'up' should be in one of these, as appropriate
+# 
+# netif_IF_wifi_mode="<hostap|sta|mesh|adhoc|..>"
+# netif_IF_wifi_parent="ath0"
+# netif_IF_wifi_createargs1="country X regdomain Y ssid Z channel Y up"
+# netif_IF_wifi_createargs2="txpower X"
+# netif_IF_wifi_createargs3="(anything else)"
+#
+# And in case hostapd/wpa_supplicant is needed..
+#
+# netif_IF_wifi_hostapd_enable="yes|no"
+# netif_IF_wifi_hostapd_conf="/etc/cfg/hostapd.wlan0.conf"
+# netif_IF_wifi_wpasupplicant_enable="yes|no"
+# netif_IF_wifi_wpa_supplicant_conf="/etc/cfg/wpa-supplicant.wlan0.conf"
+
+cmd=$1
+shift
+
+ifname=$1
+shift
+
+netif_enable=`get_if_var $ifname netif_IF_enable no`
+netif_addrtype=`get_if_var $ifname netif_IF_addrtype none`
+netif_descr=`get_if_var $ifname netif_IF_descr ''`
+netif_name=`get_if_var $ifname netif_IF_name`
+
+netif_ipv4_address=`get_if_var $ifname netif_IF_ipv4_address`
+netif_ipv4_netmask=`get_if_var $ifname netif_IF_ipv4_netmask`
+
+netif_wifi_mode="`get_if_var $ifname netif_IF_wifi_mode`"
+netif_wifi_parent="`get_if_var $ifname netif_IF_wifi_parent`"
+netif_wifi_createargs1="`get_if_var $ifname netif_IF_wifi_createargs1 ''`"
+netif_wifi_createargs2="`get_if_var $ifname netif_IF_wifi_createargs2 ''`"
+netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
+
+netif_wifi_hostapd_enable="`get_if_var $ifname netif_IF_wifi_hostapd_enable no`"
+netif_wifi_hostapd_conf="`get_if_var $ifname netif_IF_wifi_hostapd_conf`"
+
+netif_wifi_wpasupplicant_enable="`get_if_var $ifname netif_IF_wifi_wpasupplicant_enable no`"
+netif_wifi_wpasupplicant_conf="`get_if_var $ifname netif_IF_wifi_wpasupplicant_conf`"
+
+case $cmd in
+	'start')
+		echo "*** Interface: ${ifname}: start"
+		ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
+		    wlanmode ${netif_wifi_mode}
+		ifconfig ${netif_name} ${netif_wifi_createargs1}
+		if [ "x${netif_wifi_createargs2}" != "x" ]; then
+			ifconfig ${netif_name} ${netif_wifi_createargs2}
+		fi
+		if [ "x${netif_wifi_createargs3}" != "x" ]; then
+			ifconfig ${netif_name} ${netif_wifi_createargs3}
+		fi
+
+		if [ "x${netif_wifi_hostapd_enable}" = "xyes" ]; then
+			echo "*** Starting hostapd.."
+			hostapd -P /var/run/hostapd.${netif_name}.pid -B ${netif_wifi_hostapd_conf}
+			sleep 1
+		fi
+
+		if [ "x${netif_wifi_wpasupplicant_enable}" = "xyes" ]; then
+			echo "*** Starting wpa_supplicant.."
+			wpa_supplicant -s -P /var/run/wpa_supplicant.${netif_name}.pid -B \
+			    -i ${netif_name} -c ${netif_wifi_wpasupplicant_conf}
+			sleep 1
+		fi
+
+
+		# ipv4 address
+		if [ "x${netif_addrtype}" = "xstatic" ]; then
+			ifconfig ${netif_name} inet ${netif_ipv4_address} \
+			    netmask ${netif_ipv4_netmask}
+		elif [ "x${netif_addrtype}" = "xdhcp" ]; then
+			dhclient -b ${netif_name}
+		fi
+		echo "*** Interface: ${ifname}: done"
+		exit 0
+	;;
+	'stop')
+		echo "*** Interface: ${ifname}: stop"
+		if [ "x${netif_wifi_hostapd_enable}" = "xyes" ]; then
+			echo "*** Terminating hostapd.."
+			kill `cat /var/run/hostapd.${netif_name}.pid`
+			sleep 1
+		fi
+
+		if [ "x${netif_wifi_wpasupplicant_enable}" = "xyes" ]; then
+			echo "*** Terminating wpa supplicant.."
+			kill `cat /var/run/wpa_supplicant.${netif_name}.pid`
+			sleep 1
+		fi
+
+		ifconfig ${netif_name} down
+		ifconfig ${netif_name} destroy
+
+		echo "*** Interface: ${ifname}: done"
+		exit 0
+	;;
+	*)
+		echo "Usage: $0 {start|stop} {name}"
+esac
+
+exit 0
