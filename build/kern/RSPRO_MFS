@@ -1,6 +1,6 @@
 include		"UBNT_AR71XX_BASE"
 ident		"RSPRO_MFS"
-hints		"RSPRO_MFS.hints"
+hints		"RSPRO.hints"
 
 # GEOM modules
 device		geom_redboot	# to get access to the SPI flash partitions
