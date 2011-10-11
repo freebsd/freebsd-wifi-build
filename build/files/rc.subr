@@ -92,3 +92,22 @@ get_if_var()
 	eval echo \${${prefix}${_if}${suffix}-${_default}}
 }
 
+# check_if_vars if var1 var2 var3 ...
+#	Check whether the list of variables are defined.
+#	Each variable should contain the substring "IF" which will
+#	be replaced with $if as in get_if_var().
+#
+check_if_vars()
+{
+	$ifname="$1"
+	shift
+	while [ $# -ne 0 ]; do
+		val="`get_if_var $ifname $1 UNSET`"
+		if [ "x$val" -eq "xUNSET" ]; then
+			echo "*** ERROR: variable $1 is not defined for ifname $ifname"
+			return 0
+		fi
+		shift
+	done
+	return 1
+}
