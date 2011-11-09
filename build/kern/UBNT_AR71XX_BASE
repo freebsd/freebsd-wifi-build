@@ -11,6 +11,7 @@ options 	ISA_MIPS32
 makeoptions	TARGET_BIG_ENDIAN
 makeoptions	KERNLOADADDR=0x80050000
 options		HZ=1000
+options		HWPMC_HOOKS
 
 files		"../atheros/files.ar71xx"
 
@@ -122,3 +123,6 @@ device		gif		# ip[46] in ip[46] tunneling protocol
 device		gre		# generic encapsulation - only for IPv4 in IPv4 though atm
 
 options		ARGE_DEBUG	# Enable if_arge debugging for now
+
+# Enable hwpmc by default
+device		hwpmc

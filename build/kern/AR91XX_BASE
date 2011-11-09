@@ -16,6 +16,7 @@ cpu		CPU_MIPS4KC
 options 	ISA_MIPS32
 makeoptions	KERNLOADADDR=0x80050000
 options		HZ=1000
+options		HWPMC_HOOKS
 
 files		"../atheros/files.ar71xx"
 hints		"AR91XX_BASE.hints"
@@ -97,3 +98,5 @@ device		md
 device		bpf
 device		random
 device		if_bridge
+
+device		hwpmc
