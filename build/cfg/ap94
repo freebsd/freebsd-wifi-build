@@ -1,0 +1,6 @@
+BUILDNAME=mipseb
+TARGET=mips
+TARGET_ARCH=mipseb
+TARGET_CPUTYPE=mips32
+KERNCONF=AP94
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
