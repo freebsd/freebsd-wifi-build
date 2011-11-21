@@ -55,6 +55,7 @@ while [ "x$1" != "x" ]; do
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${KERNCONF}"
 		cp ${X_DESTDIR}/boot/kernel/kernel /tftpboot/kernel.${KERNCONF}
+		cp ${X_DESTDIR}/boot/kernel/kernel.symbols /tftpboot/kernel.${KERNCONF}.symbols
 	fi
 	shift
 done
