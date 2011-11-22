@@ -24,7 +24,7 @@ options		GEOM_PART_MBR
 #options		ROOTDEVNAME=\"ufs:da0a\"
 # Or an MDROOT for testing.
 options		MD_ROOT
-options		MD_ROOT_SIZE=5120
+options		MD_ROOT_SIZE=6144
 device		geom_uzip
 options		GEOM_UZIP
 options		ROOTDEVNAME=\"ufs:/dev/md0.uzip\"
