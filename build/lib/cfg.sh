@@ -62,10 +62,14 @@ X_DESTDIR="${CUR_DIR}/../root/${BUILDNAME}"
 # or automatically generated.
 
 # X_FSIMAGE
-X_FSIMAGE="/tmp/mfs.img"
+X_FSIMAGE="${CUR_DIR}/../mfsroot-${CFGNAME}.img"
 
 # X_STAGING_FSROOT
-X_STAGING_FSROOT="/tmp/fs"
+X_STAGING_FSROOT="${CUR_DIR}/../mfsroot/${CFGNAME}"
 
 # X_KERNEL
 X_KERNEL="/tftpboot/kernel.${KERNCONF}"
+
+# Configuration filesystem image
+X_CFGFS="${CUR_DIR}/../cfgfs-${CFGNAME}.img"
+

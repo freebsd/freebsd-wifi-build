@@ -17,6 +17,7 @@ shift
 X_BASEDIR=${SCRIPT_DIR}/../
 
 echo "*** Deleting old file system.."
+mkdir -p ${X_STAGING_FSROOT}
 chflags -R noschg ${X_STAGING_FSROOT}
 rm -rf ${X_STAGING_FSROOT}
 
