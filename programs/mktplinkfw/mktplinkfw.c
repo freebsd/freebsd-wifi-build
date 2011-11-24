@@ -112,7 +112,10 @@ static struct board_info *board;
 static struct file_info kernel_info;
 static uint32_t kernel_la = 0;
 static uint32_t kernel_ep = 0;
+static uint32_t bootcfg_ofs = 0;
+static uint32_t bootcfg_len = 0;
 static struct file_info rootfs_info;
+static struct file_info bootcfg_info = { NULL, 0 };
 static uint32_t rootfs_ofs = 0;
 static struct file_info boot_info;
 static int combined;
@@ -325,6 +328,9 @@ static void usage(int status)
 "Options:\n"
 "  -B <board>      create image for the board specified with <board>\n"
 "  -c              use combined kernel image\n"
+"  -d <file>       read board config from <file>\n"
+"  -g <offset>     set board config offset\n"
+"  -j <length>     set board config length\n"
 "  -E <ep>         overwrite kernel entry point with <ep> (hexval prefixed with 0x)\n"
 "  -L <la>         overwrite kernel load address with <la> (hexval prefixed with 0x)\n"
 "  -k <file>       read kernel image from the file <file>\n"
@@ -452,14 +458,31 @@ static int check_options(void)
 			ERR("no rootfs image specified");
 			return -1;
 		}
+		if (bootcfg_ofs != 0 && bootcfg_info.file_name == NULL) {
+			ERR("no bootcfg image specified");
+			return -1;
+		}
 
 		ret = get_file_stat(&rootfs_info);
 		if (ret)
 			return ret;
 
-		if (rootfs_info.file_size >
+		if (bootcfg_ofs) {
+			ret = get_file_stat(&bootcfg_info);
+			if (ret)
+				return ret;
+		}
+		if (bootcfg_info.file_size > bootcfg_len) {
+			ERR("bootfs image is too big");
+			return -1;
+		}
+
+		/*
+		 * XXX This should be cleaner!
+		 */
+		if ((rootfs_info.file_size + bootcfg_len) >
                     (board->fw_max_len - rootfs_ofs)) {
-			ERR("rootfs image is too big");
+			ERR("rootfs + bootfs image is too big");
 			return -1;
 		}
 	}
@@ -497,6 +520,8 @@ static void fill_header(char *buf, int len)
 	if (!combined) {
 		hdr->rootfs_ofs = HOST_TO_BE32(rootfs_ofs);
 		hdr->rootfs_len = HOST_TO_BE32(rootfs_info.file_size);
+		hdr->boot_ofs = HOST_TO_BE32(bootcfg_ofs);
+		hdr->boot_len = HOST_TO_BE32(bootcfg_len);
 	}
 
 	get_md5(buf, len, hdr->md5sum1);
@@ -565,6 +590,15 @@ static int build_fw(void)
 			goto out_free_buf;
 
 		writelen = rootfs_ofs + rootfs_info.file_size;
+
+		if (bootcfg_ofs) {
+			p = buf + bootcfg_ofs;
+			ret = read_to_buf(&bootcfg_info, p);
+			if (ret)
+				goto out_free_buf;
+
+			writelen = bootcfg_ofs + bootcfg_len;
+		}
 	}
 
 	if (!strip_padding)
@@ -805,7 +839,7 @@ int main(int argc, char *argv[])
 	while ( 1 ) {
 		int c;
 
-		c = getopt(argc, argv, "B:E:L:V:N:ci:k:r:R:o:xhs");
+		c = getopt(argc, argv, "B:d:E:g:h:j:L:V:N:ci:k:r:R:o:xhs");
 		if (c == -1)
 			break;
 
@@ -813,8 +847,17 @@ int main(int argc, char *argv[])
 		case 'B':
 			board_id = optarg;
 			break;
+		case 'd':
+			bootcfg_info.file_name = optarg;
+			break;
 		case 'E':
 			sscanf(optarg, "0x%x", &kernel_ep);
+			break;
+		case 'g':
+			sscanf(optarg, "0x%x", &bootcfg_ofs);
+			break;
+		case 'j':
+			sscanf(optarg, "0x%x", &bootcfg_len);
 			break;
 		case 'L':
 			sscanf(optarg, "0x%x", &kernel_la);
