@@ -46,6 +46,10 @@ if [ "x${TARGET_CPUTYPE}" != "x" ]; then
 fi
 
 while [ "x$1" != "x" ]; do
+	if [ "$1" = "installworld" ]; then
+		mkdir -p ${X_DESTDIR}/usr/local/bin/
+		mkdir -p ${X_DESTDIR}/usr/local/share/athprom/
+	fi
 	env CROSS_BUILD_TESTING=YES MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}	\
 	    make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}	\
 	    ${X_TARGET_CPUTYPE}	KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR}	\
