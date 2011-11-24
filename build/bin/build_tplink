@@ -17,16 +17,11 @@ shift
 # gzip the kernel image
 cat ${X_KERNEL} | gzip -9 | dd of=${X_KERNEL}.gz
 
-# Create a 64k (empty) config file image
-# XXX it's hardcoded, -j below gives the length
-dd if=/dev/zero of=${X_CFGFS} bs=1k count=64
-
 # Create the firmware
 mktplinkfw -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
     -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
     -k ${X_KERNEL}.gz -N ${TPLINK_IMG_NAME} \
     -V ${TPLINK_IMG_VERSION} -r ${X_FSIMAGE}.uzip \
-    -d ${X_CFGFS} -g ${TPLINK_BOOTCFG_LOADADDR} -j 0x00010000 \
     -o /tftpboot/${KERNCONF}.factory.bin \
 	|| exit 1
 
