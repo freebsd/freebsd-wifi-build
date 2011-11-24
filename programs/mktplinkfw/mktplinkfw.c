@@ -24,12 +24,21 @@
 
 #include "md5.h"
 
+#define	HOST_TO_BE32(x)		htonl(x)
+#define	BE32_TO_HOST(x)		ntohl(x)
+
+/*
+ * This is linux specific; it completely fails to get the endianness
+ * correct when building on FreeBSD.
+ */
+#if 0
 #if (__BYTE_ORDER == __BIG_ENDIAN)
 #  define HOST_TO_BE32(x)	(x)
 #  define BE32_TO_HOST(x)	(x)
 #else
 #  define HOST_TO_BE32(x)	bswap_32(x)
 #  define BE32_TO_HOST(x)	bswap_32(x)
+#endif
 #endif
 
 #define HEADER_VERSION_V1	0x01000000
