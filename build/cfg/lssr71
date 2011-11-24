@@ -5,5 +5,10 @@ TARGET_CPUTYPE=mips32
 KERNCONF=LSSR71
 LOCAL_DIRS="tools/tools/ath"
 
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/redboot/cfg"
+BIN_CFG_SIZE="65536"
+
 UBNT_ARCH="LS-SR71"
 UBNT_VERSION="LS-SR71.ar7100"

@@ -4,3 +4,9 @@ TARGET_ARCH=mipseb
 TARGET_CPUTYPE=mips32
 KERNCONF=AP94
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/map/cfg"
+BIN_CFG_SIZE="65536"
+

@@ -2,8 +2,10 @@
 
 # Restore the configuration from the cfg partition.
 
-echo "*** Restoring from /dev/redboot/cfg.."
+. /etc/board.cfg || exit 1
+
+echo "*** Restoring from ${CFG_PATH} .. "
 cd /
-dd if=/dev/redboot/cfg bs=64k | gunzip | cpio -iudv || exit 1
+dd if=${CFG_PATH} bs=${CFG_SIZE} | gunzip | cpio -iudv || exit 1
 
 echo "*** Completed."

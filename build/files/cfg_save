@@ -7,7 +7,9 @@
 # The administrator must ensure that /etc/cfg/manifest
 # contains the manifest file itself.
 
-echo "*** Storing configuration files from /etc/cfg/manifest.."
+. /etc/board.cfg || exit 1
+
+echo "*** Storing configuration files from /etc/cfg/manifest -> ${CFG_PATH}.."
 cd /
-cat /etc/cfg/manifest | cpio -ov | gzip -9 | dd of=/dev/redboot/cfg bs=64k conv=sync || exit 1
+cat /etc/cfg/manifest | cpio -ov | gzip -9 | dd of=${CFG_PATH} bs=${CFG_SIZE} conv=sync || exit 1
 echo "*** Completed."

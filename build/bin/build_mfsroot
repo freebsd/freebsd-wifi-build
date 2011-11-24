@@ -279,6 +279,11 @@ install ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/hostapd.conf ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/hostapd.wlan1.conf ${X_STAGING_FSROOT}/c/etc/
 
+# Local board setup
+echo "# Configuration for: ${KERNCONF}" > ${X_STAGING_FSROOT}/c/etc/board.cfg
+echo "CFG_PATH=\"${BIN_CFG_PARTITION}\"" >> ${X_STAGING_FSROOT}/c/etc/board.cfg
+echo "CFG_SIZE=\"${BIN_CFG_SIZE}\"" >> ${X_STAGING_FSROOT}/c/etc/board.cfg
+
 # kernel modules
 #install ${X_DESTDIR}/boot/kernel/bridgestp.ko ${X_STAGING_FSROOT}/boot/kernel/
 #install ${X_DESTDIR}/boot/kernel/if_ath.ko ${X_STAGING_FSROOT}/boot/kernel/
