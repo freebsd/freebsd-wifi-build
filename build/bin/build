@@ -42,6 +42,9 @@ while [ "x$1" != "x" ]; do
 		'ubnt')
 			${SCRIPT_DIR}/build_ubnt ${CFGNAME} || exit 1
 		;;
+		'tplink')
+			${SCRIPT_DIR}/build_tplink ${CFGNAME} || exit 1
+		;;
 		'fsimage')
 			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;
