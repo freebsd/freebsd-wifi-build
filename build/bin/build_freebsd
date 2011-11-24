@@ -50,16 +50,21 @@ while [ "x$1" != "x" ]; do
 		mkdir -p ${X_DESTDIR}/usr/local/bin/
 		mkdir -p ${X_DESTDIR}/usr/local/libdata/athprom/
 	fi
+	if [ "$1" = "installkernel" ]; then
+		mkdir -p ${X_DESTDIR}/boot/kernel.${KERNCONF}/
+	fi
 	env CROSS_BUILD_TESTING=YES MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}	\
 	    make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}	\
 	    ${X_TARGET_CPUTYPE}	KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR}	\
+	    KODIR=/boot/kernel.${KERNCONF}/					\
+	    KMODDIR=/boot/kernel.${KERNCONF}/					\
 	    __MAKE_CONF=/dev/null SRCCONF=/dev/null				\
 	    LOCAL_DIRS="${LOCAL_DIRS}" $1					\
 	|| exit 1
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${KERNCONF}"
-		cp ${X_DESTDIR}/boot/kernel/kernel /tftpboot/kernel.${KERNCONF}
-		cp ${X_DESTDIR}/boot/kernel/kernel.symbols /tftpboot/kernel.${KERNCONF}.symbols
+		cp ${X_KERNEL} /tftpboot/kernel.${KERNCONF}
+		cp ${X_KERNEL}.symbols /tftpboot/kernel.${KERNCONF}.symbols
 	fi
 	shift
 done

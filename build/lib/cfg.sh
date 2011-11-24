@@ -68,7 +68,8 @@ X_FSIMAGE="${CUR_DIR}/../mfsroot-${CFGNAME}.img"
 X_STAGING_FSROOT="${CUR_DIR}/../mfsroot/${CFGNAME}"
 
 # X_KERNEL
-X_KERNEL="/tftpboot/kernel.${KERNCONF}"
+X_TFTPBOOT_KERNEL="/tftpboot/kernel.${KERNCONF}"
+X_KERNEL="${X_DESTDIR}/boot/kernel.${KERNCONF}/kernel"
 
 # Configuration filesystem image
 X_CFGFS="${CUR_DIR}/../cfgfs-${CFGNAME}.img"
