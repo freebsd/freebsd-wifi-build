@@ -53,6 +53,10 @@ while [ "x$1" != "x" ]; do
 	if [ "$1" = "installkernel" ]; then
 		mkdir -p ${X_DESTDIR}/boot/kernel.${KERNCONF}/
 	fi
+	if [ "$1" = "buildenv" ]; then
+		echo "*** Overriding BUILD_FLAGS to '' so 'buildenv' works!"
+		BUILD_FLAGS=""
+	fi
 	env CROSS_BUILD_TESTING=YES MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}	\
 	    make ${BUILD_FLAGS} TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}	\
 	    ${X_TARGET_CPUTYPE}	KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR}	\
