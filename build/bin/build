@@ -33,6 +33,9 @@ while [ "x$1" != "x" ]; do
 		'installkernel')
 			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
 		;;
+		'cleanroot')
+			${SCRIPT_DIR}/build_cleanroot ${CFGNAME} $BUILD_TARGET || exit 1
+		;;
 		'distribution')
 			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
 		;;
