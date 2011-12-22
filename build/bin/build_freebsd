@@ -48,6 +48,7 @@ fi
 while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" ]; then
 		mkdir -p ${X_DESTDIR}/usr/local/bin/
+		mkdir -p ${X_DESTDIR}/bsdbox/
 		mkdir -p ${X_DESTDIR}/usr/local/libdata/athprom/
 	fi
 	if [ "$1" = "installkernel" ]; then
@@ -63,7 +64,8 @@ while [ "x$1" != "x" ]; do
 	    KODIR=/boot/kernel.${KERNCONF}/					\
 	    KMODDIR=/boot/kernel.${KERNCONF}/					\
 	    __MAKE_CONF=/dev/null SRCCONF=/dev/null				\
-	    LOCAL_DIRS="${LOCAL_DIRS}" $1					\
+	    LOCAL_DIRS="${LOCAL_DIRS}"						\
+	    LOCAL_TOOL_DIRS="${LOCAL_TOOL_DIRS}" $1				\
 	|| exit 1
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${KERNCONF}"
