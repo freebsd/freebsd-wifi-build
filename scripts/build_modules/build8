@@ -1,0 +1,15 @@
+#!/bin/sh
+
+X_KERNDIR="i386/compile/EEEPC"
+X_SRCDIR="/home/adrian/work/freebsd/stable/9/src/"
+
+# This allows for -HEAD includes for net80211 ..
+env CFLAGS="-I/home/adrian/work/freebsd/stable/9/src/sys" \
+make \
+	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth" \
+	KMODDIR="../../../../modules/" \
+	KMODOWN='adrian' \
+	KMODGRP='adrian' \
+	SYSDIR="${X_SRCDIR}/sys/" \
+	KERNBUILDDIR="${X_SRCDIR}/sys/${X_KERNDIR}" \
+	$@
