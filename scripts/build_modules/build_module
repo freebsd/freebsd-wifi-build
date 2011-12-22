@@ -1,7 +1,7 @@
 #!/bin/sh
 
-X_KERNDIR="i386/compile/EEEPC"
-X_SRCDIR="/home/adrian/work/freebsd/stable/9/src/"
+X_KERNDIR=${X_KERNDIR:="i386/compile/EEEPC"}
+X_SRCDIR=${X_SRCDIR:="/home/adrian/work/freebsd/stable/9/src/"}
 
 # This allows for -HEAD includes for net80211 ..
 env CFLAGS="-I../../../sys/" \
