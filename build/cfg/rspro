@@ -4,6 +4,7 @@ TARGET_ARCH=mipseb
 TARGET_CPUTYPE=mips32
 KERNCONF=RSPRO
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+LOCAL_TOOL_DIRS=" "
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.
