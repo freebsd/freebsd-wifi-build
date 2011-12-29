@@ -7,7 +7,7 @@
 
 # It should include AR71XX and add the local stuff, but then I'd miss out
 # on all the default stuff I need (eg redboot/geom modules)
-include		"UBNT_AR71XX_BASE"
+include		"AR71XX_BASE"
 
 ident		LSSR71
 
