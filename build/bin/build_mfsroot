@@ -72,6 +72,9 @@ install ${X_DESTDIR}/sbin/reboot ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/sysctl ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/dmesg ${X_STAGING_FSROOT}/sbin/
 
+# ethernet switch
+install ${X_DESTDIR}/sbin/etherswitchcfg ${X_STAGING_FSROOT}/sbin/
+
 install ${X_DESTDIR}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
 

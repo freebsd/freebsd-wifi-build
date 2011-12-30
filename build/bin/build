@@ -48,6 +48,9 @@ while [ "x$1" != "x" ]; do
 		'tplink')
 			${SCRIPT_DIR}/build_tplink ${CFGNAME} || exit 1
 		;;
+		'uboot')
+			${SCRIPT_DIR}/build_uboot ${CFGNAME} || exit 1
+		;;
 		'fsimage')
 			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;

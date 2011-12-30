@@ -1,0 +1,29 @@
+#!/bin/sh
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+# suck in the per-device options
+CFGNAME=$1
+shift
+. ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
+
+# This builds a tplink system image from the given kernel and MFS.
+
+# lzma the kernel image
+# Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
+# from base, as EOS (end of stream) markers aren't allowed for uboot.
+
+/usr/local/bin/lzma e ${X_KERNEL} ${X_KERNEL}.lzma || exit 1
+
+# Create the firmware
+mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
+  -a ${UBOOT_KERN_LOADADDR} -e ${UBOOT_KERN_STARTADDR} \
+  -n "FreeBSD" -d ${X_KERNEL}.lzma ${X_KERNEL}.lzma.uImage \
+  || exit 1
+
+exit 0
