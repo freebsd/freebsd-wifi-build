@@ -1,0 +1,18 @@
+BUILDNAME=mipseb
+TARGET=mips
+TARGET_ARCH=mipseb
+TARGET_CPUTYPE=mips32
+KERNCONF=PB47
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+LOCAL_TOOL_DIRS=" "
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/map/cfg"
+BIN_CFG_SIZE="65536"
+
+# Uboot stuff
+UBOOT_ARCH="mips"
+UBOOT_KERN_LOADADDR="0x80050000"
+UBOOT_KERN_STARTADDR="0x80050100"
+
