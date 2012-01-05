@@ -15,6 +15,12 @@ shift
 echo "*** Running makefs to build compressed image .. "
 makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FLAGS} -s ${X_FSSIZE} -f 1000 ${X_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
 
-echo "*** Running mkuzip to create a compressed filesystem .. "
-mkuzip -s 16384 ${X_FSIMAGE} || exit 1
+X_FSIMAGE_CMD=${X_FSIMAGE_CMD:="mkuzip"}
+X_FSIMAGE_ARGS=${X_FSIMAGE_ARGS:="-s 16384"}
+X_FSIMAGE_SUFFIX=${X_FSIMAGE_SUFFIX:=".uzip"}
 
+echo "*** Running ${X_FSIMAGE_CMD} to create a compressed filesystem .. "
+${X_FSIMAGE_CMD} ${X_FSIMAGE_ARGS} \
+    -o ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ${X_FSIMAGE} \
+    || exit 1
+cp ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} /tftpboot
