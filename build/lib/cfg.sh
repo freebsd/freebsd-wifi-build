@@ -47,7 +47,7 @@ X_MAKEFS_ENDIAN="be"
 X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"
 
 # X_FSSIZE - how big to make the makefs?
-X_FSSIZE="20971520"
+X_FSSIZE=${X_FSSIZE:="20971520"}
 
 # Variables defined by this script
 
