@@ -36,9 +36,11 @@ get_mfs_size ${X_KERNEL}.netboot
 
 # add it to the kernel
 echo "*** copying the mfsroot into the kernel image"
-dd if=${X_FSIMAGE}.uzip ibs=8192 iseek=0 of=${X_KERNEL}.netboot obs=${mfs_ofs} oseek=1 conv=notrunc
+dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ibs=8192 iseek=0 of=${X_KERNEL}.netboot obs=${mfs_ofs} oseek=1 conv=notrunc
 
 echo "*** generate md5 for ${X_KERNEL}.netboot"
 md5 -q ${X_KERNEL}.netboot > ${X_KERNEL}.netboot.md5
+
+cp ${X_KERNEL}.netboot /tftpboot/kernel.${KERNCONF}.netboot
 
 echo "*** Complete."
