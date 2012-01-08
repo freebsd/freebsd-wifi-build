@@ -296,12 +296,23 @@ echo "CFG_SIZE=\"${BIN_CFG_SIZE}\"" >> ${X_STAGING_FSROOT}/c/etc/board.cfg
 # kernel modules - if required
 if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
 	echo "*** Including modules.."
-	#install ${X_DESTDIR}/boot/kernel/bridgestp.ko ${X_STAGING_FSROOT}/boot/kernel/
+
+	# The AR9130 build (which uses if_ath_ahb) doesn't yet build right
+	# from modules (without hacking sys/modules/ath/Makefile)
+	# so there's no point in keeping it.
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_ath.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_ath_pci.ko ${X_STAGING_FSROOT}/boot/kernel/
-	#install ${X_DESTDIR}/boot/kernel/if_bridge.ko ${X_STAGING_FSROOT}/boot/kernel/
-	#install ${X_DESTDIR}/boot/kernel/if_gif.ko ${X_STAGING_FSROOT}/boot/kernel/
-	#install ${X_DESTDIR}/boot/kernel/if_gre.ko ${X_STAGING_FSROOT}/boot/kernel/
+
+	# networking related stuff
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/bridgestp.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_bridge.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_gif.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_gre.ko ${X_STAGING_FSROOT}/boot/kernel/
+
+	# misc stuff
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/random.ko ${X_STAGING_FSROOT}/boot/kernel/
+
+	# wlan modules
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_acl.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_amrr.ko ${X_STAGING_FSROOT}/boot/kernel/
@@ -310,5 +321,10 @@ if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_tkip.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_wep.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_xauth.ko ${X_STAGING_FSROOT}/boot/kernel/
+
+	# Cut down set of usb modules
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/usb.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ehci.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/umass.ko ${X_STAGING_FSROOT}/boot/kernel/
 fi
 
