@@ -12,7 +12,7 @@ BIN_CFG_PARTITION="/dev/map/cfg"
 BIN_CFG_SIZE="65536"
 
 # Modules need to be included
-MFSROOT_INC_MODULES="YES"
+# MFSROOT_INC_MODULES="YES"
 
 # Uboot stuff
 UBOOT_ARCH="mips"
@@ -21,5 +21,5 @@ UBOOT_KERN_STARTADDR="0x80050100"
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkulzma"
-X_FSIMAGE_ARGS="-s 65536"
+X_FSIMAGE_ARGS="-s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
