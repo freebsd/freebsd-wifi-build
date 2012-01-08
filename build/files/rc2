@@ -23,7 +23,12 @@ cfg_load
 . /etc/cfg/rc.conf
 
 echo "*** setting up hostname"
-/bin/hostname ${system_hostname} 
+/bin/hostname ${system_hostname}
+
+echo "*** Load kernel modules"
+for i in ${kernel_modules}; do
+	/sbin/kldload ${i}
+done
 
 # Bring up loopback
 echo "*** bringing up loopback .."
@@ -41,4 +46,5 @@ echo "*** inetd"
 /usr/sbin/inetd
 
 echo "*** Done!"
+
 exit 0
