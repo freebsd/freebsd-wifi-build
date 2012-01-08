@@ -54,6 +54,9 @@ while [ "x$1" != "x" ]; do
 		'fsimage')
 			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;
+		'tinymfsroot')
+			${SCRIPT_DIR}/build_tinymfsroot ${CFGNAME} || exit 1
+		;;
 		'mfsroot')
 			${SCRIPT_DIR}/build_mfsroot ${CFGNAME} || exit 1
 		;;
