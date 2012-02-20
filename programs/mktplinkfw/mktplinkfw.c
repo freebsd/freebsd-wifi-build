@@ -21,8 +21,9 @@
 #include <stdarg.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <arpa/inet.h>
 
-#include "md5.h"
+#include <openssl/md5.h>
 
 #define	HOST_TO_BE32(x)		htonl(x)
 #define	BE32_TO_HOST(x)		ntohl(x)
