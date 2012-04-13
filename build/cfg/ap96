@@ -2,7 +2,7 @@ BUILDNAME=mipseb
 TARGET=mips
 TARGET_ARCH=mipseb
 TARGET_CPUTYPE=mips32
-KERNCONF=AP94
+KERNCONF=AP96
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
 LOCAL_TOOL_DIRS=' '
 
@@ -23,3 +23,4 @@ UBOOT_KERN_STARTADDR="0x80050100"
 # X_FSIMAGE_CMD="mkulzma"
 # X_FSIMAGE_ARGS="-s 65536 -v"
 # X_FSIMAGE_SUFFIX=".ulzma"
+
