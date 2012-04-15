@@ -74,3 +74,8 @@ X_KERNEL="${X_DESTDIR}/boot/kernel.${KERNCONF}/kernel"
 # Configuration filesystem image
 X_CFGFS="${CUR_DIR}/../cfgfs-${CFGNAME}.img"
 
+# Defaults!
+X_FSIMAGE_CMD=${X_FSIMAGE_CMD:="mkuzip"}
+X_FSIMAGE_ARGS=${X_FSIMAGE_ARGS:="-s 16384"}
+X_FSIMAGE_SUFFIX=${X_FSIMAGE_SUFFIX:=".uzip"}
+
