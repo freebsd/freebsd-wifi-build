@@ -75,8 +75,9 @@ install ${X_DESTDIR}/sbin/kldload ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/kldunload ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/kldstat ${X_STAGING_FSROOT}/sbin/
 
-# ethernet switch
+# ethernet switch - stb, then ray
 install ${X_DESTDIR}/sbin/etherswitchcfg ${X_STAGING_FSROOT}/sbin/
+install ${X_DESTDIR}/sbin/switchctl ${X_STAGING_FSROOT}/sbin/
 
 install ${X_DESTDIR}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
@@ -109,6 +110,9 @@ install ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/passwd ${X_STAGING_FSROOT}/usr/bin/
 
 install ${X_DESTDIR}/usr/sbin/gpioctl ${X_STAGING_FSROOT}/usr/sbin/
+
+install ${X_DESTDIR}/usr/sbin/pciconf ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/share/misc/pci_vendors ${X_STAGING_FSROOT}/usr/share/misc/
 
 # editors are useful, honest!
 install ${X_DESTDIR}/usr/bin/ee ${X_STAGING_FSROOT}/usr/bin/
@@ -197,11 +201,13 @@ install -m 4711 ${X_DESTDIR}/usr/bin/su ${X_STAGING_FSROOT}/usr/bin/
 
 install ${X_DESTDIR}/usr/bin/telnet ${X_STAGING_FSROOT}/usr/bin/
 # kerberos libraries needed for telnet/telnetd
-install ${X_DESTDIR}/usr/lib/libkrb5.so.10 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTDIR}/usr/lib/libhx509.so.10 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTDIR}/usr/lib/libasn1.so.10 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libkrb5.so.11 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libwind.so.11 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libheimbase.so.11 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libhx509.so.11 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libasn1.so.11 ${X_STAGING_FSROOT}/usr/lib
 install ${X_DESTDIR}/usr/lib/libcom_err.so.5 ${X_STAGING_FSROOT}/usr/lib
-install ${X_DESTDIR}/usr/lib/libroken.so.10 ${X_STAGING_FSROOT}/usr/lib
+install ${X_DESTDIR}/usr/lib/libroken.so.11 ${X_STAGING_FSROOT}/usr/lib
 
 install ${X_DESTDIR}/usr/sbin/inetd ${X_STAGING_FSROOT}/usr/sbin/
 install ${X_DESTDIR}/usr/lib/libwrap.so.6 ${X_STAGING_FSROOT}/usr/lib/
@@ -262,6 +268,12 @@ install ${X_BASEDIR}/files/wpa_supplicant.conf ${X_STAGING_FSROOT}/c/etc/
 install ${X_BASEDIR}/files/manifest ${X_STAGING_FSROOT}/c/etc/cfg/
 install ${X_BASEDIR}/files/rc.conf ${X_STAGING_FSROOT}/c/etc/cfg/
 install ${X_BASEDIR}/files/rc.conf.default ${X_STAGING_FSROOT}/c/etc/
+
+# pmc
+install ${X_DESTDIR}/usr/sbin/pmcstat ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/pmccontrol ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/lib/libpmc.so.5 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libelf.so.1 ${X_STAGING_FSROOT}/usr/lib/
 
 # rc stuff
 install ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
