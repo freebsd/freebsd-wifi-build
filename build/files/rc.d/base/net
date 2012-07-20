@@ -11,6 +11,10 @@
 # local config
 . /etc/cfg/rc.conf
 
+### hax
+sysctl dev.ath.0.txq_mcastq_maxdepth=32
+sysctl dev.ath.1.txq_mcastq_maxdepth=32
+
 cmd=$1
 shift
 

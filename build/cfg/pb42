@@ -2,7 +2,7 @@ BUILDNAME=mipseb
 TARGET=mips
 TARGET_ARCH=mipseb
 TARGET_CPUTYPE=mips32
-KERNCONF=LSSR71
+KERNCONF=PB42
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
 LOCAL_TOOL_DIRS=" "
 
@@ -11,13 +11,5 @@ LOCAL_TOOL_DIRS=" "
 BIN_CFG_PARTITION="/dev/redboot/cfg"
 BIN_CFG_SIZE="65536"
 
-UBNT_ARCH="LS-SR71"
-UBNT_VERSION="LS-SR71.ar7100"
-
-# Make a ulzma image
-X_FSIMAGE_CMD="mkulzma"
-# XXX this is so high right now in order to get this
-# squeezed onto 8MB of flash, given a 5.9MB compressed
-# filesystem..
-X_FSIMAGE_ARGS="-s 131072 -v"
-X_FSIMAGE_SUFFIX=".ulzma"
+UBNT_ARCH="PB42"
+UBNT_VERSION="PB4X.ar7100.FreeBSD"

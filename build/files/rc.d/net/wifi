@@ -91,7 +91,6 @@ case $cmd in
 			sleep 1
 		fi
 
-
 		# ipv4 address
 		if [ "x${netif_addrtype}" = "xstatic" ]; then
 			ifconfig ${netif_name} inet ${netif_ipv4_address} \
