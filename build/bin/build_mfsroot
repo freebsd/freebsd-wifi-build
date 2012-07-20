@@ -80,7 +80,7 @@ install ${X_DESTDIR}/sbin/etherswitchcfg ${X_STAGING_FSROOT}/sbin/
 install ${X_DESTDIR}/sbin/switchctl ${X_STAGING_FSROOT}/sbin/
 
 install ${X_DESTDIR}/sbin/mount_msdosfs ${X_STAGING_FSROOT}/sbin/
-install ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/usr/lib/libkiconv.so ${X_STAGING_FSROOT}/usr/lib/
 
 install ${X_DESTDIR}/usr/bin/true ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/usr/bin/false ${X_STAGING_FSROOT}/bin/
@@ -97,6 +97,7 @@ install ${X_DESTDIR}/bin/ps ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/sleep ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/hostname ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/bin/mkdir ${X_STAGING_FSROOT}/bin/
+install ${X_DESTDIR}/bin/chmod ${X_STAGING_FSROOT}/bin/
 install ${X_DESTDIR}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
@@ -108,11 +109,13 @@ install ${X_DESTDIR}/usr/bin/clear ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/reset ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/bin/passwd ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/sbin/chown ${X_STAGING_FSROOT}/usr/sbin/
 
-install ${X_DESTDIR}/usr/sbin/gpioctl ${X_STAGING_FSROOT}/usr/sbin/
-
+# PCI tools
 install ${X_DESTDIR}/usr/sbin/pciconf ${X_STAGING_FSROOT}/usr/sbin/
 install ${X_DESTDIR}/usr/share/misc/pci_vendors ${X_STAGING_FSROOT}/usr/share/misc/
+
+install ${X_DESTDIR}/usr/sbin/gpioctl ${X_STAGING_FSROOT}/usr/sbin/
 
 # editors are useful, honest!
 install ${X_DESTDIR}/usr/bin/ee ${X_STAGING_FSROOT}/usr/bin/
@@ -135,7 +138,7 @@ install ${X_DESTDIR}/usr/lib/libgnuregex.so.5 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libbz2.so.4 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/lib/libz.so.6 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/usr/lib/libarchive.so.6 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTDIR}/lib/libmd.so.5 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libmd.so.6 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/usr/lib/liblzma.so.5 ${X_STAGING_FSROOT}/usr/lib/
 
 # ath tools
@@ -150,6 +153,8 @@ install ${X_DESTDIR}/usr/local/bin/athkey ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athpoke ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athrd ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athstats ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athaggrstats ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athratestats ${X_STAGING_FSROOT}/usr/bin/
 
 # wlan tools
 install ${X_DESTDIR}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
@@ -240,7 +245,7 @@ install ${X_DESTDIR}/lib/libipx.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libkvm.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libpcap.so.8 ${X_STAGING_FSROOT}/lib/
-install ${X_DESTDIR}/lib/libcrypto.so.6 ${X_STAGING_FSROOT}/lib/
+install ${X_DESTDIR}/lib/libcrypto.so.7 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libm.so.5 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
 install ${X_DESTDIR}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
@@ -248,7 +253,7 @@ install ${X_DESTDIR}/lib/libjail.so.1 ${X_STAGING_FSROOT}/lib/
 
 install ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
-install ${X_DESTDIR}/usr/lib/libssl.so.6 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_DESTDIR}/usr/lib/libssl.so.7 ${X_STAGING_FSROOT}/usr/lib/
 install ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
 
 # RC script
@@ -287,8 +292,8 @@ install ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin
 install ${X_BASEDIR}/files/cfg_load ${X_STAGING_FSROOT}/bin
 
 # iperf - local binary
-# install ${X_BASEDIR}/files/iperf ${X_STAGING_FSROOT}/usr/bin/
-# install ${X_DESTDIR}/usr/lib/libstdc++.so.6 ${X_STAGING_FSROOT}/usr/lib/
+install ${X_BASEDIR}/files/iperf ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/lib/libstdc++.so.6 ${X_STAGING_FSROOT}/usr/lib/
 
 # stuff that goes into /c/etc
 install ${X_DESTDIR}/etc/regdomain.xml ${X_STAGING_FSROOT}/c/etc/
