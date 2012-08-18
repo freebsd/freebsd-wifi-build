@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="`dirname $0`"
 
-MODULES_LIST="ath ath_pci wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth"
+MODULES_LIST="ath ath_pci wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth bwn wi iwn mwl bwi"
 
 for i in ${MODULES_LIST}; do
 	echo "entering ${i}"
