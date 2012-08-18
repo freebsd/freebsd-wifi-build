@@ -82,6 +82,12 @@ fw_layout_t fw_layout_data[] = {
 		.kern_entry	=	0x80002000,
 		.firmware_max_length=	0x006A0000,
 	},
+	{
+		.name		=	"PB42",
+		.kern_start	=	0xbf030000,
+		.kern_entry	=	0x80060000,
+		.firmware_max_length=	0x00B00000,
+	},
 	{	.name		=	"",
 	},
 };
@@ -260,12 +266,26 @@ static int create_image_layout(const char* kernelfile, const char* rootfsfile,
 	kernel->partition_entryaddr = p->kern_entry;
 	strncpy(kernel->filename, kernelfile, sizeof(kernel->filename));
 	im->part_count++;
-	printf("kernel: %d 0x%08x\n", kernel->partition_length, kernel->partition_baseaddr);
 
+	printf("kernel: %d bytes (base 0x%08x)\n", kernel->partition_length,
+	    kernel->partition_baseaddr);
+	printf("rootfs: %d bytes\n", filelength(rootfsfile));
+	if (cfgfs)
+		printf("cfgfs: %d bytes\n", im->cfg.size);
+
+	printf("total: (%d bytes)\n",
+	    kernel->partition_length +
+	    filelength(rootfsfile) +
+	    (cfgfs != NULL ? im->cfg.size : 0));
+
+	/*
+	 * This is dirty - cfgfs isn't calculated here, it's subtracted from
+	 * rootfs. I'll fix that later. :)
+	 */
+	strcpy(rootfs->partition_name, "rootfs");
 	if (filelength(rootfsfile) + kernel->partition_length > p->firmware_max_length)
 		return (-2);
 
-	strcpy(rootfs->partition_name, "rootfs");
 	rootfs->partition_index = 2;
 	rootfs->partition_baseaddr = kernel->partition_baseaddr + kernel->partition_length;
 	rootfs->partition_length = p->firmware_max_length - kernel->partition_length;
@@ -280,9 +300,7 @@ static int create_image_layout(const char* kernelfile, const char* rootfsfile,
 	 * rootfs entry.
 	 */
 	if (im->cfg.enable) {
-
 		rootfs->partition_length -= im->cfg.size;
-
 		strcpy(cfgfs->partition_name, "cfg");
 		cfgfs->partition_index = 3;
 		cfgfs->partition_baseaddr = kernel->partition_baseaddr +
