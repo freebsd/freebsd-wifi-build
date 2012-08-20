@@ -41,7 +41,8 @@ mkdir -p ${X_DESTDIR} || exit 1
 
 # Only set TARGET_CPUTYPE if it's actually set
 X_TARGET_CPUTYPE=""
-if [ "x${TARGET_CPUTYPE}" != "x" ]; then
+if [ "x${KERN_NO_TARGET_CPUTYPE}" != "x" && \
+     "x${TARGET_CPUTYPE}" != "x" ]; then
     X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
 fi
 
