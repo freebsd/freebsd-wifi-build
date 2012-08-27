@@ -41,9 +41,16 @@ mkdir -p ${X_DESTDIR} || exit 1
 
 # Only set TARGET_CPUTYPE if it's actually set
 X_TARGET_CPUTYPE=""
-if [ "x${KERN_NO_TARGET_CPUTYPE}" != "x" && \
-     "x${TARGET_CPUTYPE}" != "x" ]; then
-    X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
+if [ "x${KERN_NO_TARGET_CPUTYPE}" != "x" ] && \
+    [ "x${TARGET_CPUTYPE}" != "x" ]; then
+	X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
+fi
+
+# XXX double-check this works, especially with the escaping and parameter list
+# stuff.
+X_LOCAL_TOOL_DIRS=""
+if [ "x${LOCAL_TOOL_DIRS}" != "x" ]; then
+	X_LOCAL_TOOL_DIRS="LOCAL_TOOL_DIRS=\"${LOCAL_TOOL_DIRS}\""
 fi
 
 # Create a make.conf
@@ -72,6 +79,7 @@ while [ "x$1" != "x" ]; do
 	    __MAKE_CONF=${X_DESTDIR}/../make.conf.${BUILDNAME}	\
 	    SRCCONF=/dev/null					\
 	    LOCAL_DIRS="${LOCAL_DIRS}"				\
+	    ${X_LOCAL_TOOL_DIRS}				\
 	    $1							\
 	|| exit 1
 	if [ "$1" = "installkernel" ]; then
