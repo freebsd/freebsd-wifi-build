@@ -342,6 +342,9 @@ if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
 	# Cut down set of usb modules
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/usb.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ehci.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ohci.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/umass.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ar71xx_ehci.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ar71xx_ohci.ko ${X_STAGING_FSROOT}/boot/kernel/
 fi
 

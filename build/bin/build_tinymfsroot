@@ -322,5 +322,9 @@ if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/uhci.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ohci.ko ${X_STAGING_FSROOT}/boot/kernel/
 	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/umass.ko ${X_STAGING_FSROOT}/boot/kernel/
+
+	# .. and the USB bus glue
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ar71xx_ehci.ko ${X_STAGING_FSROOT}/boot/kernel/
+	install ${X_DESTDIR}/boot/kernel.${KERNCONF}/ar71xx_ohci.ko ${X_STAGING_FSROOT}/boot/kernel/
 fi
 
