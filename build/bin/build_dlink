@@ -24,6 +24,21 @@ shift
 # kernel then image.
 # 1048576,5308416
 
+# X_DLINK_MAX_KERN_SIZE=1048576
+# X_DLINK_MAX_ROOTFS_SIZE=5308416
+
+KERN_SIZE="`stat -f '%z' /tftpboot/kernel.${KERNCONF}.lzma.uImage`"
+ROOTFS_SIZE="`stat -f '%z' ${X_FSIMAGE}${X_FSIMAGE_SUFFIX}`"
+
+if [ ${KERN_SIZE} -gt ${X_DLINK_MAX_KERN_SIZE} ]; then
+	echo "*** Kernel is too big ${KERN_SIZE} > ${X_DLINK_MAX_KERN_SIZE}!"
+	exit 1
+fi
+if [ ${ROOTFS_SIZE} -gt ${X_DLINK_MAX_ROOTFS_SIZE} ]; then
+	echo "*** Rootfs is too big ${ROOTFS_SIZE} > ${X_DLINK_MAX_ROOTFS_SIZE}!"
+	exit 1
+fi
+
 # Create the firmware
 mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   -a ${UBOOT_KERN_LOADADDR} -e ${UBOOT_KERN_STARTADDR} \
