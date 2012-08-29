@@ -56,6 +56,14 @@ fi
 # Create a make.conf
 echo "MALLOC_PRODUCTION=" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
 
+# Make a src.conf
+echo 'WITHOUT_KERBEROS="YES"' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_IPX="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_ATM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+
 while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" ]; then
 		mkdir -p ${X_DESTDIR}/usr/local/bin/
@@ -77,7 +85,7 @@ while [ "x$1" != "x" ]; do
 	    KODIR=/boot/kernel.${KERNCONF}/			\
 	    KMODDIR=/boot/kernel.${KERNCONF}/			\
 	    __MAKE_CONF=${X_DESTDIR}/../make.conf.${BUILDNAME}	\
-	    SRCCONF=/dev/null					\
+	    SRCCONF=${X_DESTDIR}/../src.conf.${BUILDNAME}	\
 	    LOCAL_DIRS="${LOCAL_DIRS}"				\
 	    ${X_LOCAL_TOOL_DIRS}				\
 	    $1							\
