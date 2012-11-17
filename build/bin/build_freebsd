@@ -39,13 +39,6 @@ echo "MAKEOBJDIRPREFIX: ${X_MAKEOBJDIRPREFIX}"
 mkdir -p ${X_MAKEOBJDIRPREFIX} || exit 1
 mkdir -p ${X_DESTDIR} || exit 1
 
-# Only set TARGET_CPUTYPE if it's actually set
-X_TARGET_CPUTYPE=""
-if [ "x${KERN_NO_TARGET_CPUTYPE}" != "x" ] && \
-    [ "x${TARGET_CPUTYPE}" != "x" ]; then
-	X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
-fi
-
 # XXX double-check this works, especially with the escaping and parameter list
 # stuff.
 X_LOCAL_TOOL_DIRS=""
@@ -77,10 +70,22 @@ while [ "x$1" != "x" ]; do
 		echo "*** Overriding BUILD_FLAGS to '' so 'buildenv' works!"
 		BUILD_FLAGS=""
 	fi
+
+	# Only set TARGET_CPUTYPE if it's actually set
+	# Always set it for world builds; don't set it for kernel builds
+	X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
+	if [ "$1" = "buildkernel" -o "$1" = "installkernel" ]; then
+		if [ "x${KERN_NO_TARGET_CPUTYPE}" = "xyes" ]; then
+			X_TARGET_CPUTYPE=""
+		fi
+	fi
+
 	env CROSS_BUILD_TESTING=YES				\
 	    MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
-	    make ${BUILD_FLAGS} TARGET=${TARGET}		\
-	    TARGET_ARCH=${TARGET_ARCH}	 ${X_TARGET_CPUTYPE}	\
+	    make ${BUILD_FLAGS}					\
+	    TARGET=${TARGET}					\
+	    TARGET_ARCH=${TARGET_ARCH}				\
+	    ${X_TARGET_CPUTYPE}					\
 	    KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR}		\
 	    KODIR=/boot/kernel.${KERNCONF}/			\
 	    KMODDIR=/boot/kernel.${KERNCONF}/			\
