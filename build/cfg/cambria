@@ -1,0 +1,16 @@
+BUILDNAME=armeb
+TARGET=arm
+TARGET_ARCH=armeb
+TARGET_CPUTYPE=xscale
+KERNCONF=CAMBRIA
+LOCAL_DIRS="tools/tools/ath	tools/tools/net80211/wlanstats"
+
+KERN_NO_TARGET_CPUTYPE="yes"
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/redboot/cfg"
+BIN_CFG_SIZE="65536"
+
+#UBNT_ARCH="RSPRO"
+#UBNT_VERSION="RSPRO.ar7100pro.V1"
