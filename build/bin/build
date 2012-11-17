@@ -21,26 +21,13 @@ while [ "x$1" != "x" ]; do
 	shift
 
 	case $BUILD_TARGET in
-		'buildworld')
+		'buildworld' | 'buildkernel' | 'installworld' | \
+		    'installkernel' | 'distribution' | 'buildenv' | \
+		    'toolchain' | 'kernel-toolchain')
 			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET || exit 1
-		;;
-		'buildkernel')
-			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
-		;;
-		'installworld')
-			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
-		;;
-		'installkernel')
-			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
 		;;
 		'cleanroot')
 			${SCRIPT_DIR}/build_cleanroot ${CFGNAME} $BUILD_TARGET || exit 1
-		;;
-		'distribution')
-			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
-		;;
-		'buildenv')
-			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET  || exit 1
 		;;
 		'ubnt')
 			${SCRIPT_DIR}/build_ubnt ${CFGNAME} || exit 1

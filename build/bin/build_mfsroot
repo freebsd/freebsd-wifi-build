@@ -229,7 +229,9 @@ install ${X_DESTDIR}/usr/sbin/tcpdump ${X_STAGING_FSROOT}/usr/sbin/
 
 
 install ${X_DESTDIR}/usr/sbin/hostapd ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/hostapd_cli ${X_STAGING_FSROOT}/usr/sbin/
 install ${X_DESTDIR}/usr/sbin/wpa_supplicant ${X_STAGING_FSROOT}/usr/sbin/
+install ${X_DESTDIR}/usr/sbin/wpa_cli ${X_STAGING_FSROOT}/usr/sbin/
 
 install ${X_DESTDIR}/libexec/ld-elf.so.1 ${X_STAGING_FSROOT}/libexec/
 
