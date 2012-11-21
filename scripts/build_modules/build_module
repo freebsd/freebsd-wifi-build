@@ -8,11 +8,13 @@ X_KMODGRP=${X_KMODGRP:="adrian"}
 # This allows for -HEAD includes for net80211 ..
 env CFLAGS="-I../../../sys/" \
 make \
-	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth" \
+	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth bwn wi iwn usb" \
+	DEBUG_FLAGS="-g" \
 	DEBUG_FLAGS="-g" \
 	KMODDIR="../../../../modules/" \
 	KMODOWN="${X_KMODOWN}" \
 	KMODGRP="${X_KMODGRP}" \
+	MAKESYSPATH="${X_SRCDIR}/share/mk" \
 	SYSDIR="${X_SRCDIR}/sys/" \
 	KERNBUILDDIR="${X_SRCDIR}/sys/${X_KERNDIR}" \
 	$@
