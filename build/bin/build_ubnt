@@ -26,6 +26,7 @@ dd if=/dev/zero of=${X_CFGFS} bs=1k count=64
 
 # Filesystem image is created by "build_fsimage"
 
-mkfwimage -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_KERNEL}.gz \
+${SCRIPT_DIR}/../../programs/ubnt-mkfwimage/mkfwimage	\
+    -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_KERNEL}.gz \
     -C ${BIN_CFG_SIZE} -c ${X_CFGFS} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
     -o /tftpboot/${KERNCONF}.initial.img

@@ -18,7 +18,8 @@ shift
 cat ${X_KERNEL} | gzip -9 | dd of=${X_KERNEL}.gz
 
 # Create the firmware
-mktplinkfw -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
+${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
+    -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
     -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
     -k ${X_KERNEL}.gz -N ${TPLINK_IMG_NAME} \
     -V ${TPLINK_IMG_VERSION} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
