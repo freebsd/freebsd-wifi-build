@@ -56,6 +56,7 @@ echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_IPX="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_ATM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_CLANG_IS_CC="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" ]; then
@@ -80,14 +81,20 @@ while [ "x$1" != "x" ]; do
 		fi
 	fi
 
+	X_DESTDIR_LINE=""
+	if [ "$1" = "installworld" -o "$1" = "installkernel" -o "$1" = "distribution" ]; then
+		X_DESTDIR_LINE="DESTDIR=${X_DESTDIR}"
+	fi
+
 	env CROSS_BUILD_TESTING=YES				\
 	    MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make ${BUILD_FLAGS}					\
 	    TARGET=${TARGET}					\
 	    TARGET_ARCH=${TARGET_ARCH}				\
 	    ${X_TARGET_CPUTYPE}					\
-	    KERNCONF=${KERNCONF} DESTDIR=${X_DESTDIR}		\
+	    KERNCONF=${KERNCONF}				\
 	    KODIR=/boot/kernel.${KERNCONF}/			\
+	    ${X_DESTDIR_LINE}					\
 	    KMODDIR=/boot/kernel.${KERNCONF}/			\
 	    __MAKE_CONF=${X_DESTDIR}/../make.conf.${BUILDNAME}	\
 	    SRCCONF=${X_DESTDIR}/../src.conf.${BUILDNAME}	\
