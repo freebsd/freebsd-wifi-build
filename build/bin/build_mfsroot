@@ -155,6 +155,7 @@ install ${X_DESTDIR}/usr/local/bin/athrd ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athstats ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athsurvey ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athradar ${X_STAGING_FSROOT}/usr/bin/
+install ${X_DESTDIR}/usr/local/bin/athspectral ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athaggrstats ${X_STAGING_FSROOT}/usr/bin/
 install ${X_DESTDIR}/usr/local/bin/athratestats ${X_STAGING_FSROOT}/usr/bin/
 
