@@ -29,6 +29,9 @@ while [ "x$1" != "x" ]; do
 		'cleanroot')
 			${SCRIPT_DIR}/build_cleanroot ${CFGNAME} $BUILD_TARGET || exit 1
 		;;
+		'cleanobj')
+			${SCRIPT_DIR}/build_cleanobj ${CFGNAME} $BUILD_TARGET || exit 1
+		;;
 		'ubnt')
 			${SCRIPT_DIR}/build_ubnt ${CFGNAME} || exit 1
 		;;
