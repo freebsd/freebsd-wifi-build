@@ -71,6 +71,10 @@ while [ "x$1" != "x" ]; do
 		echo "*** Overriding BUILD_FLAGS to '' so 'buildenv' works!"
 		BUILD_FLAGS=""
 	fi
+	if [ "$1" = "buildenvvars" ]; then
+		echo "*** Overriding BUILD_FLAGS to '' so 'buildenvvars' works!"
+		BUILD_FLAGS=""
+	fi
 
 	# Only set TARGET_CPUTYPE if it's actually set
 	# Always set it for world builds; don't set it for kernel builds
@@ -88,7 +92,7 @@ while [ "x$1" != "x" ]; do
 
 	env CROSS_BUILD_TESTING=YES				\
 	    MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
-	    make ${BUILD_FLAGS}					\
+	    make ${BUILD_FLAGS} DB_FROM_SRC=1			\
 	    TARGET=${TARGET}					\
 	    TARGET_ARCH=${TARGET_ARCH}				\
 	    ${X_TARGET_CPUTYPE}					\

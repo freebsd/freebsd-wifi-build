@@ -23,7 +23,7 @@ while [ "x$1" != "x" ]; do
 	case $BUILD_TARGET in
 		'buildworld' | 'buildkernel' | 'installworld' | \
 		    'installkernel' | 'distribution' | 'buildenv' | \
-		    'toolchain' | 'kernel-toolchain' | 'xdev')
+		    'toolchain' | 'kernel-toolchain' | 'xdev' | 'buildenvvars' )
 			${SCRIPT_DIR}/build_freebsd ${CFGNAME} $BUILD_TARGET || exit 1
 		;;
 		'cleanroot')
