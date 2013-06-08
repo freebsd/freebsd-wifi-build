@@ -1,0 +1,34 @@
+BUILDNAME=mipseb
+TARGET=mips
+TARGET_ARCH=mipseb
+TARGET_CPUTYPE=mips32
+KERNCONF=CARAMBOLA2
+
+# bsdbox - so sneak this to be smaller!
+LOCAL_DIRS="tools/tools/ath tools/bsdbox/"
+LOCAL_TOOL_DIRS="tools/bsdbox/"
+# XXX needs to be a multiple of the blocksize (512 bytes) ?
+X_FSSIZE="2818048"
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/map/cfg"
+BIN_CFG_SIZE="65536"
+
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+
+# Netboot
+NETBOOT_KERNEL="YES"
+
+# Uboot stuff
+UBOOT_ARCH="mips"
+UBOOT_KERN_LOADADDR="0x80050000"
+UBOOT_KERN_STARTADDR="0x80050100"
+
+# Make a ulzma image
+X_FSIMAGE_CMD="mkulzma"
+# XXX this is so high right now in order to get this
+# squeezed onto 4MB of flash. Sigh.
+X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
