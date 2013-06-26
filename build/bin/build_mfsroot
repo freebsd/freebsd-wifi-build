@@ -164,6 +164,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/athdecode ${X_STAGING_FSROOT}/usr/bin
 ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/athpeek ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/athregs ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/ath_ee_v4k_print ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/ath_ee_9300_print ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/athdebug ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/athkey ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/local/bin/athpoke ${X_STAGING_FSROOT}/usr/bin/
