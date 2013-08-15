@@ -48,6 +48,7 @@ fi
 
 # Create a make.conf
 echo "MALLOC_PRODUCTION=" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
+echo 'WITH_ICONV=no' >> ${X_DESTDIR}/../make.conf.${BUILDNAME}
 
 # Make a src.conf
 echo 'WITHOUT_KERBEROS="YES"' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
