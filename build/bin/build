@@ -41,6 +41,9 @@ while [ "x$1" != "x" ]; do
 		'dlink')
 			${SCRIPT_DIR}/build_dlink ${CFGNAME} || exit 1
 		;;
+		'airstation')
+			${SCRIPT_DIR}/build_airstation ${CFGNAME} || exit 1
+		;;
 		'uboot')
 			${SCRIPT_DIR}/build_uboot ${CFGNAME} || exit 1
 		;;
