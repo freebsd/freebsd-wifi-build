@@ -17,6 +17,8 @@ shift
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
+# base version gives following error while trying to uncompress the kernel on boot:
+# "Uncompressing Kernel Image ... Stream with EOS marker is not supportedLZMA ERROR 1"
 
 /usr/local/bin/lzma e ${X_KERNEL} /tftpboot/kernel.${KERNCONF}.lzma || exit 1
 

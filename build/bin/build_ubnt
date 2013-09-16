@@ -18,15 +18,25 @@ shift
 # mkfwimage tool will accept it, the urescue program in the redboot
 # loader won't!
 
-echo "X_KERNEL: ${X_KERNEL}"
-cat ${X_KERNEL} | gzip -9 | dd if=/dev/stdin of=${X_KERNEL}.gz bs=64k conv=sync
-
 # Create a 64k (empty) config file image
 dd if=/dev/zero of=${X_CFGFS} bs=1k count=64
 
-# Filesystem image is created by "build_fsimage"
+echo "X_KERNEL: ${X_KERNEL}"
 
+if [ "$X_UBOOT" = "YES" ]; then
+echo "Using uboot-friendly kernel"
 ${SCRIPT_DIR}/../../programs/ubnt-mkfwimage/mkfwimage	\
+    -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k /tftpboot/kernel.${KERNCONF}.lzma.uImage \
+    -C ${BIN_CFG_SIZE} -c ${X_CFGFS} -r /tftpboot/mfsroot-${CFGNAME}.img${X_FSIMAGE_SUFFIX} \
+    -o /tftpboot/${KERNCONF}.initial.img
+
+else
+
+cat ${X_KERNEL} | gzip -9 | dd if=/dev/stdin of=${X_KERNEL}.gz bs=64k conv=sync
+
+${SCRIPT_DIR}/../../programs/ubnt-mkfwimage/mkfwimage  \
     -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_KERNEL}.gz \
     -C ${BIN_CFG_SIZE} -c ${X_CFGFS} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
     -o /tftpboot/${KERNCONF}.initial.img
+
+fi

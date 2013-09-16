@@ -42,9 +42,9 @@ typedef struct fw_layout_data {
 fw_layout_t fw_layout_data[] = {
 	{
 		.name		=	"XS2",
-		.kern_start	=	0xbfc30000,
+		.kern_start	=	0x00040000,
 		.kern_entry	=	0x80041000,
-		.firmware_max_length=	0x00390000,
+		.firmware_max_length=	0x006A0000,
 	},
 	{
 		.name		=	"XS5",
