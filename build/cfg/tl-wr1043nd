@@ -1,6 +1,6 @@
 BUILDNAME=mipseb
 TARGET=mips
-TARGET_ARCH=mipseb
+TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
 KERNCONF=TP-WN1043ND
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
@@ -9,6 +9,11 @@ LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/
 # configuration partition name and location.
 BIN_CFG_PARTITION="/dev/map/cfg"
 BIN_CFG_SIZE="65536"
+
+# Use mkulzma for rootfs
+X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
 
 TPLINK_ROOTFS_START="0x00200000"
 TPLINK_KERN_LOADADDR="0x80050000"
