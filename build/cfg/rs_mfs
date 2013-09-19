@@ -1,6 +1,6 @@
-BUILDNAME=mipseb
+BUILDNAME=mips
 TARGET=mips
-TARGET_ARCH=mipseb
+TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
 KERNCONF=ROUTERSTATION_MFS
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
