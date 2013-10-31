@@ -1,7 +1,7 @@
 #!/bin/sh
 
-X_KERNDIR=${X_KERNDIR:="i386/compile/MARILYN-9-STABLE"}
 X_SRCDIR=${X_SRCDIR:="/home/adrian/work/freebsd/stable/9/src/"}
+X_KERNDIR=${X_KERNDIR:="/home/adrian/work/freebsd/stable/9/src/sys/i386/compile/MARILYN-9-STABLE"}
 X_KMODOWN=${X_KMODOWN:="adrian"}
 X_KMODGRP=${X_KMODGRP:="adrian"}
 
@@ -16,5 +16,5 @@ make \
 	KMODGRP="${X_KMODGRP}" \
 	MAKESYSPATH="${X_SRCDIR}/share/mk" \
 	SYSDIR="${X_SRCDIR}/sys/" \
-	KERNBUILDDIR="${X_SRCDIR}/sys/${X_KERNDIR}" \
+	KERNBUILDDIR="${X_KERNDIR}" \
 	$@
