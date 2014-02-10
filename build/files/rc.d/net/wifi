@@ -69,7 +69,7 @@ case $cmd in
 	'start')
 		echo "*** Interface: ${ifname}: start"
 		ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
-		    wlanmode ${netif_wifi_mode}
+		    wlanmode ${netif_wifi_mode} bssid
 		ifconfig ${netif_name} ${netif_wifi_createargs1}
 		if [ "x${netif_wifi_createargs2}" != "x" ]; then
 			ifconfig ${netif_name} ${netif_wifi_createargs2}
