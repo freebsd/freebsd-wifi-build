@@ -302,7 +302,7 @@ ${INSTALL_PROG} ${X_BASEDIR}/files/rc.conf.default ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/sbin/pmcstat ${X_STAGING_FSROOT}/usr/sbin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/sbin/pmccontrol ${X_STAGING_FSROOT}/usr/sbin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libpmc.so.5 ${X_STAGING_FSROOT}/usr/lib/
-${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libelf.so.1 ${X_STAGING_FSROOT}/usr/lib/
+${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libelf.so.2 ${X_STAGING_FSROOT}/usr/lib/
 
 # rc stuff
 ${INSTALL_PROG} ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
