@@ -2,7 +2,7 @@ BUILDNAME=mips
 TARGET=mips
 TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
-KERNCONF=DIR-825
+KERNCONF=DIR-825B1
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
 
 # The configuration load/save script needs to know the
