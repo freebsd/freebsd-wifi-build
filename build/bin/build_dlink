@@ -12,8 +12,6 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-# This builds a tplink system image from the given kernel and MFS.
-
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
@@ -47,9 +45,9 @@ if [ ${ROOTFS_SIZE} -gt ${X_DLINK_MAX_ROOTFS_SIZE} ]; then
 fi
 
 (
-	dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1048576 conv=sync;
+	dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1572864 conv=sync;
 	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ;
-	echo -n "00AP94-AR7161-RT-080619-00"
+	echo -n "${X_DLINK_SIGNATURE}"
 ) > /tftpboot/${CFGNAME}.factory.img
 
 exit 0

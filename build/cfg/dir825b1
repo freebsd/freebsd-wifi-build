@@ -22,6 +22,9 @@ UBOOT_KERN_STARTADDR="0x80050100"
 X_DLINK_MAX_KERN_SIZE=1048576
 X_DLINK_MAX_ROOTFS_SIZE=5308416
 
+# This is a required end of image signature for this hardware
+X_DLINK_SIGNATURE=00AP94-AR7161-RT-080619-00
+
 # Make a ulzma image
 X_FSIMAGE_CMD="mkulzma"
 X_FSIMAGE_ARGS="-s 131072 -v"
