@@ -58,6 +58,8 @@ echo 'WITHOUT_IPX="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_ATM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_ICONV="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_CLANG_IS_CC="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_CASPER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+echo 'WITHOUT_CAPSICUM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" ]; then
@@ -113,6 +115,3 @@ while [ "x$1" != "x" ]; do
 	fi
 	shift
 done
-
-#	    __MAKE_CONF=/dev/null						\
-#	    SRCCONF=${X_DESTDIR}/../src.conf.${BUILDNAME}			\
