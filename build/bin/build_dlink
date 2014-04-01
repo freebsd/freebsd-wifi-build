@@ -44,8 +44,10 @@ if [ ${ROOTFS_SIZE} -gt ${X_DLINK_MAX_ROOTFS_SIZE} ]; then
 	exit 1
 fi
 
+# concatenate the kernel image (1k aligned 1024*1024==1048576
+# the filesystem image and the dlink signature for this image
 (
-	dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1572864 conv=sync;
+	dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1048576 conv=sync;
 	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ;
 	echo -n "${X_DLINK_SIGNATURE}"
 ) > /tftpboot/${CFGNAME}.factory.img
