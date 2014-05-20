@@ -104,6 +104,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/bin/rm ${X_STAGING_FSROOT}/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/bin/ls ${X_STAGING_FSROOT}/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/bin/ln ${X_STAGING_FSROOT}/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
+${INSTALL_PROG} ${X_DESTDIR}/bin/mv ${X_STAGING_FSROOT}/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/bin/df ${X_STAGING_FSROOT}/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/bin/cat ${X_STAGING_FSROOT}/bin/
@@ -318,8 +319,8 @@ ${INSTALL_PROG} ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin
 ${INSTALL_PROG} ${X_BASEDIR}/files/cfg_load ${X_STAGING_FSROOT}/bin
 
 # iperf - local binary
-${INSTALL_PROG} ${X_BASEDIR}/files/iperf ${X_STAGING_FSROOT}/usr/bin/
-${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libstdc++.so.6 ${X_STAGING_FSROOT}/usr/lib/
+# ${INSTALL_PROG} ${X_BASEDIR}/files/iperf ${X_STAGING_FSROOT}/usr/bin/
+# ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libstdc++.so.6 ${X_STAGING_FSROOT}/usr/lib/
 
 # stuff that goes into /c/etc
 ${INSTALL_PROG} ${X_DESTDIR}/etc/regdomain.xml ${X_STAGING_FSROOT}/c/etc/
