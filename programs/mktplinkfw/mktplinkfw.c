@@ -138,6 +138,11 @@ static struct board_info boards[] = {
 		.id		= "TL-MR3020v1",
 		.hw_id		= HWID_TL_MR3020_V1,
 		.hw_rev		= 1,
+		/*
+		 * Actual size of firmware is 3.8MB but for now, allow larger
+		 * sizes until we work out a plan for this unit
+		 * .fw_max_len	= 0x3c0000,
+		 */
 		.fw_max_len	= 0x640000,
 		.kernel_la	= 0x80060000,
 		.kernel_ep	= 0x80060000,
