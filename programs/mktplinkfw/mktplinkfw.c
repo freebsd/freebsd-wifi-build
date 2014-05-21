@@ -43,6 +43,7 @@
 #endif
 
 #define HEADER_VERSION_V1	0x01000000
+#define HWID_TL_MR3020_V1	0x30200001
 #define HWID_TL_MR3220_V1	0x32200001
 #define HWID_TL_MR3420_V1	0x34200001
 #define HWID_TL_WA901ND_V1	0x09010001
@@ -134,6 +135,14 @@ char md5salt_boot[MD5SUM_LEN] = {
 
 static struct board_info boards[] = {
 	{
+		.id		= "TL-MR3020v1",
+		.hw_id		= HWID_TL_MR3020_V1,
+		.hw_rev		= 1,
+		.fw_max_len	= 0x640000,
+		.kernel_la	= 0x80060000,
+		.kernel_ep	= 0x80060000,
+		.rootfs_ofs	= 0x100000,
+	}, {
 		.id		= "TL-MR3220v1",
 		.hw_id		= HWID_TL_MR3220_V1,
 		.hw_rev		= 1,
@@ -278,7 +287,7 @@ static struct board_info boards[] = {
 #define ERRS(fmt, ...) do { \
 	int save = errno; \
 	fflush(0); \
-	fprintf(stderr, "[%s] *** error: " fmt "\n", \
+	fprintf(stderr, "[%s] *** error: " fmt " error:%s\n", \
 			progname, ## __VA_ARGS__, strerror(save)); \
 } while (0)
 
@@ -343,7 +352,7 @@ static void usage(int status)
 	exit(status);
 }
 
-static int get_md5(char *data, int size, char *md5)
+static void get_md5(char *data, int size, uint8_t *md5)
 {
 	MD5_CTX ctx;
 
@@ -440,13 +449,15 @@ static int check_options(void)
 	if (combined) {
 		if (kernel_info.file_size >
 		    board->fw_max_len - sizeof(struct fw_header)) {
-			ERR("kernel image is too big");
+			ERR("Combined kernel image is too big. Max[%lu] kernel img [%d]", 
+			    board->fw_max_len - sizeof(struct fw_header), kernel_info.file_size);
 			return -1;
 		}
 	} else {
 		if (kernel_info.file_size >
-		    rootfs_ofs - sizeof(struct fw_header)) {
-			ERR("kernel image is too big");
+		    (rootfs_ofs - sizeof(struct fw_header))) {
+			ERR("kernel image is too big. Max[%lu] kernel img [%d]", 
+			    rootfs_ofs - sizeof(struct fw_header), kernel_info.file_size);
 			return -1;
 		}
 		if (rootfs_info.file_name == NULL) {
@@ -460,7 +471,8 @@ static int check_options(void)
 
 		if (rootfs_info.file_size >
                     (board->fw_max_len - rootfs_ofs)) {
-			ERR("rootfs image is too big");
+			ERR("rootfs image is too big. Max[%d] fs img [%d]",
+			    board->fw_max_len - rootfs_ofs, rootfs_info.file_size);
 			return -1;
 		}
 	}
@@ -517,7 +529,7 @@ static int write_fw(char *data, int len)
 	errno = 0;
 	fwrite(data, len, 1, f);
 	if (errno) {
-		ERRS("unable to write output file");
+		ERRS("unable to write output file \"%s\"", ofname);
 		goto out_flush;
 	}
 
