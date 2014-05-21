@@ -94,7 +94,7 @@ while [ "x$1" != "x" ]; do
 	fi
 
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
-	    make ${BUILD_FLAGS} DB_FROM_SRC=1			\
+	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
 	    TARGET=${TARGET}					\
 	    TARGET_ARCH=${TARGET_ARCH}				\
 	    ${X_TARGET_CPUTYPE}					\
