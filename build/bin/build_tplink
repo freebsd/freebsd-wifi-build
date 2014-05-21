@@ -23,6 +23,9 @@ elif [ x${TPLINK_COMPRESSION_LZMA} = "xYES" ]; then
 	TPLINK_KERNEL=${X_KERNEL}.lzma
 fi
 
+# build mktplinkfw if not built or needs a refresh
+cd ${SCRIPT_DIR}/../../programs/mktplinkfw && make  || exit 1
+
 # If the kernel was built to netboot and has the MFSroot already
 # compiled into it, use the all in one argument "-c" and drop
 # the ramdisk from the command line.
