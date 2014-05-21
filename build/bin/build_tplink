@@ -14,16 +14,36 @@ shift
 
 # This builds a tplink system image from the given kernel and MFS.
 
-# gzip the kernel image
-cat ${X_KERNEL} | gzip -9 | dd of=${X_KERNEL}.gz
+# gzip or lzma the kernel image
+if [ x${TPLINK_COMPRESSION_GZIP} = "xYES" ]; then
+	cat ${X_KERNEL} | gzip -9 | dd of=${X_KERNEL}.gz
+	TPLINK_KERNEL=${X_KERNEL}.gz
+elif [ x${TPLINK_COMPRESSION_LZMA} = "xYES" ]; then
+	/usr/local/bin/lzma e ${X_KERNEL} ${X_KERNEL}.lzma || exit 1
+	TPLINK_KERNEL=${X_KERNEL}.lzma
+fi
 
+# If the kernel was built to netboot and has the MFSroot already
+# compiled into it, use the all in one argument "-c" and drop
+# the ramdisk from the command line.
+
+if [ "x${X_MFSROOT}" = "xYES" ]; then
 # Create the firmware
-${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
-    -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
-    -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
-    -k ${X_KERNEL}.gz -N ${TPLINK_IMG_NAME} \
-    -V ${TPLINK_IMG_VERSION} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
-    -o /tftpboot/${KERNCONF}.factory.bin \
+	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
+	     -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
+	     -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
+	     -k ${TPLINK_KERNEL} -c -N ${TPLINK_IMG_NAME} \
+	     -V ${TPLINK_IMG_VERSION} \
+	     -o /tftpboot/${KERNCONF}.factory.bin \
 	|| exit 1
+else
+	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
+	    -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
+	    -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
+	    -k ${TPLINK_KERNEL} -N ${TPLINK_IMG_NAME} \
+	    -V ${TPLINK_IMG_VERSION} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
+	    -o /tftpboot/${KERNCONF}.factory.bin \
+	|| exit 1
+fi
 
 exit 0
