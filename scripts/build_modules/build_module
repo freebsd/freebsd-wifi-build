@@ -6,12 +6,11 @@ X_KMODOWN=${X_KMODOWN:="adrian"}
 X_KMODGRP=${X_KMODGRP:="adrian"}
 
 # This allows for -HEAD includes for net80211 ..
-env CFLAGS="-I../../../sys/" \
+env CFLAGS="-I/home/adrian/work/freebsd/ath/head/src/sys/" \
 make \
 	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth bwn wi iwn usb" \
-	DEBUG_FLAGS="-g" \
-	DEBUG_FLAGS="-g" \
-	KMODDIR="../../../../modules/" \
+	DEBUG_FLAGS="-gdwarf-2" \
+	KMODDIR="/home/adrian/work/freebsd/ath/head/modules/" \
 	KMODOWN="${X_KMODOWN}" \
 	KMODGRP="${X_KMODGRP}" \
 	MAKESYSPATH="${X_SRCDIR}/share/mk" \
