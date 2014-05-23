@@ -28,18 +28,21 @@ cd ${SCRIPT_DIR}/../../programs/mktplinkfw && make  || exit 1
 
 # If the kernel was built to netboot and has the MFSroot already
 # compiled into it, use the all in one argument "-c" and drop
-# the ramdisk from the command line.
+# the ramdisk from the command line.  Add "-Q" to ignore the fact
+# that the f/w image will exceed the capacity of the flash on the
+# device.
 
 if [ "x${X_MFSROOT}" = "xYES" ]; then
-# Create the firmware
+# Create firmware suitable for TFTP
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
-	     -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
+	     -Q -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
 	     -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
 	     -k ${TPLINK_KERNEL} -c -N ${TPLINK_IMG_NAME} \
 	     -V ${TPLINK_IMG_VERSION} \
 	     -o /tftpboot/${KERNCONF}.factory.bin \
 	|| exit 1
 else
+# Create firmware suitable for flashing
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
 	    -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
 	    -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \

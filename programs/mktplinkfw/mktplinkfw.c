@@ -119,6 +119,11 @@ static uint32_t rootfs_ofs = 0;
 static struct file_info boot_info;
 static int combined;
 static int strip_padding;
+/*
+ * By default, do not let fw image exceed the size specified
+ * in the board_info structure
+ */
+static int check_fw_size = 1;
 
 static struct file_info inspect_info;
 static int extract = 0;
@@ -138,12 +143,7 @@ static struct board_info boards[] = {
 		.id		= "TL-MR3020v1",
 		.hw_id		= HWID_TL_MR3020_V1,
 		.hw_rev		= 1,
-		/*
-		 * Actual size of firmware is 3.8MB but for now, allow larger
-		 * sizes until we work out a plan for this unit
-		 * .fw_max_len	= 0x3c0000,
-		 */
-		.fw_max_len	= 0x640000,
+		.fw_max_len	= 0x3c0000,
 		.kernel_la	= 0x80060000,
 		.kernel_ep	= 0x80060000,
 		.rootfs_ofs	= 0x100000,
@@ -340,6 +340,8 @@ static void usage(int status)
 "Options:\n"
 "  -B <board>      create image for the board specified with <board>\n"
 "  -c              use combined kernel image\n"
+"  -Q              allow size of image to exceed board defined fw_max.\n"
+"                  For use in TFTP/Netboot or boot from USB\n"
 "  -E <ep>         overwrite kernel entry point with <ep> (hexval prefixed with 0x)\n"
 "  -L <la>         overwrite kernel load address with <la> (hexval prefixed with 0x)\n"
 "  -k <file>       read kernel image from the file <file>\n"
@@ -452,15 +454,17 @@ static int check_options(void)
 		return ret;
 
 	if (combined) {
-		if (kernel_info.file_size >
-		    board->fw_max_len - sizeof(struct fw_header)) {
+		if ((kernel_info.file_size >
+		    board->fw_max_len - sizeof(struct fw_header)) &&
+		    check_fw_size) {
 			ERR("Combined kernel image is too big. Max[%lu] kernel img [%d]", 
 			    board->fw_max_len - sizeof(struct fw_header), kernel_info.file_size);
 			return -1;
 		}
 	} else {
-		if (kernel_info.file_size >
-		    (rootfs_ofs - sizeof(struct fw_header))) {
+		if ((kernel_info.file_size >
+		    (rootfs_ofs - sizeof(struct fw_header))) &&
+		    check_fw_size) {
 			ERR("kernel image is too big. Max[%lu] kernel img [%d]", 
 			    rootfs_ofs - sizeof(struct fw_header), kernel_info.file_size);
 			return -1;
@@ -474,8 +478,9 @@ static int check_options(void)
 		if (ret)
 			return ret;
 
-		if (rootfs_info.file_size >
-                    (board->fw_max_len - rootfs_ofs)) {
+		if ((rootfs_info.file_size >
+                    (board->fw_max_len - rootfs_ofs)) &&
+		    check_fw_size) {
 			ERR("rootfs image is too big. Max[%d] fs img [%d]",
 			    board->fw_max_len - rootfs_ofs, rootfs_info.file_size);
 			return -1;
@@ -509,7 +514,10 @@ static void fill_header(char *buf, int len)
 
 	hdr->kernel_la = HOST_TO_BE32(kernel_la);
 	hdr->kernel_ep = HOST_TO_BE32(kernel_ep);
-	hdr->fw_length = HOST_TO_BE32(board->fw_max_len);
+	if (check_fw_size)
+		hdr->fw_length = HOST_TO_BE32(kernel_info.file_size + rootfs_info.file_size);
+	else
+		hdr->fw_length = HOST_TO_BE32(board->fw_max_len);
 	hdr->kernel_ofs = HOST_TO_BE32(sizeof(struct fw_header));
 	hdr->kernel_len = HOST_TO_BE32(kernel_info.file_size);
 	if (!combined) {
@@ -560,14 +568,17 @@ static int build_fw(void)
 	int ret = EXIT_FAILURE;
 	int writelen = 0;
 
-	buflen = board->fw_max_len;
+	if (check_fw_size)
+		buflen = board->fw_max_len;
+	else
+		buflen = kernel_info.file_size + rootfs_info.file_size;
 
+	buflen += sizeof(struct fw_header);
 	buf = malloc(buflen);
 	if (!buf) {
 		ERR("no memory for buffer\n");
 		goto out;
 	}
-
 	memset(buf, 0xff, buflen);
 	p = buf + sizeof(struct fw_header);
 	ret = read_to_buf(&kernel_info, p);
@@ -823,7 +834,7 @@ int main(int argc, char *argv[])
 	while ( 1 ) {
 		int c;
 
-		c = getopt(argc, argv, "B:E:L:V:N:ci:k:r:R:o:xhs");
+		c = getopt(argc, argv, "B:E:L:V:N:ci:k:r:R:o:xhsQ");
 		if (c == -1)
 			break;
 
@@ -866,6 +877,9 @@ int main(int argc, char *argv[])
 			break;
 		case 'x':
 			extract = 1;
+			break;
+		case 'Q':
+			check_fw_size = 0;
 			break;
 		case 'h':
 			usage(EXIT_SUCCESS);
