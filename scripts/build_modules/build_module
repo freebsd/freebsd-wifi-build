@@ -4,9 +4,11 @@ X_SRCDIR=${X_SRCDIR:="/home/adrian/work/freebsd/stable/9/src/"}
 X_KERNDIR=${X_KERNDIR:="/home/adrian/work/freebsd/stable/9/src/sys/i386/compile/MARILYN-9-STABLE"}
 X_KMODOWN=${X_KMODOWN:="adrian"}
 X_KMODGRP=${X_KMODGRP:="adrian"}
+X_CFLAGS=${X_CFLAGS:="-I/home/adrian/work/freebsd/ath/head/src/sys/"}
+X_CFLAGS2=${X_CFLAGS2:=""}
 
 # This allows for -HEAD includes for net80211 ..
-env CFLAGS="-I/home/adrian/work/freebsd/ath/head/src/sys/" \
+env CFLAGS="${X_CFLAGS} ${X_CFLAGS2}" \
 make \
 	MODULES_OVERRIDE="wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth bwn wi iwn usb" \
 	DEBUG_FLAGS="-gdwarf-2" \
