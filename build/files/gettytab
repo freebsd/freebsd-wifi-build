@@ -219,6 +219,8 @@ al.230400:\
 # Entries for 3-wire serial terminals.  These don't supply carrier, so
 # clocal needs to be set, and crtscts needs to be unset.
 #
+3wire:\
+	:np:nc:sp#0:
 3wire.9600|9600-3wire:\
 	:np:nc:sp#9600:
 3wire.19200|19200-3wire:\
