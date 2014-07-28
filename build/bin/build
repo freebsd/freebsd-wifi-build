@@ -50,11 +50,17 @@ while [ "x$1" != "x" ]; do
 		'fsimage')
 			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;
+		'fullfsimage')
+			${SCRIPT_DIR}/build_fullfsimage ${CFGNAME} || exit 1
+		;;
 		'tinymfsroot')
 			${SCRIPT_DIR}/build_tinymfsroot ${CFGNAME} || exit 1
 		;;
 		'mfsroot')
 			${SCRIPT_DIR}/build_mfsroot ${CFGNAME} || exit 1
+		;;
+		'fullroot')
+			${SCRIPT_DIR}/build_fullroot ${CFGNAME} || exit 1
 		;;
 		'netboot')
 			${SCRIPT_DIR}/build_netboot ${CFGNAME} || exit 1

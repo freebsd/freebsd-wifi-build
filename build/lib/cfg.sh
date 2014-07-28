@@ -46,8 +46,14 @@ X_MAKEFS_ENDIAN="be"
 # X_MAKEFS_FLAGS - what flags to pass to makefs when building the MFS image
 X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"
 
+# X_MAKEFS_FULL_FLAGS - what flags to pass to makefs when building the full image
+X_MAKEFS_FULL_FLAGS="version=2"
+
 # X_FSSIZE - how big to make the makefs?
 X_FSSIZE=${X_FSSIZE:="20971520"}
+
+# X_FULL_FSSIZE - how big to make the full image?
+X_FULL_FSSIZE=${X_FULL_FSSIZE:="1073741824"}
 
 # Variables defined by this script
 
@@ -63,6 +69,9 @@ X_DESTDIR="${CUR_DIR}/../root/${BUILDNAME}"
 
 # X_FSIMAGE
 X_FSIMAGE="${CUR_DIR}/../mfsroot-${CFGNAME}.img"
+
+# X_FULL_FSIMAGE
+X_FULL_FSIMAGE="${CUR_DIR}/../fullroot-${CFGNAME}.img"
 
 # X_FSIMAGE_SUFFIX
 X_FSIMAGE_SUFFIX=${X_FSIMAGE_SUFFIX:=".uzip"}
