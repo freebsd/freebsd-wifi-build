@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# PROVIDE: autosize
+# BEFORE: sysctl
+# KEYWORD: firstbootonly
+
+# This is a very quick hack to optionally do rootfs autosizing if
+# it's required.
+#
+# It needs to be more complete - be a "firstboot" kind of thing;
+# make it configurable based on the board rather than assuming
+#   it's /dev/da0;
+# resize the underlying partition too if needed;
+# deal with gpt bugs with the resize not being fully visible, etc.
+
+. /etc/rc.subr
+
+name="autosize"
+start_cmd="autosize_start"
+stop_cmd=":"
+rcvar="autosize_enable"
+
+autosize_start ()
+{
+    echo "Enlarging root partition"
+    growfs -y /dev/gpt/rootfs
+}
+
+load_rc_config $name
+run_rc_command "$1"
