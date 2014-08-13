@@ -265,7 +265,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/lib/libncursesw.so.8 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libgcc_s.so.1 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libbsdxml.so.4 ${X_STAGING_FSROOT}/lib/
-${INSTALL_PROG} ${X_DESTDIR}/lib/libsbuf.so.7 ${X_STAGING_FSROOT}/lib/
+${INSTALL_PROG} ${X_DESTDIR}/lib/libsbuf.so.6 ${X_STAGING_FSROOT}/lib/
 # install ${X_DESTDIR}/lib/libipx.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
@@ -276,7 +276,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/lib/libm.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libjail.so.1 ${X_STAGING_FSROOT}/lib/
-${INSTALL_PROG} ${X_DESTDIR}/lib/libnv.so.0 ${X_STAGING_FSROOT}/lib/
+${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libnv.so.0 ${X_STAGING_FSROOT}/usr/lib/
 
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
