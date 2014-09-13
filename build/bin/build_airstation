@@ -30,8 +30,8 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
 # Format requires the string as a preamble for validation
 (
 	printf "# Airstation Public Fmt1\0\0\0\0\0\0\0\0"
-        dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1048576 conv=sync;
-        dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX}
+        dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1M conv=sync;
+        dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
 ) > /tftpboot/${CFGNAME}-tftp.bin
 
 exit 0
