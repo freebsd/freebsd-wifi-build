@@ -23,7 +23,7 @@ rcvar="autosize_enable"
 autosize_start ()
 {
     echo "Enlarging root partition"
-    growfs -y /dev/gpt/rootfs
+    growfs -y ${autosize_rootfs}
 }
 
 load_rc_config $name
