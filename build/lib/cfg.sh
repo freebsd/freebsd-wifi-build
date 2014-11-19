@@ -55,6 +55,9 @@ X_FSSIZE=${X_FSSIZE:="20971520"}
 # X_FULL_FSSIZE - how big to make the full image?
 X_FULL_FSSIZE=${X_FULL_FSSIZE:="1073741824"}
 
+# X_FULL_FSINODES - how many inodes to have free?
+X_FULL_FSINODES=${X_FULL_FSINODES:="1048576"}
+
 # Variables defined by this script
 
 # X_MAKEOBJDIRPREFIX - where to place object files
