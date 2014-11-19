@@ -47,11 +47,12 @@ rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 
 # now, default /etc/fstab
 # XXX TODO: label!
-echo '/dev/gpt/rootfs / ufs rw 1 1' > ${X_STAGING_TMPDIR}/fstab
+echo "${X_ROOTFS_DEV} / ufs rw 1 1" > ${X_STAGING_TMPDIR}/fstab
 install -m 644 ${X_STAGING_TMPDIR}/fstab ${X_STAGING_FSROOT}/etc/
 
 # .. and default to autosize_enable=yes
-echo 'autosize_enable="YES"' > ${X_STAGING_TMPDIR}/rc.conf
+echo "autosize_enable=\"YES\"" > ${X_STAGING_TMPDIR}/rc.conf
+echo "autosize_rootdev=\"${X_ROOTFS_DEV}\"" >> ${X_STAGING_TMPDIR}/rc.conf
 install -m 644 ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_FSROOT}/etc/
 
 install -m 755 ${X_BASEDIR}/files.full/autosize ${X_STAGING_FSROOT}/etc/rc.d/
