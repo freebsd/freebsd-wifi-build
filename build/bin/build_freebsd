@@ -110,6 +110,7 @@ while [ "x$1" != "x" ]; do
 	|| exit 1
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${X_KERNSUFFIX}"
+		mkdir -p /tftpboot/
 		cp ${X_KERNEL} /tftpboot/kernel.${X_KERNSUFFIX}
 		cp ${X_KERNEL}.symbols /tftpboot/kernel.${X_KERNSUFFIX}.symbols
 	fi
