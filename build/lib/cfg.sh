@@ -40,8 +40,14 @@ BUILD_FLAGS=${BUILD_FLAGS:="NO_CLEAN=1 -j2"}
 # BUILD_FLAGS
 # LOCAL_DIRS
 
+# X_KERNSUFFIX - which suffix to install the kernel file in /tftpboot
+# with.  Defaults to KERNCONF but in some instances we'll want
+# to force a different name (eg MALTA for both little and big endian
+# is the same kernel name, so it builds and installs under MALTA.)
+X_KERNSUFFIX=${X_KERNSUFFIX:="${KERNCONF}"}
+
 # X_MAKEFS_ENDIAN - what endian-ness should the makefs FFS be?
-X_MAKEFS_ENDIAN="be"
+X_MAKEFS_ENDIAN=${X_MAKEFS_ENDIAN:="be"}
 
 # X_MAKEFS_FLAGS - what flags to pass to makefs when building the MFS image
 X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"
