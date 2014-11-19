@@ -12,6 +12,6 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-echo "*** Running makefs to build compressed image .. "
+echo "*** Running makefs to build image .. "
 echo "*** from ${X_STAGING_FSROOT} .."
-makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FULL_FLAGS} -f 1000 ${X_FULL_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
+makefs -t ffs -M ${X_FULL_FSSIZE} -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FULL_FLAGS} -f ${X_FULL_FSINODES} ${X_FULL_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
