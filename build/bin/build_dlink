@@ -35,6 +35,8 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
 KERN_SIZE="`stat -f '%z' /tftpboot/kernel.${KERNCONF}.lzma.uImage`"
 ROOTFS_SIZE="`stat -f '%z' ${X_FSIMAGE}${X_FSIMAGE_SUFFIX}`"
 
+printf "*** Kernel size: %d bytes; Rootfs size: %d bytes\n" ${KERN_SIZE} ${ROOTFS_SIZE}
+
 if [ ${KERN_SIZE} -gt ${X_DLINK_MAX_KERN_SIZE} ]; then
 	echo "*** Kernel is too big ${KERN_SIZE} > ${X_DLINK_MAX_KERN_SIZE}!"
 	exit 1

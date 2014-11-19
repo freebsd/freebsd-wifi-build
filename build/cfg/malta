@@ -1,0 +1,13 @@
+# This is a big-endian mips build
+
+BUILDNAME=mips
+TARGET=mips
+TARGET_ARCH=mips
+TARGET_CPUTYPE=mips32
+KERNCONF=MALTA
+LOCAL_DIRS=" "
+
+X_ROOTFS_DEV="/dev/ada0"
+
+X_FULL_FSSIZE="4294967296"
+
