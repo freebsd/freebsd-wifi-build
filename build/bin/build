@@ -7,10 +7,16 @@ CUR_DIR="`pwd`"
 CFGNAME=$1
 shift
 
+USER_SETTINGS=${USER_SETTINGS:-${HOME}/.freebsd-wifi-build-settings.cfg}
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
+export USER_SETTINGS
 
 echo "*** Configuration file	: $CFGNAME"
 echo "*** Platform		: $BUILDNAME"
+if [ "x$X_BUILDASUSER" = "xYES" ]; then
+  echo "*** User build as : $LOGNAME"
+fi
 
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1

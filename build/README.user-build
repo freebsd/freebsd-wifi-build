@@ -1,0 +1,66 @@
+It is possible to build the firmware as a normal user instead of root.
+
+1. Install various prerequisites
+
+    ${SUDO} pkg install fakeroot gmake bison dialog4ports git wget subversion fakeroot lzma uboot-mkimage libtool
+
+2. Create a working directory
+
+3. Within that directory, make a copy of the freebsd sources, and freebsd-wifi-build. 
+
+   For example, using github:
+
+    git clone https://github.com/freebsd/freebsd-git
+    git clone https://github.com/freebsd/freebsd-wifi-build.git
+
+  Or from a snapshot:
+
+    unzip freebsd-release-10.1.0.zip
+    git clone https://github.com/freebsd/freebsd-wifi-build.git
+
+3. Prepare a user customisation script
+
+    echo 'X_BUILDASUSER=YES' > ~/.freebsd-wifi-build-settings.cfg
+
+   Alternatively, the following should also work for this session:
+
+    export X_BUILDASUSER=YES
+
+   Note, by default the kernel in /tftpboot will be read-only which means successive installkernel
+   will fail unless it is moved out of the way, or the option X_FORCE_TFTPCP=YES is used
+
+4. Build the userland and kernel and the staging tree
+
+    cd freebsd-release-10.1.0
+    ../freebsd-wifi-build/build/bin/build carambola2 buildworld
+    ../freebsd-wifi-build/build/bin/build carambola2 buildkernel
+    ../freebsd-wifi-build/build/bin/build carambola2 installworld
+    ../freebsd-wifi-build/build/bin/build carambola2 installkernel
+    ../freebsd-wifi-build/build/bin/build carambola2 distribution
+
+   These operations can be combined:
+
+    ../freebsd-wifi-build/build/bin/build carambola2 buildworld buildkernel installworld installkernel distribution
+
+5. Build the firmware filesystem, using fakeroot.
+
+    fakeroot ../freebsd-wifi-build/build/bin/build carambola2 mfsroot
+
+6. Customise the firmware further here
+
+7. Build the image using fakeroot
+
+   Note that currently this requires /tftpboot to be user writable
+
+    fakeroot ../freebsd-wifi-build/build/bin/build carambola2 fsimage
+    ../freebsd-wifi-build/build/bin/build carambola2 uboot
+
+8. The build produces a kernel and an MFS image. For some architectures it is also possible to combine these.
+
+   For example, for the carambola2, assuming that 2MByte is allocated to the kernel:
+
+		X_FLASH=/tftpboot/kernel.CARAMBOLA2.lzma.flash
+		dd if=/dev/zero bs=$(( 0x200000 )) count=1 of=${X_FLASH}
+		dd if=/tftpboot/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc
+		dd if=/tftpboot/mfsroot-carambola2.img.ulzma >> ${X_FLASH}
+
