@@ -1,0 +1,76 @@
+How to cross-build a port that can be used with  the mfsroot.
+
+Note - these instructions have only been tested with the user-build described in README.user-build
+
+1. Install some ports. For example, using portsnap:
+
+    cd path/to/directory/above/freebsd-wifi-build
+    mkdir portsnap ports ports-build downloads
+		portsnap -d portsnap fetch
+		portsnap -p ports extract
+
+2. Ports that rely on libraries need to be built in the correct order.
+
+3. Prepare port:
+
+		PORT=sysutils/less    # <--- FOR EXAMPLE
+    
+    WORKING=`dirname $PORT`
+    WORKING=`basename $WORKING`/`basename $PORT`
+		X_SELF_DIR=`pwd`
+		DOWNLOADS=${X_SELF_DIR}/ports-distfiles
+		X_PORTS=${X_SELF_DIR}/ports
+		X_PORTSBUILD=${X_SELF_DIR}/ports-build
+    
+    fakeroot make PORTSDIR=${X_PORTS} \
+                __MAKE_CONF=${X_SELF_DIR}/root/make.conf.mips DISABLE_MAKE_JOBS=yes \
+                DISTDIR=downloads \
+                PORT_DBDIR=${X_PORTSBUILD}/db \
+                WRKDIR=${X_PORTSBUILD}/w/${WORKING}/work \
+                STAGEDIR=${X_PORTSBUILD}/staging \
+                PREFIX=/install \
+                INSTALL_AS_USER=yes \
+                TARGET=mips \
+                TARGET_ARCH=mips \
+                TARGET_CPUTYPE=mips32 \
+                NO_DEPENDS=1 NO_PKG_REGISTER=1 DB_FROM_SRC=1 \
+                BUILD_FLAGS=NO_CLEAN=1 \
+                ${OTHER_SETTINGS} \
+                  configure
+
+4. Cross-build:
+
+   This assumes that the previous buildworld stage was completed
+
+		SOURCES=${X_SELF_DIR}/release-freebsd=10.1.0  # <-- for example
+    CROSS=${X_SELF_DIR}/obj/mips/mips.mips/${SOURCES}/tmp/usr/bin
+    PATH=${CROSS}:${PATH} fakeroot make PORTSDIR=${X_PORTS} \
+                __MAKE_CONF=${X_SELF_DIR}/root/make.conf.mips DISABLE_MAKE_JOBS=yes \
+                DISTDIR=${DOWNLOADS} \
+                PORT_DBDIR=${X_PORTSBUILD}/db \
+                WRKDIR=${X_PORTSBUILD}/w/${WORKING}/work \
+                STAGEDIR=${X_PORTSBUILD}/staging \
+                PREFIX=/install \
+                INSTALL_AS_USER=yes \
+                TARGET=mips \
+                TARGET_ARCH=mips \
+                TARGET_CPUTYPE=mips32 \
+                NO_DEPENDS=1 NO_PKG_REGISTER=1 DB_FROM_SRC=1 \
+                BUILD_FLAGS=NO_CLEAN=1 \
+                ${OTHER_SETTINGS} \
+                  install
+
+5. Copy files into the mfsroot. Do this before building the flash.
+
+    X_FROM=${X_PORTSBUILD}/staging/install
+    
+		${INSTALL_PROG} ${X_FROM}/bin/less ${X_STAGING_FSROOT}/bin/
+
+    # Note, less needs ncurses from the buildworld
+
+    X_DESTDIR=${X_SELF_DIR}/root/mips             # <-- depends on the target
+    
+		${INSTALL_PROG} ${X_DESTDIR}/lib/libncurses.so* ${X_STAGING_FSROOT}/lib/
+		${INSTALL_PROG} ${X_DESTDIR}/usr/bin/vi ${X_STAGING_FSROOT}/usr/bin/
+
+

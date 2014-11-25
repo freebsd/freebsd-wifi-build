@@ -46,7 +46,7 @@ It is possible to build the firmware as a normal user instead of root.
 
     fakeroot ../freebsd-wifi-build/build/bin/build carambola2 mfsroot
 
-6. Customise the firmware further here
+6. Customise the firmware further here, such as copying additional files / configuration into the mfsroot
 
 7. Build the image using fakeroot
 
@@ -63,4 +63,6 @@ It is possible to build the firmware as a normal user instead of root.
 		dd if=/dev/zero bs=$(( 0x200000 )) count=1 of=${X_FLASH}
 		dd if=/tftpboot/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc
 		dd if=/tftpboot/mfsroot-carambola2.img.ulzma >> ${X_FLASH}
+
+9. For building custom images it is probably going to be useful to make your own repo that scripts the above.
 
