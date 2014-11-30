@@ -1,4 +1,12 @@
-It is possible to build the firmware as a normal user instead of root.
+It is possible to build the firmware as a normal user instead of root; this is now the default.
+
+This requires the fakeroot package to be installed.
+
+To use the previous behaviour, without fakeroot, set X_BUILDASUSER=NO in your local configuration.
+
+To make the process easier, it is also useful use copies of the FreeBSD sources tree.
+
+For example:
 
 1. Install various prerequisites
 
@@ -10,7 +18,7 @@ It is possible to build the firmware as a normal user instead of root.
 
    For example, using github:
 
-    git clone https://github.com/freebsd/freebsd-git
+    git clone https://github.com/freebsd/freebsd.git
     git clone https://github.com/freebsd/freebsd-wifi-build.git
 
   Or from a snapshot:
@@ -20,14 +28,10 @@ It is possible to build the firmware as a normal user instead of root.
 
 3. Prepare a user customisation script
 
-    echo 'X_BUILDASUSER=YES' > ~/.freebsd-wifi-build-settings.cfg
-
-   Alternatively, the following should also work for this session:
-
-    export X_BUILDASUSER=YES
-
    Note, by default the kernel in /tftpboot will be read-only which means successive installkernel
    will fail unless it is moved out of the way, or the option X_FORCE_TFTPCP=YES is used
+
+    echo 'X_FORCE_TFTPCP=YES' > ~/.freebsd-wifi-build-settings.cfg
 
 4. Build the userland and kernel and the staging tree
 
@@ -42,17 +46,17 @@ It is possible to build the firmware as a normal user instead of root.
 
     ../freebsd-wifi-build/build/bin/build carambola2 buildworld buildkernel installworld installkernel distribution
 
-5. Build the firmware filesystem, using fakeroot.
+5. Build the firmware filesystem you require.
 
-    fakeroot ../freebsd-wifi-build/build/bin/build carambola2 mfsroot
+    ../freebsd-wifi-build/build/bin/build carambola2 mfsroot
 
 6. Customise the firmware further here, such as copying additional files / configuration into the mfsroot
 
-7. Build the image using fakeroot
+7. Build the image applicable for your device.
 
    Note that currently this requires /tftpboot to be user writable
 
-    fakeroot ../freebsd-wifi-build/build/bin/build carambola2 fsimage
+    ../freebsd-wifi-build/build/bin/build carambola2 fsimage
     ../freebsd-wifi-build/build/bin/build carambola2 uboot
 
 8. The build produces a kernel and an MFS image. For some architectures it is also possible to combine these.
@@ -64,5 +68,9 @@ It is possible to build the firmware as a normal user instead of root.
 		dd if=/tftpboot/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc
 		dd if=/tftpboot/mfsroot-carambola2.img.ulzma >> ${X_FLASH}
 
+   The above is now done automatically for the carambola2.
+   The separate kernel and mfs image files remain if you need to do something different.
+
 9. For building custom images it is probably going to be useful to make your own repo that scripts the above.
 
+   For an example, see https://github.com/pastcompute/carambola2-freebsd-userbuild
