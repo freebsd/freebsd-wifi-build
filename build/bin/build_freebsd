@@ -80,16 +80,16 @@ if [ "x$X_SKIP_MORE_STUFF" = "xYES" ]; then
 fi
 
 if [ "x$X_BUILDASUSER" = "xYES" ]; then
-  echo 'WITH_INSTALL_AS_USER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITH_INSTALL_AS_USER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
 if test -e "${X_EXTRA_SRC_CONF}" ; then
-  cat "${X_EXTRA_SRC_CONF}" >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	cat "${X_EXTRA_SRC_CONF}" >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
 X_CP_OPTS=""
 if [ "x${X_FORCE_TFTPCP}" = "xYES" ]; then
-  X_CP_OPTS="-f"
+	X_CP_OPTS="-f"
 fi
 
 
@@ -125,9 +125,9 @@ while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" -o "$1" = "installkernel" -o "$1" = "distribution" ]; then
 		X_DESTDIR_LINE="DESTDIR=${X_DESTDIR}"
 	fi
-  if [ "x$X_BUILDASUSER" = "xYES" ]; then
+	if [ "x$X_BUILDASUSER" = "xYES" ]; then
 		X_DESTDIR_LINE="${X_DESTDIR_LINE} -DNO_ROOT"
-  fi
+	fi
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
 	    TARGET=${TARGET}					\
