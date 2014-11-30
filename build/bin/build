@@ -12,10 +12,26 @@ USER_SETTINGS=${USER_SETTINGS:-${HOME}/.freebsd-wifi-build-settings.cfg}
 test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
 export USER_SETTINGS
 
+X_BUILDASUSER=${X_BUILDASUSER:-YES}
+export X_BUILDASUSER
+
 echo "*** Configuration file	: $CFGNAME"
 echo "*** Platform		: $BUILDNAME"
 if [ "x$X_BUILDASUSER" = "xYES" ]; then
   echo "*** User build as : $LOGNAME"
+  # NOTE: we could test if ${X_FAKEROOT} exists, but it might be a list rather than a single binary
+  #       so just handle the default case
+  if [ "x${X_FAKEROOT}" = "x" ] ; then
+    if ! test -x `which fakeroot` ; then
+      echo "Cannot find fakeroot in PATH, fakeroot is required for user build."
+      exit 1
+    fi
+    X_FAKEROOT=fakeroot
+  fi
+  # NOTE: currently, we still require user access to /tftpboot
+else
+  echo "*** System build as : $LOGNAME"
+  unset X_FAKEROOT
 fi
 
 # include the config variable generation code
@@ -54,19 +70,19 @@ while [ "x$1" != "x" ]; do
 			${SCRIPT_DIR}/build_uboot ${CFGNAME} || exit 1
 		;;
 		'fsimage')
-			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
+			${X_FAKEROOT} ${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;
 		'fullfsimage')
-			${SCRIPT_DIR}/build_fullfsimage ${CFGNAME} || exit 1
+			${X_FAKEROOT} ${SCRIPT_DIR}/build_fullfsimage ${CFGNAME} || exit 1
 		;;
 		'tinymfsroot')
-			${SCRIPT_DIR}/build_tinymfsroot ${CFGNAME} || exit 1
+			${X_FAKEROOT} ${SCRIPT_DIR}/build_tinymfsroot ${CFGNAME} || exit 1
 		;;
 		'mfsroot')
-			${SCRIPT_DIR}/build_mfsroot ${CFGNAME} || exit 1
+			${X_FAKEROOT} ${SCRIPT_DIR}/build_mfsroot ${CFGNAME} || exit 1
 		;;
 		'fullroot')
-			${SCRIPT_DIR}/build_fullroot ${CFGNAME} || exit 1
+			${X_FAKEROOT} ${SCRIPT_DIR}/build_fullroot ${CFGNAME} || exit 1
 		;;
 		'netboot')
 			${SCRIPT_DIR}/build_netboot ${CFGNAME} || exit 1
