@@ -146,7 +146,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/usr/bin/vmstat ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/bin/systat ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libdevstat.so.7 ${X_STAGING_FSROOT}/lib/
 
-# libraries are for grep, tar, cpio
+# libraries are for grep, tar, cpio, df
 ${INSTALL_PROG} ${X_DESTDIR}/usr/bin/tar ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/bin/cpio ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/bin/grep ${X_STAGING_FSROOT}/usr/bin/
@@ -283,6 +283,9 @@ ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libssl.so.7 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
+
+# libgpio is a stand alone library now, needed for gpioctl
+${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libgpio.so.0 ${X_STAGING_FSROOT}/usr/lib/
 
 # RC script
 ${INSTALL_PROG} ${X_BASEDIR}/files/rc ${X_STAGING_FSROOT}/etc/
