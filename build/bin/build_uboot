@@ -29,4 +29,14 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   /tftpboot/kernel.${KERNCONF}.lzma.uImage \
   || exit 1
 
+if [ "x${UBOOT_COMBINED}" = "xYES" ]; then
+	# concatenate the kernel image (1m aligned 1024*1024==1048576
+	# the filesystem image and the dlink signature for this image
+	(
+        	dd if=/tftpboot/kernel.${KERNCONF}.lzma.uImage bs=1M conv=sync;
+        	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ;
+        	echo -n "${X_DLINK_SIGNATURE}"
+	) > /tftpboot/${CFGNAME}.factory.img
+fi
+
 exit 0
