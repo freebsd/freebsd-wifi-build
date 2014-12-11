@@ -1,2 +1,6 @@
+For general instructions on building, by default as a user, see README.user-build
+For attempting to include ports in your image, see README.ports-build
+For information on retaining specific local customations, see README.user-settings
+
 I'll add more to this soon.
 

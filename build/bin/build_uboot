@@ -29,4 +29,13 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   /tftpboot/kernel.${KERNCONF}.lzma.uImage \
   || exit 1
 
+# If this is a carambola we can also create a single image with both the kernel and
+# filesystem, to make flashing more efficient
+if [ "$CFGNAME" = "carambola2" ] ; then
+  X_FLASH=/tftpboot/kernel.CARAMBOLA2.lzma.flash
+  dd if=/dev/zero bs=$(( 0x200000 )) count=1 of=${X_FLASH} || exit 1
+  dd if=/tftpboot/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc || exit 1
+  dd if=/tftpboot/mfsroot-carambola2.img.ulzma >> ${X_FLASH} || exit 1
+fi
+
 exit 0

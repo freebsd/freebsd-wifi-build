@@ -34,6 +34,12 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
+test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
+
+if [ "x${X_SETX_DEBUG}" = "xYES" ]; then
+  set -x
+fi
+
 echo "MAKEOBJDIRPREFIX: ${X_MAKEOBJDIRPREFIX}"
 
 mkdir -p ${X_MAKEOBJDIRPREFIX} || exit 1
@@ -61,8 +67,34 @@ echo 'WITHOUT_CLANG_IS_CC="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_CASPER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_CAPSICUM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+if [ "x$X_SKIP_MORE_STUFF" = "xYES" ]; then
+	echo 'WITHOUT_GAMES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_DOCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_MAN="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_INFO="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_LOCALES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_NLS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_EXAMPLES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_ZFS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_RCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+fi
+
+if [ "x$X_BUILDASUSER" = "xYES" ]; then
+	echo 'WITH_INSTALL_AS_USER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+fi
+
+if test -e "${X_EXTRA_SRC_CONF}" ; then
+	cat "${X_EXTRA_SRC_CONF}" >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+fi
+
+X_CP_OPTS=""
+if [ "x${X_FORCE_TFTPCP}" = "xYES" ]; then
+	X_CP_OPTS="-f"
+fi
+
 
 while [ "x$1" != "x" ]; do
+	echo "*** Stage		: $1"
 	if [ "$1" = "installworld" ]; then
 		mkdir -p ${X_DESTDIR}/usr/local/bin/
 		mkdir -p ${X_DESTDIR}/bsdbox/
@@ -93,7 +125,9 @@ while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" -o "$1" = "installkernel" -o "$1" = "distribution" ]; then
 		X_DESTDIR_LINE="DESTDIR=${X_DESTDIR}"
 	fi
-
+	if [ "x$X_BUILDASUSER" = "xYES" ]; then
+		X_DESTDIR_LINE="${X_DESTDIR_LINE} -DNO_ROOT"
+	fi
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
 	    TARGET=${TARGET}					\
@@ -112,8 +146,8 @@ while [ "x$1" != "x" ]; do
 	if [ "$1" = "installkernel" ]; then
 		echo "*** Copying kernel to /tftpboot/kernel.${X_KERNSUFFIX}"
 		mkdir -p /tftpboot/
-		cp ${X_KERNEL} /tftpboot/kernel.${X_KERNSUFFIX}
-		cp ${X_KERNEL}.symbols /tftpboot/kernel.${X_KERNSUFFIX}.symbols
+		cp ${X_CP_OPTS} ${X_KERNEL} /tftpboot/kernel.${X_KERNSUFFIX}
+		cp ${X_CP_OPTS} ${X_KERNEL}.symbols /tftpboot/kernel.${X_KERNSUFFIX}.symbols
 	fi
 	shift
 done

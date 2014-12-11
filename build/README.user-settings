@@ -1,0 +1,29 @@
+The user settings file if present allow user-specific tweaking of the build.
+
+If unspecified, defaults to ${HOME}/.freebsd-wifi-build-settings.cfg
+The default can be changed by setting USER_SETTINGS=somefile.cfg in the shell.
+If not present it is ignored.
+
+Currently the following options can be set:
+
+X_BUILDASUSER      If YES then changes `src.conf` and the environment passed to
+                   `make world`, etc., that support building as the currently
+                   logged-in user instead of root
+
+X_SKIP_MORE_STUFF  If YES then add more WITHOUT_ options to src.conf that ensure
+                   things like info, man, games and examples are not built.
+                   This greatly decreases build time when testing images.
+
+X_EXTRA_SRC_CONF   If set, append this file to end of the generated src.conf
+                   If not absolute path, is interpeted relative to ${CUR_DIR}
+
+X_FORCE_TFTPCP     If YES then use '-f' with cp to ./tftpboot ; this is an 
+                   interim workaround, until Github issue #3 is solved.
+
+X_SETX_DEBUG       If YES then turn on `set -x` in some scripts.
+
+These will also take effect if set on the command line environment, but that is
+only recommended for testing, because if settings get out of synch between calls
+it can lead to hard to diagnose build problems.
+
+Note that setting any other code in this file may break things unexpectedly.
