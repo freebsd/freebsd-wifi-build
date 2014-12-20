@@ -15,6 +15,9 @@
 sysctl dev.ath.0.txq_mcastq_maxdepth=32
 sysctl dev.ath.1.txq_mcastq_maxdepth=32
 
+sysctl dev.ath.0.hal.force_full_reset=1
+sysctl dev.ath.1.hal.force_full_reset=1
+
 cmd=$1
 shift
 
