@@ -90,6 +90,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/sbin/dmesg ${X_STAGING_FSROOT}/sbin/
 ${INSTALL_PROG} ${X_DESTDIR}/sbin/kldload ${X_STAGING_FSROOT}/sbin/
 ${INSTALL_PROG} ${X_DESTDIR}/sbin/kldunload ${X_STAGING_FSROOT}/sbin/
 ${INSTALL_PROG} ${X_DESTDIR}/sbin/kldstat ${X_STAGING_FSROOT}/sbin/
+${INSTALL_PROG} ${X_DESTDIR}/sbin/ipfw ${X_STAGING_FSROOT}/sbin/
 
 # ethernet switch
 ${INSTALL_PROG} ${X_DESTDIR}/sbin/etherswitchcfg ${X_STAGING_FSROOT}/sbin/
