@@ -28,6 +28,7 @@
 # 
 # netif_IF_wifi_mode="<hostap|sta|mesh|adhoc|..>"
 # netif_IF_wifi_parent="ath0"
+# netif_IF_wifi_parent_cfg="<anything>"
 # netif_IF_wifi_createargs1="country X regdomain Y ssid Z channel Y up"
 # netif_IF_wifi_createargs2="txpower X"
 # netif_IF_wifi_createargs3="(anything else)"
@@ -49,6 +50,7 @@ netif_enable=`get_if_var $ifname netif_IF_enable no`
 netif_addrtype=`get_if_var $ifname netif_IF_addrtype none`
 netif_descr=`get_if_var $ifname netif_IF_descr ''`
 netif_name=`get_if_var $ifname netif_IF_name`
+netif_parent_cfg=`get_if_var $ifname netif_IF_parent_cfg`
 
 netif_ipv4_address=`get_if_var $ifname netif_IF_ipv4_address`
 netif_ipv4_netmask=`get_if_var $ifname netif_IF_ipv4_netmask`
@@ -68,6 +70,11 @@ netif_wifi_wpasupplicant_conf="`get_if_var $ifname netif_IF_wifi_wpasupplicant_c
 case $cmd in
 	'start')
 		echo "*** Interface: ${ifname}: start"
+
+		if [ "x${netif_parent_cfg}" != "x" ]; then
+			ifconfig ${netif_wifi_parent} ${netif_parent_cfg}
+		fi
+
 		ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
 		    wlanmode ${netif_wifi_mode} bssid
 		ifconfig ${netif_name} ${netif_wifi_createargs1}
