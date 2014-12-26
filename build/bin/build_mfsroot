@@ -156,7 +156,7 @@ ${INSTALL_PROG} ${X_DESTDIR}/lib/libz.so.6 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libarchive.so.6 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/lib/libmd.so.6 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/liblzma.so.5 ${X_STAGING_FSROOT}/usr/lib/
-${INSTALL_PROG} ${X_DESTDIR}/usr/lib/libxo.so.0 ${X_STAGING_FSROOT}/usr/lib/
+${INSTALL_PROG} ${X_DESTDIR}/lib/libxo.so.0 ${X_STAGING_FSROOT}/lib/
 
 # libraries for wlanstats, athstats
 ${INSTALL_PROG} ${X_DESTDIR}/usr/lib/private/libbsdstat.so.1 ${X_STAGING_FSROOT}/usr/lib/
