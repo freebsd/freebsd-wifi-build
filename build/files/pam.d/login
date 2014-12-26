@@ -9,7 +9,7 @@ auth		sufficient	pam_self.so		no_warn
 auth		include		system
 
 # account
-account		requisite	pam_securetty.so
+#account		requisite	pam_securetty.so
 account		required	pam_nologin.so
 account		include		system
 
