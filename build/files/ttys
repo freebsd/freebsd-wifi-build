@@ -4,21 +4,3 @@ console none			unknown off secure
 
 # Serial terminals
 ttyu0	"/usr/libexec/getty 3wire"	vt100	on	secure
-
-# Pseudo terminals
-ttyp0 	none			network
-ttyp1 	none			network
-ttyp2 	none			network
-ttyp3 	none			network
-ttyp4 	none			network
-ttyp5 	none			network
-ttyp6 	none			network
-ttyp7 	none			network
-ttyp8 	none			network
-ttyp9 	none			network
-ttypa 	none			network
-ttypb 	none			network
-ttypc 	none			network
-ttypd 	none			network
-ttype 	none			network
-ttypf 	none			network
