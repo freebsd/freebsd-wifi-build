@@ -1,4 +1,4 @@
 
-SUBDIR=	mktplinkfw ubnt-mkfwimage
+SUBDIR=	mktplinkfw mktplinkfw2 ubnt-mkfwimage
 
 .include <bsd.subdir.mk>
