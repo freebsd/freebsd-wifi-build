@@ -14,7 +14,7 @@ shift
 
 echo "*** Running makefs to build compressed image .. "
 echo "*** from ${X_STAGING_FSROOT} .."
-makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FLAGS} -f 1000 ${X_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
+makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FLAGS} -x -F ${X_STAGING_METALOG} -f 1000 ${X_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
 
 echo "*** Running ${X_FSIMAGE_CMD} to create a compressed filesystem .. "
 ${X_FSIMAGE_CMD} ${X_FSIMAGE_ARGS} \

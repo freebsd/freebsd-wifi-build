@@ -125,9 +125,11 @@ while [ "x$1" != "x" ]; do
 	if [ "$1" = "installworld" -o "$1" = "installkernel" -o "$1" = "distribution" ]; then
 		X_DESTDIR_LINE="DESTDIR=${X_DESTDIR}"
 	fi
+
 	if [ "x$X_BUILDASUSER" = "xYES" ]; then
-		X_DESTDIR_LINE="${X_DESTDIR_LINE} -DNO_ROOT"
+		X_DESTDIR_LINE="${X_DESTDIR_LINE} NO_ROOT=1"
 	fi
+
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
 	    TARGET=${TARGET}					\
