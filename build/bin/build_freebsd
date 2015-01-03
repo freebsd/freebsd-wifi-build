@@ -87,11 +87,9 @@ if test -e "${X_EXTRA_SRC_CONF}" ; then
 	cat "${X_EXTRA_SRC_CONF}" >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
-X_CP_OPTS=""
-if [ "x${X_FORCE_TFTPCP}" = "xYES" ]; then
-	X_CP_OPTS="-f"
-fi
-
+# Always force copy; otherwise we may not be able to overwrite
+# the stuff we've placed in /tftpboot/
+X_CP_OPTS="-f"
 
 while [ "x$1" != "x" ]; do
 	echo "*** Stage		: $1"
