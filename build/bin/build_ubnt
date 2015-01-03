@@ -26,9 +26,9 @@ echo "X_KERNEL: ${X_KERNEL}"
 if [ "$X_UBOOT" = "YES" ]; then
 echo "Using uboot-friendly kernel"
 ${SCRIPT_DIR}/../../programs/ubnt-mkfwimage/mkfwimage	\
-    -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k /tftpboot/kernel.${KERNCONF}.lzma.uImage \
-    -C ${BIN_CFG_SIZE} -c ${X_CFGFS} -r /tftpboot/mfsroot-${CFGNAME}.img${X_FSIMAGE_SUFFIX} \
-    -o /tftpboot/${KERNCONF}.initial.img
+    -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage \
+    -C ${BIN_CFG_SIZE} -c ${X_CFGFS} -r ${X_TFTPBOOT}/mfsroot-${CFGNAME}.img${X_FSIMAGE_SUFFIX} \
+    -o ${X_TFTPBOOT}/${KERNCONF}.initial.img
 
 else
 
@@ -37,6 +37,6 @@ cat ${X_KERNEL} | gzip -9 | dd if=/dev/stdin of=${X_KERNEL}.gz bs=64k conv=sync
 ${SCRIPT_DIR}/../../programs/ubnt-mkfwimage/mkfwimage  \
     -B ${UBNT_ARCH} -v ${UBNT_VERSION} -k ${X_KERNEL}.gz \
     -C ${BIN_CFG_SIZE} -c ${X_CFGFS} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
-    -o /tftpboot/${KERNCONF}.initial.img
+    -o ${X_TFTPBOOT}/${KERNCONF}.initial.img
 
 fi

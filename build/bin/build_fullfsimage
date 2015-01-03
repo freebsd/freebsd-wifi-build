@@ -14,4 +14,4 @@ shift
 
 echo "*** Running makefs to build image .. "
 echo "*** from ${X_STAGING_FSROOT} .."
-makefs -t ffs -M ${X_FULL_FSSIZE} -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FULL_FLAGS} -f ${X_FULL_FSINODES} ${X_FULL_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
+makefs -t ffs -M ${X_FULL_FSSIZE} -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FULL_FLAGS} -x -F ${X_STAGING_METALOG} -f ${X_FULL_FSINODES} ${X_FULL_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
