@@ -45,6 +45,14 @@ rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 
 # .. now, kernel; that's living elsewhere?
 
+# TODO:
+#
+# Populate a second METALOG; pass in two to makefs so it joins them
+# together and adds/overrides things appropriately.
+#
+# Use install with the right metalog/destdir stuff so it populates
+# the second metalog!
+
 # now, default /etc/fstab
 # XXX TODO: label!
 echo "${X_ROOTFS_DEV} / ufs rw 1 1" > ${X_STAGING_TMPDIR}/fstab
