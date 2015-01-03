@@ -41,6 +41,6 @@ dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ibs=8192 iseek=0 of=${X_KERNEL}.netboot ob
 echo "*** generate md5 for ${X_KERNEL}.netboot"
 md5 -q ${X_KERNEL}.netboot > ${X_KERNEL}.netboot.md5
 
-cp ${X_KERNEL}.netboot /tftpboot/kernel.${KERNCONF}.netboot
+cp ${X_KERNEL}.netboot ${X_TFTPBOOT}/kernel.${KERNCONF}.netboot
 
 echo "*** Complete."

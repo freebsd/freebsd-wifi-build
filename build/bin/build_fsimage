@@ -20,4 +20,4 @@ echo "*** Running ${X_FSIMAGE_CMD} to create a compressed filesystem .. "
 ${X_FSIMAGE_CMD} ${X_FSIMAGE_ARGS} \
     -o ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ${X_FSIMAGE} \
     || exit 1
-cp ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} /tftpboot
+cp -f ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ${X_TFTPBOOT}

@@ -88,7 +88,7 @@ if test -e "${X_EXTRA_SRC_CONF}" ; then
 fi
 
 # Always force copy; otherwise we may not be able to overwrite
-# the stuff we've placed in /tftpboot/
+# the stuff we've placed in ${X_TFTPBOOT}/
 X_CP_OPTS="-f"
 
 while [ "x$1" != "x" ]; do
@@ -144,10 +144,10 @@ while [ "x$1" != "x" ]; do
 	    $1							\
 	|| exit 1
 	if [ "$1" = "installkernel" ]; then
-		echo "*** Copying kernel to /tftpboot/kernel.${X_KERNSUFFIX}"
-		mkdir -p /tftpboot/
-		cp ${X_CP_OPTS} ${X_KERNEL} /tftpboot/kernel.${X_KERNSUFFIX}
-		cp ${X_CP_OPTS} ${X_KERNEL}.symbols /tftpboot/kernel.${X_KERNSUFFIX}.symbols
+		echo "*** Copying kernel to ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}"
+		mkdir -p ${X_TFTPBOOT}
+		cp ${X_CP_OPTS} ${X_KERNEL} ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}
+		cp ${X_CP_OPTS} ${X_KERNEL}.symbols ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.symbols
 	fi
 	shift
 done
