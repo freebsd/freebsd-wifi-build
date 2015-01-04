@@ -40,7 +40,7 @@ BUILD_FLAGS=${BUILD_FLAGS:="NO_CLEAN=1 -j2"}
 # BUILD_FLAGS
 # LOCAL_DIRS
 
-# X_KERNSUFFIX - which suffix to install the kernel file in /tftpboot
+# X_KERNSUFFIX - which suffix to install the kernel file in ${X_TFTPBOOT}
 # with.  Defaults to KERNCONF but in some instances we'll want
 # to force a different name (eg MALTA for both little and big endian
 # is the same kernel name, so it builds and installs under MALTA.)
@@ -63,6 +63,9 @@ X_FULL_FSSIZE=${X_FULL_FSSIZE:="1073741824"}
 
 # X_FULL_FSINODES - how many inodes to have free?
 X_FULL_FSINODES=${X_FULL_FSINODES:="1048576"}
+
+# Where to install things for TFTPBOOT.
+X_TFTPBOOT=${X_TFTPBOOT:="/tftpboot"}
 
 # Variables defined by this script
 
@@ -94,11 +97,14 @@ X_FSIMAGE_ARGS=${X_FSIMAGE_ARGS:="-s 16384"}
 # X_STAGING_FSROOT
 X_STAGING_FSROOT="${CUR_DIR}/../mfsroot/${CFGNAME}"
 
+# X_STAGING_METALOG
+X_STAGING_METALOG="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}"
+
 # X_STAGING_TMPDIR
 X_STAGING_TMPDIR="${CUR_DIR}/../tmp/${CFGNAME}"
 
 # X_KERNEL
-X_TFTPBOOT_KERNEL="/tftpboot/kernel.${KERNCONF}"
+X_TFTPBOOT_KERNEL="${X_TFTPBOOT}/kernel.${KERNCONF}"
 X_KERNEL="${X_DESTDIR}/boot/kernel.${KERNCONF}/kernel"
 
 # Configuration filesystem image

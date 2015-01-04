@@ -21,52 +21,17 @@
 #include <stdarg.h>
 #include <errno.h>
 #include <sys/stat.h>
-
 #include <openssl/md5.h>
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+
 #define ALIGN(x,a) ({ typeof(a) __a = (a); (((x) + __a - 1) & ~(__a - 1)); })
 
-#define HEADER_VERSION_V1	0x01000000
-#define HWID_GL_INET_V1		0x08000001
-#define HWID_GS_OOLITE_V1	0x3C000101
-#define HWID_TL_MR10U_V1	0x00100101
-#define HWID_TL_MR13U_V1	0x00130101
-#define HWID_TL_MR3020_V1	0x30200001
-#define HWID_TL_MR3220_V1	0x32200001
-#define HWID_TL_MR3220_V2	0x32200002
-#define HWID_TL_MR3420_V1	0x34200001
-#define HWID_TL_MR3420_V2	0x34200002
-#define HWID_TL_WA701N_V1	0x07010001
-#define HWID_TL_WA7510N_V1	0x75100001
-#define HWID_TL_WA801ND_V1	0x08010001
-#define HWID_TL_WA830RE_V1	0x08300010
-#define HWID_TL_WA830RE_V2	0x08300002
-#define HWID_TL_WA801ND_V2	0x08010002
-#define HWID_TL_WA901ND_V1	0x09010001
-#define HWID_TL_WA901ND_V2	0x09010002
-#define HWID_TL_WDR4300_V1_IL	0x43008001
-#define HWID_TL_WDR4900_V1	0x49000001
-#define HWID_TL_WR703N_V1	0x07030101
-#define HWID_TL_WR720N_V3	0x07200103
-#define HWID_TL_WR741ND_V1	0x07410001
-#define HWID_TL_WR741ND_V4	0x07410004
-#define HWID_TL_WR740N_V1	0x07400001
-#define HWID_TL_WR740N_V3	0x07400003
-#define HWID_TL_WR743ND_V1	0x07430001
-#define HWID_TL_WR743ND_V2	0x07430002
-#define HWID_TL_WR841N_V1_5	0x08410002
-#define HWID_TL_WR841ND_V3	0x08410003
-#define HWID_TL_WR841ND_V5	0x08410005
-#define HWID_TL_WR841ND_V7	0x08410007
-#define HWID_TL_WR941ND_V2	0x09410002
-#define HWID_TL_WR941ND_V4	0x09410004
-#define HWID_TL_WR1043ND_V1	0x10430001
-#define HWID_TL_WR1043ND_V2	0x10430002
-#define HWID_TL_WR1041N_V2	0x10410002
-#define HWID_TL_WR2543N_V1	0x25430001
+#define HEADER_VERSION_V2	0x02000000
+
+#define HWID_TD_W8970_V1		0x89700001
 
 #define MD5SUM_LEN	16
 
@@ -76,29 +41,33 @@ struct file_info {
 };
 
 struct fw_header {
-	uint32_t	version;	/* header version */
-	char		vendor_name[24];
-	char		fw_version[36];
-	uint32_t	hw_id;		/* hardware id */
-	uint32_t	hw_rev;		/* hardware revision */
-	uint32_t	unk1;
-	uint8_t		md5sum1[MD5SUM_LEN];
-	uint32_t	unk2;
-	uint8_t		md5sum2[MD5SUM_LEN];
-	uint32_t	unk3;
-	uint32_t	kernel_la;	/* kernel load address */
-	uint32_t	kernel_ep;	/* kernel entry point */
-	uint32_t	fw_length;	/* total length of the firmware */
-	uint32_t	kernel_ofs;	/* kernel data offset */
-	uint32_t	kernel_len;	/* kernel data length */
-	uint32_t	rootfs_ofs;	/* rootfs data offset */
-	uint32_t	rootfs_len;	/* rootfs data length */
-	uint32_t	boot_ofs;	/* bootloader data offset */
-	uint32_t	boot_len;	/* bootloader data length */
-	uint16_t	ver_hi;
-	uint16_t	ver_mid;
-	uint16_t	ver_lo;
-	uint8_t		pad[354];
+	uint32_t	version;	/* 0x00: header version */
+	char		fw_version[48]; /* 0x04: fw version string */
+	uint32_t	hw_id;		/* 0x34: hardware id */
+	uint32_t	hw_rev;		/* 0x38: FIXME: hardware revision? */
+	uint32_t	unk1;	        /* 0x3c: 0x00000000 */
+	uint8_t		md5sum1[MD5SUM_LEN]; /* 0x40 */
+	uint32_t	unk2;		/* 0x50: 0x00000000 */
+	uint8_t		md5sum2[MD5SUM_LEN]; /* 0x54 */
+	uint32_t	unk3;		/* 0x64: 0xffffffff */
+
+	uint32_t	kernel_la;	/* 0x68: kernel load address */
+	uint32_t	kernel_ep;	/* 0x6c: kernel entry point */
+	uint32_t	fw_length;	/* 0x70: total length of the image */
+	uint32_t	kernel_ofs;	/* 0x74: kernel data offset */
+	uint32_t	kernel_len;	/* 0x78: kernel data length */
+	uint32_t	rootfs_ofs;	/* 0x7c: rootfs data offset */
+	uint32_t	rootfs_len;	/* 0x80: rootfs data length */
+	uint32_t	boot_ofs;	/* 0x84: FIXME: seems to be unused */
+	uint32_t	boot_len;	/* 0x88: FIXME: seems to be unused */
+	uint16_t	unk4;		/* 0x8c: 0x55aa */
+	uint8_t		sver_hi;	/* 0x8e */
+	uint8_t		sver_lo;	/* 0x8f */
+	uint8_t		unk5;		/* 0x90: magic: 0xa5 */
+	uint8_t		ver_hi;         /* 0x91 */
+	uint8_t		ver_mid;        /* 0x92 */
+	uint8_t		ver_lo;         /* 0x93 */
+	uint8_t		pad[364];
 } __attribute__ ((packed));
 
 struct flash_layout {
@@ -124,6 +93,7 @@ static char *progname;
 static char *vendor = "TP-LINK Technologies";
 static char *version = "ver. 1.0";
 static char *fw_ver = "0.0.0";
+static char *sver = "1.0";
 
 static char *board_id;
 static struct board_info *board;
@@ -136,6 +106,8 @@ static uint32_t hw_rev;
 static int fw_ver_lo;
 static int fw_ver_mid;
 static int fw_ver_hi;
+static int sver_lo;
+static int sver_hi;
 static struct file_info kernel_info;
 static uint32_t kernel_la = 0;
 static uint32_t kernel_ep = 0;
@@ -148,15 +120,13 @@ static int combined;
 static int strip_padding;
 static int add_jffs2_eof;
 static unsigned char jffs2_eof_mark[4] = {0xde, 0xad, 0xc0, 0xde};
-static uint32_t fw_max_len;
-static uint32_t reserved_space;
 
 static struct file_info inspect_info;
 static int extract = 0;
 
 char md5salt_normal[MD5SUM_LEN] = {
 	0xdc, 0xd7, 0x3a, 0xa5, 0xc3, 0x95, 0x98, 0xfb,
-	0xdd, 0xf9, 0xe7, 0xf4, 0x0e, 0xae, 0x47, 0x38,
+	0xdc, 0xf9, 0xe7, 0xf4, 0x0e, 0xae, 0x47, 0x37,
 };
 
 char md5salt_boot[MD5SUM_LEN] = {
@@ -166,47 +136,11 @@ char md5salt_boot[MD5SUM_LEN] = {
 
 static struct flash_layout layouts[] = {
 	{
-		.id		= "4M",
-		.fw_max_len	= 0x3c0000,
-		.kernel_la	= 0x80060000,
-		.kernel_ep	= 0x80060000,
+		.id		= "8Mltq",
+		.fw_max_len	= 0x7a0000,
+		.kernel_la	= 0x80002000,
+		.kernel_ep	= 0x80002000,
 		.rootfs_ofs	= 0x140000,
-	}, {
-		.id		= "4Mlzma",
-		.fw_max_len	= 0x3c0000,
-		.kernel_la	= 0x80060000,
-		.kernel_ep	= 0x80060000,
-		.rootfs_ofs	= 0x100000,
-	}, {
-		.id		= "8M",
-		.fw_max_len	= 0x7c0000,
-		.kernel_la	= 0x80060000,
-		.kernel_ep	= 0x80060000,
-		.rootfs_ofs	= 0x140000,
-	}, {
-		.id		= "8Mlzma",
-		.fw_max_len	= 0x7c0000,
-		.kernel_la	= 0x80060000,
-		.kernel_ep	= 0x80060000,
-		.rootfs_ofs	= 0x100000,
-	}, {
-		.id		= "16M",
-		.fw_max_len	= 0xf80000,
-		.kernel_la	= 0x80060000,
-		.kernel_ep	= 0x80060000,
-		.rootfs_ofs	= 0x140000,
-	}, {
-		.id		= "16Mlzma",
-		.fw_max_len	= 0xf80000,
-		.kernel_la	= 0x80060000,
-		.kernel_ep	= 0x80060000,
-		.rootfs_ofs	= 0x100000,
-	}, {
-		.id		= "16Mppc",
-		.fw_max_len	= 0xf80000,
-		.kernel_la	= 0x00000000,
-		.kernel_ep	= 0xc0000000,
-		.rootfs_ofs	= 0x2a0000,
 	}, {
 		/* terminating entry */
 	}
@@ -214,190 +148,10 @@ static struct flash_layout layouts[] = {
 
 static struct board_info boards[] = {
 	{
-		.id		= "TL-MR10Uv1",
-		.hw_id		= HWID_TL_MR10U_V1,
+		.id		= "TD-W8970v1",
+		.hw_id		= HWID_TD_W8970_V1,
 		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-MR13Uv1",
-		.hw_id		= HWID_TL_MR13U_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-MR3020v1",
-		.hw_id		= HWID_TL_MR3020_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-MR3220v1",
-		.hw_id		= HWID_TL_MR3220_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-MR3220v2",
-		.hw_id		= HWID_TL_MR3220_V2,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-MR3420v1",
-		.hw_id		= HWID_TL_MR3420_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-MR3420v2",
-		.hw_id		= HWID_TL_MR3420_V2,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-WA701Nv1",
-		.hw_id		= HWID_TL_WA701N_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WA7510N",
-		.hw_id		= HWID_TL_WA7510N_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WA801NDv1",
-		.hw_id		= HWID_TL_WA801ND_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WA830REv1",
-		.hw_id		= HWID_TL_WA830RE_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WA830REv2",
-		.hw_id		= HWID_TL_WA830RE_V2,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id             = "TL-WA801NDv2",
-		.hw_id          = HWID_TL_WA801ND_V2,
-		.hw_rev         = 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-WA901NDv1",
-		.hw_id		= HWID_TL_WA901ND_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id             = "TL-WA901NDv2",
-		.hw_id          = HWID_TL_WA901ND_V2,
-		.hw_rev         = 1,
-		.layout_id	= "4M",
-	}, {
-		.id             = "TL-WDR4300v1",
-		.hw_id          = HWID_TL_WDR4300_V1_IL,
-		.hw_rev         = 1,
-		.layout_id	= "8Mlzma",
-	}, {
-		.id             = "TL-WDR4900v1",
-		.hw_id          = HWID_TL_WDR4900_V1,
-		.hw_rev         = 1,
-		.layout_id	= "16Mppc",
-	}, {
-		.id		= "TL-WR741NDv1",
-		.hw_id		= HWID_TL_WR741ND_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR741NDv4",
-		.hw_id		= HWID_TL_WR741ND_V4,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-WR740Nv1",
-		.hw_id		= HWID_TL_WR740N_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR740Nv3",
-		.hw_id		= HWID_TL_WR740N_V3,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR743NDv1",
-		.hw_id		= HWID_TL_WR743ND_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR743NDv2",
-		.hw_id		= HWID_TL_WR743ND_V2,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-WR841Nv1.5",
-		.hw_id		= HWID_TL_WR841N_V1_5,
-		.hw_rev		= 2,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR841NDv3",
-		.hw_id		= HWID_TL_WR841ND_V3,
-		.hw_rev		= 3,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR841NDv5",
-		.hw_id		= HWID_TL_WR841ND_V5,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR841NDv7",
-		.hw_id		= HWID_TL_WR841ND_V7,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR941NDv2",
-		.hw_id		= HWID_TL_WR941ND_V2,
-		.hw_rev		= 2,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR941NDv4",
-		.hw_id		= HWID_TL_WR941ND_V4,
-		.hw_rev		= 1,
-		.layout_id	= "4M",
-	}, {
-		.id		= "TL-WR1041Nv2",
-		.hw_id		= HWID_TL_WR1041N_V2,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-WR1043NDv1",
-		.hw_id		= HWID_TL_WR1043ND_V1,
-		.hw_rev		= 1,
-		.layout_id	= "8M",
-	}, {
-		.id		= "TL-WR1043NDv2",
-		.hw_id		= HWID_TL_WR1043ND_V2,
-		.hw_rev		= 1,
-		.layout_id	= "8Mlzma",
-	}, {
-		.id		= "TL-WR2543Nv1",
-		.hw_id		= HWID_TL_WR2543N_V1,
-		.hw_rev		= 1,
-		.layout_id	= "8Mlzma",
-	}, {
-		.id		= "TL-WR703Nv1",
-		.hw_id		= HWID_TL_WR703N_V1,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "TL-WR720Nv3",
-		.hw_id		= HWID_TL_WR720N_V3,
-		.hw_rev		= 1,
-		.layout_id	= "4Mlzma",
-	}, {
-		.id		= "GL-INETv1",
-		.hw_id		= HWID_GL_INET_V1,
-		.hw_rev		= 1,
-		.layout_id	= "8Mlzma",
-	}, {
-		.id		= "GS-OOLITEv1",
-		.hw_id		= HWID_GS_OOLITE_V1,
-		.hw_rev		= 1,
-		.layout_id	= "16Mlzma",
+		.layout_id	= "8Mltq",
 	}, {
 		/* terminating entry */
 	}
@@ -490,12 +244,11 @@ static void usage(int status)
 "  -o <file>       write output to the file <file>\n"
 "  -s              strip padding from the end of the image\n"
 "  -j              add jffs2 end-of-filesystem markers\n"
-"  -N <vendor>     set image vendor to <vendor>\n"
 "  -V <version>    set image version to <version>\n"
 "  -v <version>    set firmware version to <version>\n"
+"  -y <version>    set secondary version to <version>\n"
 "  -i <file>       inspect given firmware file <file>\n"
 "  -x              extract kernel and rootfs while inspecting (requires -i)\n"
-"  -X <size>       reserve <size> bytes in the firmware image (hexval prefixed with 0x)\n"
 "  -h              show this screen\n"
 	);
 
@@ -612,13 +365,6 @@ static int check_options(void)
 	if (!rootfs_ofs)
 		rootfs_ofs = layout->rootfs_ofs;
 
-	if (reserved_space > layout->fw_max_len) {
-		ERR("reserved space is not valid");
-		return -1;
-	}
-
-	fw_max_len = layout->fw_max_len - reserved_space;
-
 	if (kernel_info.file_name == NULL) {
 		ERR("no kernel image specified");
 		return -1;
@@ -632,7 +378,7 @@ static int check_options(void)
 
 	if (combined) {
 		if (kernel_info.file_size >
-		    fw_max_len - sizeof(struct fw_header)) {
+		    layout->fw_max_len - sizeof(struct fw_header)) {
 			ERR("kernel image is too big");
 			return -1;
 		}
@@ -654,7 +400,7 @@ static int check_options(void)
 			DBG("kernel length aligned to %u", kernel_len);
 
 			if (kernel_len + rootfs_info.file_size >
-			    fw_max_len - sizeof(struct fw_header)) {
+			    layout->fw_max_len - sizeof(struct fw_header)) {
 				ERR("images are too big");
 				return -1;
 			}
@@ -666,7 +412,7 @@ static int check_options(void)
 			}
 
 			if (rootfs_info.file_size >
-			    (fw_max_len - rootfs_ofs)) {
+			    (layout->fw_max_len - rootfs_ofs)) {
 				ERR("rootfs image is too big");
 				return -1;
 			}
@@ -684,25 +430,42 @@ static int check_options(void)
 		return -1;
 	}
 
+	ret = sscanf(sver, "%d.%d", &sver_hi, &sver_lo);
+	if (ret != 2) {
+		ERR("invalid secondary version '%s'", sver);
+		return -1;
+	}
+
 	return 0;
 }
 
 static void fill_header(char *buf, int len)
 {
 	struct fw_header *hdr = (struct fw_header *)buf;
+	unsigned ver_len;
 
-	memset(hdr, 0, sizeof(struct fw_header));
+	memset(hdr, '\xff', sizeof(struct fw_header));
 
-	hdr->version = htonl(HEADER_VERSION_V1);
-	strncpy(hdr->vendor_name, vendor, sizeof(hdr->vendor_name));
-	strncpy(hdr->fw_version, version, sizeof(hdr->fw_version));
+	hdr->version = htonl(HEADER_VERSION_V2);
+	ver_len = strlen(version);
+	if (ver_len > (sizeof(hdr->fw_version) - 1))
+		ver_len = sizeof(hdr->fw_version) - 1;
+
+	memcpy(hdr->fw_version, version, ver_len);
+	hdr->fw_version[ver_len] = 0;
+
 	hdr->hw_id = htonl(hw_id);
 	hdr->hw_rev = htonl(hw_rev);
 
-	if (boot_info.file_size == 0)
+	if (boot_info.file_size == 0) {
 		memcpy(hdr->md5sum1, md5salt_normal, sizeof(hdr->md5sum1));
-	else
+		hdr->boot_ofs = htonl(0);
+		hdr->boot_len = htonl(0);
+	} else {
 		memcpy(hdr->md5sum1, md5salt_boot, sizeof(hdr->md5sum1));
+		hdr->boot_ofs = htonl(rootfs_ofs + rootfs_info.file_size);
+		hdr->boot_len = htonl(rootfs_info.file_size);
+	}
 
 	hdr->kernel_la = htonl(kernel_la);
 	hdr->kernel_ep = htonl(kernel_ep);
@@ -714,9 +477,21 @@ static void fill_header(char *buf, int len)
 		hdr->rootfs_len = htonl(rootfs_info.file_size);
 	}
 
-	hdr->ver_hi = htons(fw_ver_hi);
-	hdr->ver_mid = htons(fw_ver_mid);
-	hdr->ver_lo = htons(fw_ver_lo);
+	hdr->boot_ofs = htonl(0);
+	hdr->boot_len = htonl(boot_info.file_size);
+
+	hdr->unk1 = htonl(0);
+	hdr->unk2 = htonl(0);
+	hdr->unk3 = htonl(0xffffffff);
+	hdr->unk4 = htons(0x55aa);
+	hdr->unk5 = 0xa5;
+
+	hdr->sver_hi = sver_hi;
+	hdr->sver_lo = sver_lo;
+
+	hdr->ver_hi = fw_ver_hi;
+	hdr->ver_mid = fw_ver_mid;
+	hdr->ver_lo = fw_ver_lo;
 
 	get_md5(buf, len, hdr->md5sum1);
 }
@@ -933,12 +708,12 @@ static int inspect_fw(void)
 	inspect_fw_pstr("File name", inspect_info.file_name);
 	inspect_fw_phexdec("File size", inspect_info.file_size);
 
-	if (ntohl(hdr->version) != HEADER_VERSION_V1) {
-		ERR("file does not seem to have V1 header!\n");
+	if (ntohl(hdr->version) != HEADER_VERSION_V2) {
+		ERR("file does not seem to have V2 header!\n");
 		goto out_free_buf;
 	}
 
-	inspect_fw_phexdec("Version 1 Header size", sizeof(struct fw_header));
+	inspect_fw_phexdec("Version 2 Header size", sizeof(struct fw_header));
 
 	if (ntohl(hdr->unk1) != 0)
 		inspect_fw_phexdec("Unknown value 1", hdr->unk1);
@@ -960,13 +735,20 @@ static int inspect_fw(void)
 		inspect_fw_phexdec("Unknown value 2", hdr->unk2);
 	inspect_fw_pmd5sum("Header MD5Sum2", hdr->md5sum2,
 	                   "(purpose yet unknown, unchecked here)");
-	if (ntohl(hdr->unk3) != 0)
+
+	if (ntohl(hdr->unk3) != 0xffffffff)
 		inspect_fw_phexdec("Unknown value 3", hdr->unk3);
+
+	if (ntohs(hdr->unk4) != 0x55aa)
+		inspect_fw_phexdec("Unknown value 4", hdr->unk4);
+
+	if (hdr->unk5 != 0xa5)
+		inspect_fw_phexdec("Unknown value 5", hdr->unk5);
 
 	printf("\n");
 
-	inspect_fw_pstr("Vendor name", hdr->vendor_name);
 	inspect_fw_pstr("Firmware version", hdr->fw_version);
+
 	board = find_board_by_hwid(ntohl(hdr->hw_id));
 	if (board) {
 		layout = find_layout(board->layout_id);
@@ -980,6 +762,10 @@ static int inspect_fw(void)
 		inspect_fw_phex("Hardware Revision",
 		                ntohl(hdr->hw_rev));
 	}
+
+	printf("%-23s: %d.%d.%d-%d.%d\n", "Software version",
+	       hdr->ver_hi, hdr->ver_mid, hdr->ver_lo,
+	       hdr->sver_hi, hdr->sver_lo);
 
 	printf("\n");
 
@@ -1069,7 +855,7 @@ int main(int argc, char *argv[])
 	while ( 1 ) {
 		int c;
 
-		c = getopt(argc, argv, "a:B:H:E:F:L:V:N:W:ci:k:r:R:o:xX:hsjv:");
+		c = getopt(argc, argv, "a:B:H:E:F:L:V:N:W:ci:k:r:R:o:xhsjv:y:");
 		if (c == -1)
 			break;
 
@@ -1100,6 +886,9 @@ int main(int argc, char *argv[])
 			break;
 		case 'v':
 			fw_ver = optarg;
+			break;
+		case 'y':
+			sver = optarg;
 			break;
 		case 'N':
 			vendor = optarg;
@@ -1133,9 +922,6 @@ int main(int argc, char *argv[])
 			break;
 		case 'h':
 			usage(EXIT_SUCCESS);
-			break;
-		case 'X':
-			sscanf(optarg, "0x%x", &reserved_space);
 			break;
 		default:
 			usage(EXIT_FAILURE);

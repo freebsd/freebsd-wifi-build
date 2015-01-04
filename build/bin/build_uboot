@@ -20,22 +20,24 @@ shift
 # base version gives following error while trying to uncompress the kernel on boot:
 # "Uncompressing Kernel Image ... Stream with EOS marker is not supportedLZMA ERROR 1"
 
-/usr/local/bin/lzma e ${X_KERNEL} /tftpboot/kernel.${KERNCONF}.lzma || exit 1
+/usr/local/bin/lzma e ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma || exit 1
 
 # Create the firmware
 mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   -a ${UBOOT_KERN_LOADADDR} -e ${UBOOT_KERN_STARTADDR} \
-  -n "FreeBSD" -d /tftpboot/kernel.${KERNCONF}.lzma \
-  /tftpboot/kernel.${KERNCONF}.lzma.uImage \
+  -n "FreeBSD" -d ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma \
+  ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage \
   || exit 1
 
 # If this is a carambola we can also create a single image with both the kernel and
 # filesystem, to make flashing more efficient
+#
+# XXX TODO: tihs should be configurable as a build option, /not/ hard-coded here!
 if [ "$CFGNAME" = "carambola2" ] ; then
-  X_FLASH=/tftpboot/kernel.CARAMBOLA2.lzma.flash
+  X_FLASH=${X_TFTPBOOT}/kernel.CARAMBOLA2.lzma.flash
   dd if=/dev/zero bs=$(( 0x200000 )) count=1 of=${X_FLASH} || exit 1
-  dd if=/tftpboot/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc || exit 1
-  dd if=/tftpboot/mfsroot-carambola2.img.ulzma >> ${X_FLASH} || exit 1
+  dd if=${X_TFTPBOOT}/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc || exit 1
+  dd if=${X_TFTPBOOT}/mfsroot-carambola2.img.ulzma >> ${X_FLASH} || exit 1
 fi
 
 exit 0
