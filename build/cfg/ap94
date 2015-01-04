@@ -22,3 +22,7 @@ UBOOT_KERN_STARTADDR="0x80050100"
 # X_FSIMAGE_CMD="mkulzma"
 # X_FSIMAGE_ARGS="-s 65536 -v"
 # X_FSIMAGE_SUFFIX=".ulzma"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+

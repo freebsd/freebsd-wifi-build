@@ -12,3 +12,7 @@ BIN_CFG_SIZE="65536"
 
 UBNT_ARCH="PB42"
 UBNT_VERSION="PB4X.ar7100.FreeBSD"
+
+# Building the firmware image
+# XXX uses ubnt, but really it's just redboot!
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ubnt"

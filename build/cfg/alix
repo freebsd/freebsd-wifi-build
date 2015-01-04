@@ -3,3 +3,7 @@ MAKEOBJDIRPREFIX=/data/freebsd/mips/head/obj-alix ; export MAKEOBJDIRPREFIX
 DESTDIR=/data/freebsd/mips/head/root-alix
 KERNCONF=ALIX.CF
 LOCAL_DIRS="tools/tools/ath"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage"
+

@@ -40,3 +40,7 @@ X_UBOOT="YES"
 # if not present, it will throw: "Firmware check failed! (-2)"
 UBNT_ARCH="XM"
 UBNT_VERSION="XM.ar7240.FreeBSD"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ubnt"
+
