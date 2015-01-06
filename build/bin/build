@@ -27,10 +27,27 @@ fi
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-while [ "x$1" != "x" ]; do
-	echo "*** Target		: $1"
-	BUILD_TARGET=$1
-	shift
+# Defaults:
+# if $1 is empty, then try the BUILD_THINGS and BUILD_IMG target list.
+# If it's buildimg, then BUILDIMG target list.
+# If it's cleanimg, then CLEANIMG target list.
+# If it's cleanall, then CLEANALL target list.
+if [ "x$1" = "x" ]; then
+	X_BUILD_LIST="${X_BUILD_BUILD_THINGS_DEFAULTS} ${X_BUILD_BUILD_IMG_DEFAULTS}"
+elif [ "x$1" = "xbuildimg" ]; then
+	X_BUILD_LIST=${X_BUILD_BUILD_IMG_DEFAULTS}
+elif [ "x$1" = "xcleanimg" ]; then
+	X_BUILD_LIST=${X_BUILD_CLEANIMG_DEFAULTS}
+elif [ "x$1" = "xcleanall" ]; then
+	X_BUILD_LIST=${X_BUILD_CLEANALL_DEFAULTS}
+else
+	X_BUILD_LIST=$*
+fi
+
+echo "Build list: ${X_BUILD_LIST}"
+
+for BUILD_TARGET in ${X_BUILD_LIST}; do
+	echo "*** Target		: ${BUILD_TARGET}"
 
 	case $BUILD_TARGET in
 		'buildworld' | 'buildkernel' | 'installworld' | \
