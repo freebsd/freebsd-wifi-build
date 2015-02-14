@@ -43,6 +43,9 @@ mkdir -p ${X_STAGING_TMPDIR}
 # ok, let's just populate the whole staging root with the installed root
 rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 
+# and put the metalog somewhere.
+cp ${X_DESTDIR}/METALOG ${X_STAGING_METALOG}
+
 # .. now, kernel; that's living elsewhere?
 
 # TODO:

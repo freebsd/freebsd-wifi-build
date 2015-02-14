@@ -79,10 +79,6 @@ if [ "x$X_SKIP_MORE_STUFF" = "xYES" ]; then
 	echo 'WITHOUT_RCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
-if [ "x$X_BUILDASUSER" = "xYES" ]; then
-	echo 'WITH_INSTALL_AS_USER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-fi
-
 if test -e "${X_EXTRA_SRC_CONF}" ; then
 	cat "${X_EXTRA_SRC_CONF}" >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
@@ -121,11 +117,8 @@ while [ "x$1" != "x" ]; do
 
 	X_DESTDIR_LINE=""
 	if [ "$1" = "installworld" -o "$1" = "installkernel" -o "$1" = "distribution" ]; then
-		X_DESTDIR_LINE="DESTDIR=${X_DESTDIR}"
-	fi
-
-	if [ "x$X_BUILDASUSER" = "xYES" ]; then
-		X_DESTDIR_LINE="${X_DESTDIR_LINE} NO_ROOT=1"
+		X_DESTDIR_LINE="DESTDIR=${X_DESTDIR} NO_ROOT=yes"
+		BUILD_FLAGS=""
 	fi
 
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
