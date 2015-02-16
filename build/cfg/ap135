@@ -2,8 +2,9 @@ BUILDNAME=mips
 TARGET=mips
 TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
-KERNCONF=AP94
+KERNCONF=AP135
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+# LOCAL_TOOL_DIRS=' '
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.
@@ -19,10 +20,9 @@ UBOOT_KERN_LOADADDR="0x80050000"
 UBOOT_KERN_STARTADDR="0x80050100"
 
 # Make a ulzma image
-# X_FSIMAGE_CMD="mkulzma"
-# X_FSIMAGE_ARGS="-s 65536 -v"
-# X_FSIMAGE_SUFFIX=".ulzma"
+X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_ARGS="-s 65536 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
-

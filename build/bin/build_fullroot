@@ -6,17 +6,7 @@ CUR_DIR="`pwd`"
 
 X_SRCDIR=${CUR_DIR}
 
-# XXX TODO for non-root builds
-#
-# We need to use the cross-build install program in order to
-# take advantage of the mtree-aware upgrades that it's recently
-# received.
 
-#
-# Unfortunately there's no "easy way" to derive that; so we have
-# to derive it ourselves.
-
-INSTALL_PROG="install"
 
 # suck in the per-device options
 CFGNAME=$1
@@ -29,6 +19,8 @@ shift
 # calculate basedir
 # XXX this should be generated in cfg.pm!
 X_BASEDIR=${SCRIPT_DIR}/../
+
+INSTALL_PROG="install -U -M ${X_STAGING_METALOG_TMP} -D ${X_STAGING_FSROOT}"
 
 echo "*** Deleting old file system.."
 ${INSTALL_PROG} -d ${X_STAGING_FSROOT}
@@ -43,6 +35,9 @@ mkdir -p ${X_STAGING_TMPDIR}
 # ok, let's just populate the whole staging root with the installed root
 rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 
+# and put the metalog somewhere.
+# cp ${X_DESTDIR}/METALOG ${X_STAGING_METALOG}
+
 # .. now, kernel; that's living elsewhere?
 
 # TODO:
@@ -56,13 +51,16 @@ rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 # now, default /etc/fstab
 # XXX TODO: label!
 echo "${X_ROOTFS_DEV} / ufs rw 1 1" > ${X_STAGING_TMPDIR}/fstab
-install -m 644 ${X_STAGING_TMPDIR}/fstab ${X_STAGING_FSROOT}/etc/
+${INSTALL_PROG} -m 644 -o root -g wheel  ${X_STAGING_TMPDIR}/fstab ${X_STAGING_FSROOT}/etc/
 
 # .. and default to autosize_enable=yes
 echo "autosize_enable=\"YES\"" > ${X_STAGING_TMPDIR}/rc.conf
-echo "autosize_rootdev=\"${X_ROOTFS_DEV}\"" >> ${X_STAGING_TMPDIR}/rc.conf
-install -m 644 ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_FSROOT}/etc/
+echo "autosize_rootfs=\"${X_ROOTFS_DEV}\"" >> ${X_STAGING_TMPDIR}/rc.conf
+${INSTALL_PROG} -m 644 -o root -g wheel ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_FSROOT}/etc/
 
-install -m 755 ${X_BASEDIR}/files.full/autosize ${X_STAGING_FSROOT}/etc/rc.d/
+${INSTALL_PROG} -m 755 -o root -g wheel ${X_BASEDIR}/files.full/autosize ${X_STAGING_FSROOT}/etc/rc.d/
+
+# Finally, assemble the new metalog from these two
+${SCRIPT_DIR}/filter.pl ${X_DESTDIR}/METALOG ${X_STAGING_METALOG_TMP} ${X_STAGING_METALOG}
 
 echo "**** Done."

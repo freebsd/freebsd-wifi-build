@@ -75,6 +75,14 @@ X_MAKEOBJDIRPREFIX="${CUR_DIR}/../obj/${BUILDNAME}/" ; export X_MAKEOBJDIRPREFIX
 # X_DESTDIR - where to place the install root 
 X_DESTDIR="${CUR_DIR}/../root/${BUILDNAME}"
 
+# The default list of operations to run when doing a build
+# XXX eventually these should be required, not optional
+X_BUILD_BUILD_THINGS_DEFAULTS=${X_BUILD_BUILD_THINGS_DEFAULTS:="buildworld buildkernel installworld installkernel distribution"}
+X_BUILD_BUILD_IMG_DEFAULTS=${X_BUILD_BUILD_IMG_DEFAULTS:=""}
+# .. and for cleaning
+X_BUILD_CLEANIMG_DEFAULTS=${X_BUILD_CLEANIMG_DEFAULTS:=""}
+X_BUILD_CLEANALL_DEFAULTS=${X_BUILD_CLEANALL_DEFAULTS:="cleanroot cleanobj"}
+
 # Variables that need to be defined by one of the build scripts
 # but I haven't decided whether they're configured by the user
 # or automatically generated.
@@ -99,6 +107,7 @@ X_STAGING_FSROOT="${CUR_DIR}/../mfsroot/${CFGNAME}"
 
 # X_STAGING_METALOG
 X_STAGING_METALOG="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}"
+X_STAGING_METALOG_TMP="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}.tmp"
 
 # X_STAGING_TMPDIR
 X_STAGING_TMPDIR="${CUR_DIR}/../tmp/${CFGNAME}"

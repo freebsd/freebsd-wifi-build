@@ -12,3 +12,5 @@ X_ROOTFS_DEV="/dev/ada0"
 X_FULL_FSSIZE="4294967296"
 X_KERNSUFFIX=MALTAEL
 
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="fullroot fullfsimage"

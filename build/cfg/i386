@@ -3,3 +3,6 @@ TARGET=i386
 TARGET_ARCH=i386
 KERNCONF=GENERIC
 LOCAL_DIRS="tools/tools/ath"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage"

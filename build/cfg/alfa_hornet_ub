@@ -38,3 +38,6 @@ X_FSIMAGE_MAXSIZE="14680064"
 
 # 1600 KiB
 X_UBOOT_KERNIMG_MAXSIZE="1638400"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"

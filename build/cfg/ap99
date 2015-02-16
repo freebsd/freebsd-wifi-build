@@ -29,3 +29,7 @@ X_FSIMAGE_CMD="mkulzma"
 # squeezed onto 4MB of flash. Sigh.
 X_FSIMAGE_ARGS="-s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+

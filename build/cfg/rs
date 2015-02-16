@@ -13,3 +13,7 @@ BIN_CFG_SIZE="65536"
 
 UBNT_ARCH="RS"
 UBNT_VERSION="RS.ar7100.FreeBSD"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ubnt"
+

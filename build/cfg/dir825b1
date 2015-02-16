@@ -29,3 +29,6 @@ X_DLINK_SIGNATURE=00AP94-AR7161-RT-080619-00
 X_FSIMAGE_CMD="mkulzma"
 X_FSIMAGE_ARGS="-s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage dlink"
