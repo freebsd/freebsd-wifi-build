@@ -362,6 +362,8 @@ if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
 	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_bridge.ko ${X_STAGING_FSROOT}/boot/kernel/
 	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_gif.ko ${X_STAGING_FSROOT}/boot/kernel/
 	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_gre.ko ${X_STAGING_FSROOT}/boot/kernel/
+	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_vlan.ko ${X_STAGING_FSROOT}/boot/kernel/
+	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/ipfw.ko ${X_STAGING_FSROOT}/boot/kernel/
 
 	# misc stuff
 	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/random.ko ${X_STAGING_FSROOT}/boot/kernel/
