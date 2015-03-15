@@ -308,40 +308,8 @@ ${INSTALL_DEF_BIN} ${X_STAGING_TMPDIR}/board.cfg ${X_STAGING_FSROOT}/c/etc
 if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
 	echo "*** Including modules.."
 
-	# The AR9130 build (which uses if_ath_ahb) doesn't yet build right
-	# from modules (without hacking sys/modules/ath/Makefile)
-	# so there's no point in keeping it.
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_ath.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_ath_pci.ko ${X_STAGING_FSROOT}/boot/kernel/
+	for i in ${MFSROOT_INC_MODULE_LIST}; do
+		${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/${i}.ko ${X_STAGING_FSROOT}/boot/kernel/
+	done
 
-	# networking related stuff
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/bridgestp.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_bridge.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_gif.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/if_gre.ko ${X_STAGING_FSROOT}/boot/kernel/
-
-	# misc stuff
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/random.ko ${X_STAGING_FSROOT}/boot/kernel/
-
-	# wlan modules
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_acl.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_amrr.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_ccmp.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_rssadapt.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_tkip.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_wep.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/wlan_xauth.ko ${X_STAGING_FSROOT}/boot/kernel/
-
-	# Cut down set of usb modules
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/usb.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/ehci.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/uhci.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/ohci.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/umass.ko ${X_STAGING_FSROOT}/boot/kernel/
-
-	# .. and the USB bus glue
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/ar71xx_ehci.ko ${X_STAGING_FSROOT}/boot/kernel/
-	${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/ar71xx_ohci.ko ${X_STAGING_FSROOT}/boot/kernel/
 fi
-
