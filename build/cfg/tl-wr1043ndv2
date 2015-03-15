@@ -13,6 +13,7 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre"
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkulzma"
