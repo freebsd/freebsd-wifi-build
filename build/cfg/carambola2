@@ -38,3 +38,6 @@ X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+
+# Build a contiguous flash image
+X_UBOOT_KERNROOTIMG="YES"

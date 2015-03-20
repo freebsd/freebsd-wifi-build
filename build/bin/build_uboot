@@ -12,8 +12,6 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-# This builds a tplink system image from the given kernel and MFS.
-
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
@@ -30,14 +28,13 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   || exit 1
 
 # If this is a carambola we can also create a single image with both the kernel and
-# filesystem, to make flashing more efficient
-#
-# XXX TODO: tihs should be configurable as a build option, /not/ hard-coded here!
-if [ "$CFGNAME" = "carambola2" ] ; then
-  X_FLASH=${X_TFTPBOOT}/kernel.CARAMBOLA2.lzma.flash
-  dd if=/dev/zero bs=$(( 0x200000 )) count=1 of=${X_FLASH} || exit 1
-  dd if=${X_TFTPBOOT}/kernel.CARAMBOLA2.lzma.uImage of=${X_FLASH} conv=notrunc || exit 1
-  dd if=${X_TFTPBOOT}/mfsroot-carambola2.img.ulzma >> ${X_FLASH} || exit 1
+# filesystem, to make flashing more efficient.
+if [ "x${X_UBOOT_KERNROOTIMG}" = "xYES" ] ; then
+  X_FLASH=${X_TFTPBOOT}/flash.${KERNCONF}.img
+  (
+    dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync || exit 1
+    dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} || exit 1
+  ) > ${X_FLASH}
 fi
 
 exit 0
