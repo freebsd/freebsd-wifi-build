@@ -12,6 +12,7 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST="ar71xx_ehci gpioiic if_gif ar71xx_ohci gpioled if_gre if_ath wlan bridgestp if_ath_pci umass wlan_acl ehci usb wlan_amrr wlan_ccmp uhci wlan_rssadapt if_bridge ohci wlan_tkip random wlan_wep gpiobus wlan_xauth"
 
 # Uboot stuff
 UBOOT_ARCH="mips"
