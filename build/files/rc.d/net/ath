@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# This configures the top-level ath0 physical interfaces - eg
+# MAC addresses, sysctls, etc.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# variables:
+#
+# netif_IF_type="ath"
+# netif_IF_enable="yes|no"
+# netif_IF_descr="description"
+# netif_IF_name="ath0"
+# netif_IF_macaddr="mac address"
+
+cmd=$1
+shift
+
+ifname=$1
+shift
+
+netif_enable=`get_if_var $ifname netif_IF_enable no`
+netif_descr=`get_if_var $ifname netif_IF_descr ''`
+netif_name=`get_if_var $ifname netif_IF_name`
+netif_macaddr=`get_if_var $ifname netif_IF_macaddr`
+
+case $cmd in
+	'start')
+		echo "*** Interface: ${ifname}: start"
+
+		if [ "x${netif_macaddr}" != "x" ]; then
+			ifconfig ${netif_wifi_name} ether ${netif_macaddr}
+		fi
+		# Get dev/unit
+		unit=`expr ${netif_name} : 'ath\([0-9]\{1,\}\)'`
+
+		# Always set force_full_reset for now
+
+		sysctl dev.ath.${unit}.txq_mcastq_maxdepth=32
+		sysctl dev.ath.${unit}.hal.force_full_reset=1
+
+		echo "*** Interface: ${ifname}: done"
+		exit 0
+	;;
+	'stop')
+		echo "*** Interface: ${ifname}: stop"
+
+		echo "*** Interface: ${ifname}: done"
+		exit 0
+	;;
+	*)
+		echo "Usage: $0 {start|stop} {name}"
+esac
+
+exit 0
