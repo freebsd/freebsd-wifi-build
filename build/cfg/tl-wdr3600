@@ -1,0 +1,39 @@
+BUILDNAME=mips
+TARGET=mips
+TARGET_ARCH=mips
+TARGET_CPUTYPE=mips32
+KERNCONF=TL-WDR4300
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+# LOCAL_TOOL_DIRS=' '
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/map/cfg"
+BIN_CFG_SIZE="65536"
+
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre"
+
+# Make a ulzma image
+X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_ARGS="-s 65536 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
+
+# Use LZMA to compress the kernel
+TPLINK_COMPRESSION_LZMA=YES
+TPLINK_CONFIG_STYLE=NEW
+
+TPLINK_ROOTFS_START="0x00180000"
+TPLINK_KERN_LOADADDR="0x80050000"
+TPLINK_KERN_STARTADDR="0x80050100"
+TPLINK_IMG_NAME="FreeBSD"
+TPLINK_IMG_VERSION="FreeBSD-HEAD"
+# New-style board config
+TPLINK_HARDWARE_ID=0x36000001
+TPLINK_HARDWARE_VER=1
+TPLINK_HARDWARE_FLASHID=8M
+TPLINK_FIRMWARE_RESERV=0x40000
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage tplink"
