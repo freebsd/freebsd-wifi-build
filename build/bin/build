@@ -12,17 +12,8 @@ USER_SETTINGS=${USER_SETTINGS:-${HOME}/.freebsd-wifi-build-settings.cfg}
 test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
 export USER_SETTINGS
 
-X_BUILDASUSER=${X_BUILDASUSER:-YES}
-export X_BUILDASUSER
-
 echo "*** Configuration file	: $CFGNAME"
 echo "*** Platform		: $BUILDNAME"
-
-if [ "x$X_BUILDASUSER" = "xYES" ]; then
-  echo "*** User build as : $LOGNAME"
-  # NOTE: we could test if ${X_FAKEROOT} exists, but it might be a list rather than a single binary
-  #       so just handle the default case
-fi
 
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1

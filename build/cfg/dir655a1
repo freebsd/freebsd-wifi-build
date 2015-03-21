@@ -2,8 +2,9 @@ BUILDNAME=mips
 TARGET=mips
 TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
-KERNCONF=DIR-825B1
+KERNCONF=DIR-655A1
 LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+# LOCAL_TOOL_DIRS=' '
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.
@@ -11,8 +12,7 @@ BIN_CFG_PARTITION="/dev/map/cfg"
 BIN_CFG_SIZE="65536"
 
 # Modules need to be included
-MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="ar71xx_ehci gpioiic if_gif ar71xx_ohci gpioled if_gre if_ath wlan bridgestp if_ath_pci umass wlan_acl ehci usb wlan_amrr wlan_ccmp uhci wlan_rssadapt if_bridge ohci wlan_tkip random wlan_wep gpiobus wlan_xauth"
+MFSROOT_INC_MODULES="NO"
 
 # Uboot stuff
 UBOOT_ARCH="mips"
@@ -20,16 +20,16 @@ UBOOT_KERN_LOADADDR="0x80050000"
 UBOOT_KERN_STARTADDR="0x80050100"
 
 # Dlink image stuff
-X_DLINK_MAX_KERN_SIZE=1048576
-X_DLINK_MAX_ROOTFS_SIZE=5308416
-X_DLINK_MAX_IMG_SIZE=6356992
+X_DLINK_MAX_KERN_SIZE=1572864
+X_DLINK_MAX_ROOTFS_SIZE=6553600
+X_DLINK_MAX_IMG_SIZE=8126464
 
 # This is a required end of image signature for this hardware
-X_DLINK_SIGNATURE=00AP94-AR7161-RT-080619-00
+X_DLINK_SIGNATURE=00AP136AR9558-RT-130411-00
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkulzma"
-X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_ARGS="-s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image

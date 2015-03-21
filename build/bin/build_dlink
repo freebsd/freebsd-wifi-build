@@ -34,22 +34,26 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
 
 KERN_SIZE="`stat -f '%z' ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage`"
 ROOTFS_SIZE="`stat -f '%z' ${X_FSIMAGE}${X_FSIMAGE_SUFFIX}`"
+IMG_SIZE="`stat -f '%z' ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage`"
+#printf "*** Kernel size: %d bytes; Rootfs size: %d bytes\n" ${KERN_SIZE} ${ROOTFS_SIZE}
+#if [ ${KERN_SIZE} -gt ${X_DLINK_MAX_KERN_SIZE} ]; then
+#	echo "*** Kernel is too big ${KERN_SIZE} > ${X_DLINK_MAX_KERN_SIZE}!"
+#	exit 1
+#fi
+#if [ ${ROOTFS_SIZE} -gt ${X_DLINK_MAX_ROOTFS_SIZE} ]; then
+#	echo "*** Rootfs is too big ${ROOTFS_SIZE} > ${X_DLINK_MAX_ROOTFS_SIZE}!"
+#	exit 1
+#fi
 
-printf "*** Kernel size: %d bytes; Rootfs size: %d bytes\n" ${KERN_SIZE} ${ROOTFS_SIZE}
-
-if [ ${KERN_SIZE} -gt ${X_DLINK_MAX_KERN_SIZE} ]; then
-	echo "*** Kernel is too big ${KERN_SIZE} > ${X_DLINK_MAX_KERN_SIZE}!"
+if [ ${IMG_SIZE} -gt ${X_DLINK_MAX_IMG_SIZE} ]; then
+	echo "*** Image is too big: ${IMG_SIZE} > ${X_DLINK_MAX_IMG_SIZE}"
 	exit 1
 fi
-if [ ${ROOTFS_SIZE} -gt ${X_DLINK_MAX_ROOTFS_SIZE} ]; then
-	echo "*** Rootfs is too big ${ROOTFS_SIZE} > ${X_DLINK_MAX_ROOTFS_SIZE}!"
-	exit 1
-fi
 
-# concatenate the kernel image (1m aligned 1024*1024==1048576
-# the filesystem image and the dlink signature for this image
+# concatenate the kernel image in a 64k chunk to the filesystem image
+# and then add the dlink factor signature at the end.
 (
-	dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=1048576 conv=sync;
+	dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync;
 	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ;
 	echo -n "${X_DLINK_SIGNATURE}"
 ) > ${X_TFTPBOOT}/${CFGNAME}.factory.img

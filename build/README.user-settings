@@ -6,10 +6,6 @@ If not present it is ignored.
 
 Currently the following options can be set:
 
-X_BUILDASUSER      If YES then changes `src.conf` and the environment passed to
-                   `make world`, etc., that support building as the currently
-                   logged-in user instead of root
-
 X_SKIP_MORE_STUFF  If YES then add more WITHOUT_ options to src.conf that ensure
                    things like info, man, games and examples are not built.
                    This greatly decreases build time when testing images.

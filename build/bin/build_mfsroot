@@ -116,8 +116,10 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/mv ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/df ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/cp ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/cat ${X_STAGING_FSROOT}/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/kenv ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/dd ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/ps ${X_STAGING_FSROOT}/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/expr ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/sleep ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/hostname ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/mkdir ${X_STAGING_FSROOT}/bin/
@@ -322,9 +324,11 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libelf.so.2 ${X_STAGING_FSROOT}/usr/lib/
 
 # rc stuff
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.hostapd ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/net ${X_STAGING_FSROOT}/c/etc/rc.d/base/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/ether ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/bridge ${X_STAGING_FSROOT}/c/etc/rc.d/net/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/ath ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/wifi ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 
 # config save/load scripts

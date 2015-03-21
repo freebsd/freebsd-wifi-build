@@ -46,7 +46,7 @@ if [ "x${TPLINK_CONFIG_STYLE}" = "xNEW" ]; then
 		-k ${TPLINK_KERNEL} \
 		-r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
 		-a 0x10000 \
-		-o ${X_TFTPBOOT}/${KERNCONF}.factory.bin
+		-o ${X_TFTPBOOT}/${CFGNAME}.factory.bin
 elif [ "x${X_MFSROOT}" = "xYES" ]; then
 # Create firmware suitable for TFTP
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
@@ -54,7 +54,7 @@ elif [ "x${X_MFSROOT}" = "xYES" ]; then
 	     -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
 	     -k ${TPLINK_KERNEL} -c -N ${TPLINK_IMG_NAME} \
 	     -V ${TPLINK_IMG_VERSION} \
-	     -o ${X_TFTPBOOT}/${KERNCONF}.factory.bin \
+	     -o ${X_TFTPBOOT}/${CFGNAME}.factory.bin \
 	|| exit 1
 else
 # Create firmware suitable for flashing
@@ -63,7 +63,7 @@ else
 	    -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
 	    -k ${TPLINK_KERNEL} -N ${TPLINK_IMG_NAME} \
 	    -V ${TPLINK_IMG_VERSION} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
-	    -o ${X_TFTPBOOT}/${KERNCONF}.factory.bin \
+	    -o ${X_TFTPBOOT}/${CFGNAME}.factory.bin \
 	|| exit 1
 fi
 

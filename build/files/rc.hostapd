@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Support routines to generate a suitable hostapd.conf file from the rc.conf
+# file.
+
+generate_hostapd_cfg_hostap()
+{
+	local _ifname _hostap_wpa_mode _hostap_wpa_key_mgmt _hostap_wpa_pairwise
+	local _hostap_ssid _hostap_psk
+	local _hostap_cfg
+	local _hostap_cfg_tmp
+	local _prefix="/var/run"
+
+	_ifname=$1
+
+	# Bring in the variables, complete with defaults
+	_hostap_ssid=`get_if_var ${_ifname} netif_IF_wifi_hostap_ssid FREEBSD`
+	_hostap_wpa_mode=`get_if_var ${_ifname} netif_IF_wifi_hostap_wpa_mode 3`
+	_hostap_wpa_passphrase=`get_if_var ${_ifname} netif_IF_wifi_hostap_wpa_passphrase FREEBSD`
+	_hostap_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_hostap_wpa_key_mgmt "WPA-PSK"`
+	_hostap_wpa_pairwise=`get_if_var ${_ifname} netif_IF_wifi_hostap_wpa_pairwise "CCMP TKIP"`
+
+	_hostap_cfg="${_prefix}/hostapd.${_ifname}.conf"
+	# XXX temp file!
+	_hostap_cfg_tmp="${_prefix}/hostapd.${_ifname}.conf.$$"
+
+	# For now, assume it's a straight wpa shared key config.
+	# Later on this should grow other options for things.
+
+	cat > ${_hostap_cfg_tmp} <<EOF
+# This is automatically generated!
+interface=${_ifname}
+driver=bsd
+ssid=${_hostap_ssid}
+wpa=${_hostap_wpa_mode}
+wpa_key_mgmt=${_hostap_wpa_key_mgmt}
+wpa_passphrase=${_hostap_wpa_passphrase}
+wpa_pairwise=${_hostap_wpa_pairwise}
+ctrl_interface=/var/run/hostapd
+EOF
+	mv ${_hostap_cfg_tmp} ${_hostap_cfg}
+	return 0
+}

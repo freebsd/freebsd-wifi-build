@@ -1,9 +1,5 @@
 It is possible to build the firmware as a normal user instead of root; this is now the default.
 
-This requires the fakeroot package to be installed.
-
-To use the previous behaviour, without fakeroot, set X_BUILDASUSER=NO in your local configuration.
-
 To make the process easier, it is also useful use copies of the FreeBSD sources tree.
 
 For example:
