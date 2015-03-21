@@ -342,8 +342,6 @@ ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/protocols ${X_STAGING_FSROOT}/c/etc/
 
 # this is needed for inetd
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
-${INSTALL_DEF_FILE} ${X_BASEDIR}/files/hostapd.conf ${X_STAGING_FSROOT}/c/etc/
-${INSTALL_DEF_FILE} ${X_BASEDIR}/files/hostapd.wlan1.conf ${X_STAGING_FSROOT}/c/etc/
 
 # Local board setup
 echo "# Configuration for: ${KERNCONF}" > ${X_STAGING_TMPDIR}/board.cfg
