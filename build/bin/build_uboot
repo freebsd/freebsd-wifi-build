@@ -30,7 +30,7 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
 # If this is a carambola we can also create a single image with both the kernel and
 # filesystem, to make flashing more efficient.
 if [ "x${X_UBOOT_KERNROOTIMG}" = "xYES" ] ; then
-  X_FLASH=${X_TFTPBOOT}/flash.${KERNCONF}.img
+  X_FLASH=${X_TFTPBOOT}/${CFGNAME}.flashinst.img
   (
     dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync || exit 1
     dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} || exit 1
