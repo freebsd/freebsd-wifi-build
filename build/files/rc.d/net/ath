@@ -31,7 +31,7 @@ case $cmd in
 		echo "*** Interface: ${ifname}: start"
 
 		if [ "x${netif_macaddr}" != "x" ]; then
-			ifconfig ${netif_wifi_name} ether ${netif_macaddr}
+			ifconfig ${netif_name} ether ${netif_macaddr}
 		fi
 		# Get dev/unit
 		unit=`expr ${netif_name} : 'ath\([0-9]\{1,\}\)'`
