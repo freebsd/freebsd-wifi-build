@@ -56,6 +56,10 @@ ${INSTALL_PROG} -m 644 -o root -g wheel  ${X_STAGING_TMPDIR}/fstab ${X_STAGING_F
 # .. and default to autosize_enable=yes
 echo "autosize_enable=\"YES\"" > ${X_STAGING_TMPDIR}/rc.conf
 echo "autosize_rootfs=\"${X_ROOTFS_DEV}\"" >> ${X_STAGING_TMPDIR}/rc.conf
+
+# .. and sshd
+echo "sshd_enable=\"YES\"" >> ${X_STAGING_TMPDIR}/rc.conf
+
 ${INSTALL_PROG} -m 644 -o root -g wheel ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_FSROOT}/etc/
 
 ${INSTALL_PROG} -m 755 -o root -g wheel ${X_BASEDIR}/files.full/autosize ${X_STAGING_FSROOT}/etc/rc.d/
