@@ -12,6 +12,9 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
+# Make tool!
+make -C ${SCRIPT_DIR}/../../programs/ubnt-mkfwimage || exit 1
+
 # This builds a redboot system image from the given kernel and MFS.
 
 # The kernel file needs to be padded to a 64k boundary or although the
