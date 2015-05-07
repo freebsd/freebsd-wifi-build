@@ -25,6 +25,7 @@ fi
 
 # build mktplinkfw if not built or needs a refresh
 make -C ${SCRIPT_DIR}/../../programs/mktplinkfw  || exit 1
+make -C ${SCRIPT_DIR}/../../programs/mktplinkfw2  || exit 1
 
 # If the kernel was built to netboot and has the MFSroot already
 # compiled into it, use the all in one argument "-c" and drop

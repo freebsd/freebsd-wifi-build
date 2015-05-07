@@ -4,6 +4,9 @@ SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="`dirname $0`"
 CUR_DIR="`pwd`"
 
+# Check dependencies are met.
+${SCRIPT_DIR}/check_deps || exit 1
+
 CFGNAME=$1
 shift
 
