@@ -27,6 +27,7 @@ echo "*** setting up hostname"
 
 echo "*** Load kernel modules"
 for i in ${kernel_modules}; do
+	echo "  .. ${i}"
 	/sbin/kldload ${i}
 done
 
