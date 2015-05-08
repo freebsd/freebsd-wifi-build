@@ -12,6 +12,8 @@ shift
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
+# XXX TODO Enforce the maximum size of the kernel image.
+
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.

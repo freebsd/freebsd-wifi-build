@@ -31,7 +31,7 @@
 
 # Hostap:
 
-# netif_IF_wifi_hostap_ssid="CACHEBOY_GOAWAYTOM"
+# netif_IF_wifi_hostap_ssid="CACHEBOY_11N"
 # netif_IF_wifi_hostap_wpa_passphrase="Sysinit891234"
 # netif_IF_wifi_hostap_wpa_mode=3
 # netif_IF_wifi_hostap_wpa_key_mgmt="WPA-PSK"
