@@ -58,7 +58,7 @@ netif_wifi_createargs2="`get_if_var $ifname netif_IF_wifi_createargs2 ''`"
 netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
 netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel 6:ht/20`"
-netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country US`"
+netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
 
 # The hostap options are handled in the hostapd config file routine.
 
@@ -90,8 +90,12 @@ case $cmd in
 		fi
 
 		# Set channel and country as appropriate
-		ifconfig ${netif_name} country ${netif_wifi_country} || exit 1
-		ifconfig ${netif_name} channel ${netif_wifi_channel} || exit 1
+		if [ "x${netif_wifi_country}" != "x" ]; then
+			ifconfig ${netif_name} country ${netif_wifi_country} || exit 1
+		fi
+		if [ "x${netif_wifi_channel}" != "x" ]; then
+			ifconfig ${netif_name} channel ${netif_wifi_channel} || exit 1
+		fi
 
 		# If hostap, then create hostap conf file and start it
 		case ${netif_wifi_mode} in
