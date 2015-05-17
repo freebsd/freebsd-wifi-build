@@ -64,9 +64,9 @@ case $cmd in
 	;;
 	'stop')
 		echo "*** Interface: ${ifname}: stop"
-		ifconfig ${interface_addrtype} down
+		ifconfig ${interface_name} down
 		# XXX should there be up/down/destroy options?
-		ifconfig ${interface_addrtype} destroy
+		ifconfig ${interface_name} destroy
 		echo "*** Interface: ${ifname}: done"
 		exit 0
 	;;

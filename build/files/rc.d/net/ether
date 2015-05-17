@@ -49,7 +49,7 @@ case $cmd in
 	;;
 	'stop')
 		echo "*** Interface: ${ifname}: stop"
-		ifconfig ${interface_addrtype} down
+		ifconfig ${interface_name} down
 		echo "*** Interface: ${ifname}: done"
 		exit 0
 	;;
