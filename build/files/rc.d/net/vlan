@@ -39,7 +39,8 @@ interface_ipv4_netmask=`get_if_var $ifname netif_IF_ipv4_netmask`
 case $cmd in
 	'start')
 		echo "*** Interface: ${ifname}: start"
-		ifconfig ${interface_name} create vlan ${interface_vlanid} vlandev ${interface_parent}
+		ifconfig ${interface_name} create vlan ${interface_vlanid} vlandev ${interface_parent} || exit 1
+		ifconfig ${interface_name} up
 		if [ "x${interface_addrtype}" = "xstatic" ]; then
 			ifconfig ${interface_name} inet ${interface_ipv4_address} \
 			    netmask ${interface_ipv4_netmask}
