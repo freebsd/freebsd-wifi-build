@@ -42,15 +42,25 @@ etherswitch_vlangroup_cfg()
 etherswitch_port_cfg()
 {
 	local swname devname
-	local pvid
+	local pvid addtag striptag
 
 	swname=$1
 	devname=$2
 	port=$3
 	pvid=`get_if_var ${port} netif_${swname}_portIF_pvid`
+	addtag=`get_if_var ${port} netif_${swname}_portIF_addtag NO`
+	striptag=`get_if_var ${port} netif_${swname}_portIF_striptag NO`
 
-	echo "*** ${swname}: port ${port} pvid ${pvid}"
+	echo "*** ${swname}: port ${port} pvid ${pvid} addtag ${addtag} striptag ${striptag}"
 	etherswitchcfg -f /dev/${devname} port${port} pvid ${pvid}
+
+	if [ "${addtag}" = "YES" ]; then
+		etherswitchcfg -f /dev/${devname} port${port} addtag
+	fi
+	if [ "${striptag}" = "YES" ]; then
+		etherswitchcfg -f /dev/${devname} port${port} striptag
+	fi
+
 }
 
 cmd=$1
