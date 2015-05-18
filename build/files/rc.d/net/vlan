@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This configures a bridge device
+# This configures a vlan subinterface.
 
 . /etc/rc.subr
 . /etc/rc.conf.default
@@ -8,19 +8,17 @@
 
 # variables:
 #
-# netif_IF_type="bridge"
+# netif_IF_type="vlan"
 # netif_IF_enable="yes|no"
-# netif_IF_addrtype="static|dhcp"
+# netif_IF_addrtype="static|dhcp|none"
 # netif_IF_descr="description"
-# netif_IF_name="bridge0"
-# netif_IF_members_stp="arge0"
-# netif_IF_members="wlan0"
+# netif_IF_name="arge0.2"
+# netif_IF_parent="arge0"
+# netif_IF_vlanid="2"
 #
 # for static addresses:
 # netif_IF_ipv4_address="x.x.x.x"
 # netif_IF_ipv4_netmask="y.y.y.y"
-#
-# TODO: speed/duplex
 
 cmd=$1
 shift
@@ -32,8 +30,8 @@ interface_enable=`get_if_var $ifname netif_IF_enable no`
 interface_addrtype=`get_if_var $ifname netif_IF_addrtype`
 interface_descr=`get_if_var $ifname netif_IF_descr`
 interface_name=`get_if_var $ifname netif_IF_name`
-interface_members_stp=`get_if_var $ifname netif_IF_members_stp`
-interface_members=`get_if_var $ifname netif_IF_members`
+interface_parent=`get_if_var $ifname netif_IF_parent`
+interface_vlanid=`get_if_var $ifname netif_IF_vlanid`
 
 interface_ipv4_address=`get_if_var $ifname netif_IF_ipv4_address`
 interface_ipv4_netmask=`get_if_var $ifname netif_IF_ipv4_netmask`
@@ -41,21 +39,11 @@ interface_ipv4_netmask=`get_if_var $ifname netif_IF_ipv4_netmask`
 case $cmd in
 	'start')
 		echo "*** Interface: ${ifname}: start"
-		ifconfig ${interface_name} create
+		ifconfig ${interface_name} create vlan ${interface_vlanid} vlandev ${interface_parent} || exit 1
 		ifconfig ${interface_name} up
-
-		# XXX force MAC address?
-
-		for i in ${interface_members}; do
-			ifconfig ${interface_name} addm ${i} -stp ${i}
-		done
-		for i in ${interface_members_stp}; do
-			ifconfig ${interface_name} addm ${i}
-		done
-		
 		if [ "x${interface_addrtype}" = "xstatic" ]; then
-			ifconfig ${interface_name} inet ${interface_ipv4_address} netmask \
-			    ${interface_ipv4_netmask}
+			ifconfig ${interface_name} inet ${interface_ipv4_address} \
+			    netmask ${interface_ipv4_netmask}
 		elif [ "x${interface_addrtype}" = "xdhcp" ]; then
 			dhclient ${interface_name} &
 		fi
@@ -65,7 +53,6 @@ case $cmd in
 	'stop')
 		echo "*** Interface: ${ifname}: stop"
 		ifconfig ${interface_name} down
-		# XXX should there be up/down/destroy options?
 		ifconfig ${interface_name} destroy
 		echo "*** Interface: ${ifname}: done"
 		exit 0

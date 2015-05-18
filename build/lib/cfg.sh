@@ -65,7 +65,7 @@ X_FULL_FSSIZE=${X_FULL_FSSIZE:="1084741824"}
 X_FULL_FSINODES=${X_FULL_FSINODES:="1048576"}
 
 # Where to install things for TFTPBOOT.
-X_TFTPBOOT=${X_TFTPBOOT:="/tftpboot"}
+X_TFTPBOOT=${X_TFTPBOOT:="${CUR_DIR}/../tftpboot"}
 
 # Variables defined by this script
 
@@ -87,11 +87,13 @@ X_BUILD_CLEANALL_DEFAULTS=${X_BUILD_CLEANALL_DEFAULTS:="cleanroot cleanobj"}
 # but I haven't decided whether they're configured by the user
 # or automatically generated.
 
+X_IMGBASE="${CUR_DIR}/../img/"
+
 # X_FSIMAGE
-X_FSIMAGE="${CUR_DIR}/../mfsroot-${CFGNAME}.img"
+X_FSIMAGE="${X_IMGBASE}/mfsroot-${CFGNAME}.img"
 
 # X_FULL_FSIMAGE
-X_FULL_FSIMAGE="${CUR_DIR}/../fullroot-${CFGNAME}.img"
+X_FULL_FSIMAGE="${X_IMGBASE}/fullroot-${CFGNAME}.img"
 
 # X_FSIMAGE_SUFFIX
 X_FSIMAGE_SUFFIX=${X_FSIMAGE_SUFFIX:=".uzip"}
@@ -127,3 +129,6 @@ X_FSIMAGE_ARGS=${X_FSIMAGE_ARGS:="-s 16384"}
 X_FSIMAGE_SUFFIX=${X_FSIMAGE_SUFFIX:=".uzip"}
 X_ROOTFS_DEV=${X_ROOTFS_DEV:="/dev/da0"}
 
+# Configuration file template defaults
+X_CFG_DEFAULT_ETHER=${X_CFG_DEFAULT_ETHER:="arge0"}
+X_CFG_DEFAULT_HOSTNAME=${X_CFG_DEFAULT_HOSTNAME:="freebsd-wifi"}

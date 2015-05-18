@@ -1,0 +1,108 @@
+#!/bin/sh
+
+# This configures an instance of an ethernet switch.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# variables:
+#
+# etherswitchX_enable="YES" # enable, or NO
+# etherswitchX_type="etherswitch"
+# etherswitchX_mode="mode" # none, port, dot1q
+# etherswitchX_descr="YES" # enable, or NO
+# etherswitchX_portlist="A B C D E" # which ports to configure
+# etherswitchX_vlangrouplist="A B C D E" # which vlangroups to configure
+#
+# etherswitchX_vlangroupA_vid="vlan id" # VLAN ID of this vlangroup
+# etherswitchX_vlangroupA_members="A,B,C" # port member, add t (eg 1t) to say "tagged"
+#
+# etherswitchX_portA_pvid="port vlan id" # port VLAN ID
+# etherswitchX_portA_addtag="YES"  # set to YES to always add vlan tag
+# etherswitchX_portA_striptag="NO" # set to YES to always strip vlan tag
+
+etherswitch_vlangroup_cfg()
+{
+	local swname devname
+	local vg vg_vid vg_members
+
+	swname=$1
+	devname=$2
+	vg=$3
+	vg_vid=`get_if_var ${vg} netif_${swname}_vlangroupIF_vid`
+	vg_members=`get_if_var ${vg} netif_${swname}_vlangroupIF_members`
+
+	# Ok, debug what we're doing
+	echo "*** ${swname}: vlangroup ${vg}: vid=${vg_vid}, members='${vg_members}'"
+	etherswitchcfg -f /dev/${devname} vlangroup${vg} vlan ${vg_vid}
+	etherswitchcfg -f /dev/${devname} vlangroup${vg} members ${vg_members}
+}
+
+etherswitch_port_cfg()
+{
+	local swname devname
+	local pvid addtag striptag
+
+	swname=$1
+	devname=$2
+	port=$3
+	pvid=`get_if_var ${port} netif_${swname}_portIF_pvid`
+	addtag=`get_if_var ${port} netif_${swname}_portIF_addtag NO`
+	striptag=`get_if_var ${port} netif_${swname}_portIF_striptag NO`
+
+	echo "*** ${swname}: port ${port} pvid ${pvid} addtag ${addtag} striptag ${striptag}"
+	etherswitchcfg -f /dev/${devname} port${port} pvid ${pvid}
+
+	if [ "${addtag}" = "YES" ]; then
+		etherswitchcfg -f /dev/${devname} port${port} addtag
+	fi
+	if [ "${striptag}" = "YES" ]; then
+		etherswitchcfg -f /dev/${devname} port${port} striptag
+	fi
+
+}
+
+cmd=$1
+shift
+
+swname=$1
+shift
+
+etherswitch_enable=`get_if_var $swname netif_IF_enable no`
+etherswitch_descr=`get_if_var $swname netif_IF_descr`
+etherswitch_name=`get_if_var $swname netif_IF_name`
+etherswitch_mode=`get_if_var $swname netif_IF_mode`
+etherswitch_portlist=`get_if_var $swname netif_IF_portlist`
+etherswitch_vlangrouplist=`get_if_var $swname netif_IF_vlangrouplist`
+
+case $cmd in
+	'start')
+		echo "*** Interface: ${swname}: start"
+
+		# Configure mode
+		etherswitchcfg -f /dev/${etherswitch_name} config vlan_mode ${etherswitch_mode}
+
+		# Configure vlangroup list
+		for i in ${etherswitch_vlangrouplist}; do
+			etherswitch_vlangroup_cfg ${swname} ${etherswitch_name} ${i}
+		done
+
+		# Configure port list
+		for i in ${etherswitch_portlist}; do
+			etherswitch_port_cfg ${swname} ${etherswitch_name} ${i}
+		done
+
+		echo "*** Interface: ${swname}: done"
+		exit 0
+	;;
+	'stop')
+		echo "*** Interface: ${swname}: stop"
+		echo "*** Interface: ${swname}: done"
+		exit 0
+	;;
+	*)
+		echo "Usage: $0 {start|stop} {name}"
+esac
+
+exit 0
