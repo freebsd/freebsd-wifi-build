@@ -117,6 +117,8 @@ ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/bin/sleep
 ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/bin/hostname
 ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/bin/mkdir
 ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/bin/kill
+${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/bin/mv
+${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/bin/expr
 
 ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/usr/bin/hexdump
 ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/usr/bin/more
