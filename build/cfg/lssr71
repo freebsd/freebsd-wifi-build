@@ -3,7 +3,8 @@ TARGET=mips
 TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
 KERNCONF=LSSR71
-LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch"
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch tools/bsdbox"
+LOCAL_TOOL_DIRS="tools/bsdbox"
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.
@@ -22,4 +23,4 @@ X_FSIMAGE_ARGS="-s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ubnt"
+X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage ubnt"

@@ -4,7 +4,6 @@
 # $FreeBSD: head/sys/mips/conf/AR71XX 202172 2010-01-12 20:55:12Z rpaulo $
 #
 
-
 # It should include AR71XX and add the local stuff, but then I'd miss out
 # on all the default stuff I need (eg redboot/geom modules)
 include		"AR71XX_BASE"
@@ -13,9 +12,11 @@ ident		LSSR71
 
 # Override hints with LSSR71 values
 hints		"LSSR71.hints"
+device		geom_uncompress
+options		GEOM_UNCOMPRESS
 
-# Boot path - redboot MFS
-options		ROOTDEVNAME=\"ufs:redboot/rootfs.uzip\"
+# boot path!
+options		ROOTDEVNAME=\"ufs:redboot/rootfs.uncompress\"
 
 # Override the memory probed via redboot; it returns 16mb rather than 32mb.
 options		AR71XX_REALMEM=32*1024*1024
