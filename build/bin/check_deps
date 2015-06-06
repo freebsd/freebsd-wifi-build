@@ -10,7 +10,7 @@ for i in ${PKG_LIST}; do
 	pkg info -e ${i}
 	if [ $? -ne 0 ]; then
 		echo "ERROR."
-		echo "Please install the ${i} package (pkg add ${i})."
+		echo "Please install the ${i} package (pkg install ${i})."
 		retval=1
 	else
 		echo "OK."
