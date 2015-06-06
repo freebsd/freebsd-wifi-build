@@ -15,6 +15,20 @@ USER_SETTINGS=${USER_SETTINGS:-${HOME}/.freebsd-wifi-build-settings.cfg}
 test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
 export USER_SETTINGS
 
+# Get the username - you don't need to run any of this as root
+# (but since I like the freebsd releng people and I'd rather not
+# cause a stroke, make it easy to override.)
+
+USER_ID="`id -u`"
+if [ "${USER_ID}" -eq "0" ]; then
+	echo "*** NOTE: running as root - you don't have to do this!"
+	echo "*** These build scripts will function correctly as non-root!"
+	if [ "x${BUILD_AS_ROOT}" != "xYES" ]; then
+		echo "*** To run as root, set BUILD_AS_ROOT=yes when building"
+		exit 1
+	fi
+fi
+
 echo "*** Configuration file	: $CFGNAME"
 echo "*** Platform		: $BUILDNAME"
 

@@ -2,17 +2,19 @@
 
 # This script checks that relevant packages have been installed.
 
-PKG_LIST="uboot-mkimage-2010.12 lzma"
+PKG_LIST="uboot-mkimage-2010.12 lzma perl5"
 
+retval=0
 for i in ${PKG_LIST}; do
 	echo -n "Checking - ${i} .. "
 	pkg info -e ${i}
 	if [ $? -ne 0 ]; then
 		echo "ERROR."
-		echo "Please install the ${i} package (pkg add ${i})."
-		exit 1
+		echo "Please install the ${i} package (pkg install ${i})."
+		retval=1
+	else
+		echo "OK."
 	fi
-	echo "OK"
 done
 
-exit 0
+exit ${retval}
