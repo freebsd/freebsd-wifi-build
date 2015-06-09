@@ -1,0 +1,42 @@
+BUILDNAME=mips
+TARGET=mips
+TARGET_ARCH=mips
+TARGET_CPUTYPE=mips32
+KERNCONF=ROCKET_M2HP
+
+# bsdbox - so sneak this to be smaller!
+LOCAL_DIRS="tools/tools/ath tools/bsdbox/"
+LOCAL_TOOL_DIRS="tools/bsdbox/"
+
+# XXX needs to be a multiple of the blocksize (512 bytes) ?
+X_FSSIZE="11886592"
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/map/cfg"
+BIN_CFG_SIZE="65536"
+
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+
+# Uboot stuff
+UBOOT_ARCH="mips"
+UBOOT_KERN_LOADADDR="0x80050000"
+UBOOT_KERN_STARTADDR="0x80050100"
+
+# Make a ulzma image
+X_FSIMAGE_CMD="mkulzma"
+
+# XXX This argument "-s" is cluster_size to mkulzma.
+# Such low value is needed for 4MB flash. We have 8MB.
+# We can tweak/improve/increase this number.
+X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
+
+# This board needs uboot friendly image
+X_UBOOT="YES"
+
+# uboot actually looks for these to validate the image.
+# if not present, it will throw: "Firmware check failed! (-2)"
+UBNT_ARCH="XM"
+UBNT_VERSION="XM.ar7240.FreeBSD"
