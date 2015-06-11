@@ -126,6 +126,7 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/mkdir ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/chmod ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_DEF_LINK} /usr/bin/more ${X_STAGING_FSROOT}/usr/bin/less
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/uptime ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/head ${X_STAGING_FSROOT}/usr/bin/
