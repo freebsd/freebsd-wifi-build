@@ -146,6 +146,10 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/gpioctl ${X_STAGING_FSROOT}/usr/sbin/
 # editors are useful, honest!
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/ee ${X_STAGING_FSROOT}/usr/bin/
 
+# dhclient is critical
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient ${X_STAGING_FSROOT}/sbin
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient-script ${X_STAGING_FSROOT}/sbin
+
 # XXX should symlink gzip to gunzip
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/gzip ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/gunzip ${X_STAGING_FSROOT}/usr/bin/
