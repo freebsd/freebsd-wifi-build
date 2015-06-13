@@ -51,7 +51,7 @@ if [ "x${TPLINK_CONFIG_STYLE}" = "xNEW" ]; then
 elif [ "x${X_MFSROOT}" = "xYES" ]; then
 # Create firmware suitable for TFTP
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw	\
-	     -Q -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
+	     -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
 	     -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
 	     -k ${TPLINK_KERNEL} -c -N ${TPLINK_IMG_NAME} \
 	     -V ${TPLINK_IMG_VERSION} \
