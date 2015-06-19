@@ -1,14 +1,8 @@
-# This is a big-endian mips build
+# Base configuration
+X_BUILD_BASE_CFG="mips"
 
-BUILDNAME=mips
-TARGET=mips
-TARGET_ARCH=mips
-TARGET_CPUTYPE=mips32
 KERNCONF=MALTA
-LOCAL_DIRS=" "
-
 X_ROOTFS_DEV="/dev/ada0"
-
 X_FULL_FSSIZE="4294967296"
 
 # Building the firmware image

@@ -1,5 +1,5 @@
 # Base configuration
-X_BUILD_BASE_CFG="mips"
+X_BUILD_BASE_CFG="mips_ap"
 
 # board configuration
 KERNCONF=CARAMBOLA2
