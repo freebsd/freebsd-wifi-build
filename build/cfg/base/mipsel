@@ -1,0 +1,9 @@
+# This is a 32 bit little-endian mips build
+
+BUILDNAME=mipsel
+TARGET=mips
+TARGET_ARCH=mipsel
+TARGET_CPUTYPE=mips32
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch tools/bsdbox"
+LOCAL_TOOL_DIRS="tools/bsdbox/"
+
