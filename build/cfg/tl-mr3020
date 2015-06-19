@@ -1,12 +1,7 @@
-BUILDNAME=mips
-TARGET=mips
-TARGET_ARCH=mips
-TARGET_CPUTYPE=mips32
-KERNCONF=TP-MR3020
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
 
-# bsdbox - so sneak this to be smaller!
-LOCAL_DIRS="tools/tools/ath tools/bsdbox/"
-LOCAL_TOOL_DIRS="tools/bsdbox/"
+KERNCONF=TP-MR3020
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.
