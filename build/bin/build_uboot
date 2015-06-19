@@ -11,6 +11,10 @@ shift
 
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
+# If X_BUILD_BASE_CFG is set, also load that in.
+if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
+fi
 
 # XXX TODO Enforce the maximum size of the kernel image.
 

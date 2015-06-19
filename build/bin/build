@@ -11,7 +11,15 @@ CFGNAME=$1
 shift
 
 USER_SETTINGS=${USER_SETTINGS:-${HOME}/.freebsd-wifi-build-settings.cfg}
+
+# Bring in the config file
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+
+# If X_BUILD_BASE_CFG is set, also load that in.
+if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
+fi
+
 test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
 export USER_SETTINGS
 
@@ -30,6 +38,7 @@ if [ "${USER_ID}" -eq "0" ]; then
 fi
 
 echo "*** Configuration file	: $CFGNAME"
+echo "*** Base configuration	: ${X_BUILD_BASE_CFG}"
 echo "*** Platform		: $BUILDNAME"
 
 # include the config variable generation code
