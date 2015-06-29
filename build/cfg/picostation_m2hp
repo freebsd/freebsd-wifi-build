@@ -1,12 +1,7 @@
-BUILDNAME=mips
-TARGET=mips
-TARGET_ARCH=mips
-TARGET_CPUTYPE=mips32
-KERNCONF=PICOSTATION_M2HP
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
 
-# bsdbox - so sneak this to be smaller!
-LOCAL_DIRS="tools/tools/ath tools/bsdbox/"
-LOCAL_TOOL_DIRS="tools/bsdbox/"
+KERNCONF=PICOSTATION_M2HP
 
 # XXX needs to be a multiple of the blocksize (512 bytes) ?
 X_FSSIZE="11886592"

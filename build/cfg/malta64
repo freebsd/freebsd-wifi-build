@@ -1,11 +1,7 @@
-# This is a big-endian mips64 build
+# Base configuration
+X_BUILD_BASE_CFG="mips64"
 
-BUILDNAME=mips
-TARGET=mips
-TARGET_ARCH=mips64
-TARGET_CPUTYPE=mips64
 KERNCONF=MALTA64
-LOCAL_DIRS=" "
 
 X_ROOTFS_DEV="/dev/ada0"
 

@@ -1,0 +1,9 @@
+# This is a big-endian mips64 build
+
+BUILDNAME=mips
+TARGET=mips
+TARGET_ARCH=mips64
+TARGET_CPUTYPE=mips64
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch tools/bsdbox"
+LOCAL_TOOL_DIRS="tools/bsdbox/"
+

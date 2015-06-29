@@ -1,9 +1,7 @@
-BUILDNAME=mips
-TARGET=mips
-TARGET_ARCH=mips
-TARGET_CPUTYPE=mips32
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
+
 KERNCONF=RT305X
-LOCAL_DIRS="tools/tools/ath"
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage"
