@@ -31,6 +31,10 @@ for i in ${kernel_modules}; do
 	/sbin/kldload ${i}
 done
 
+# Disable random entropy gathering for high-overhead things
+echo "*** Setting kern.random.harvest.mask=511"
+sysctl kern.random.harvest.mask=511
+
 # Bring up loopback
 echo "*** bringing up loopback .."
 /sbin/ifconfig lo0 inet 127.0.0.1/8 up
