@@ -1,11 +1,5 @@
-BUILDNAME=armeb
-TARGET=arm
-TARGET_ARCH=armeb
-TARGET_CPUTYPE=xscale
+X_BUILD_BASE_CFG="armeb"
 KERNCONF=AVILA
-LOCAL_DIRS="tools/tools/ath	tools/tools/net80211/wlanstats"
-
-KERN_NO_TARGET_CPUTYPE="yes"
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.

@@ -1,12 +1,8 @@
-BUILDNAME=mipseb
-TARGET=mips
-TARGET_ARCH=mipseb
-TARGET_CPUTYPE=mips32
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
+
 KERNCONF=ALFA_HORNET_UB
 
-# bsdbox - so sneak this to be smaller!
-LOCAL_DIRS="tools/tools/ath tools/bsdbox/"
-LOCAL_TOOL_DIRS="tools/bsdbox/"
 # XXX needs to be a multiple of the blocksize (512 bytes) ?
 X_FSSIZE="2818048"
 

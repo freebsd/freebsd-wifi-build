@@ -1,11 +1,7 @@
-# This is a big-endian mips build
+# Base configuration
+X_BUILD_BASE_CFG="mipsel"
 
-BUILDNAME=mipsel
-TARGET=mips
-TARGET_ARCH=mipsel
-TARGET_CPUTYPE=mips32
 KERNCONF=MALTA
-LOCAL_DIRS=" "
 
 X_MAKEFS_ENDIAN=le
 X_ROOTFS_DEV="/dev/ada0"

@@ -1,11 +1,9 @@
-BUILDNAME=mips
-TARGET=mips
-TARGET_ARCH=mips
-TARGET_CPUTYPE=mips32
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
+
+# board configuration
 KERNCONF=CARAMBOLA2
 
-LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch tools/bsdbox"
-LOCAL_TOOL_DIRS="tools/bsdbox/"
 # XXX needs to be a multiple of the blocksize (512 bytes) ?
 X_FSSIZE="2818048"
 
