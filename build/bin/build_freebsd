@@ -148,7 +148,7 @@ while [ "x$1" != "x" ]; do
 		echo "*** Copying kernel to ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}"
 		mkdir -p ${X_TFTPBOOT}
 		cp ${X_CP_OPTS} ${X_KERNEL} ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}
-		cp ${X_CP_OPTS} ${X_KERNEL}.symbols ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.symbols
+		cp ${X_CP_OPTS} ${X_KERNEL}.debug ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.debug
 	fi
 	shift
 done
