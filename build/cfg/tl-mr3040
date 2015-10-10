@@ -30,4 +30,7 @@ TPLINK_IMG_VERSION="FreeBSD-HEAD"
 TPLINK_BOARDTYPE="TL-MR3040v1"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage tplink"
+X_BUILD_BUILD_IMG_DEFAULTS="fullroot fullfsimage tplink"
+
+X_ROOTFS_DEV="/dev/da0"
+X_FULL_FSSIZE="2147483648"
