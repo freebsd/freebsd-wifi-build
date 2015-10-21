@@ -1,0 +1,44 @@
+#!/bin/sh
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+# suck in the per-device options
+CFGNAME=$1
+shift
+. ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+# If X_BUILD_BASE_CFG is set, also load that in.
+if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
+fi
+
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
+
+# This builds a buffalo airstation system image from the given kernel and MFS.
+
+# lzma the kernel image
+# Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
+# from base, as EOS (end of stream) markers aren't allowed for uboot.
+
+# refer at ZRouter
+../obj/mipsel/mips.mipsel${CUR_DIR}/tmp/usr/bin/objcopy -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin || exit 1
+
+/usr/local/bin/lzma e ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma || exit 1
+
+# Create the firmware
+mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
+  -a ${UBOOT_KERN_LOADADDR} -e ${UBOOT_KERN_STARTADDR} \
+  -n "FreeBSD" -d ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma \
+  ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage \
+  || exit 1
+
+# Format requires the string as a preamble for validation
+(
+	printf "# Airstation Public Fmt1\0\0\0\0\0\0\0\0"
+        dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=1M conv=sync;
+        dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
+) > ${X_TFTPBOOT}/${CFGNAME}-tftp.bin
+
+exit 0

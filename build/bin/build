@@ -93,6 +93,9 @@ for BUILD_TARGET in ${X_BUILD_LIST}; do
 		'uboot')
 			${SCRIPT_DIR}/build_uboot ${CFGNAME} || exit 1
 		;;
+		'ralink')
+			${SCRIPT_DIR}/build_ralink ${CFGNAME} || exit 1
+		;;
 		'fsimage')
 			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;

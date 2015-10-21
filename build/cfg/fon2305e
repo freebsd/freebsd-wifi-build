@@ -1,0 +1,14 @@
+# Base configuration
+X_BUILD_BASE_CFG="mipsel"
+
+KERNCONF=RT305X
+
+X_MAKEFS_ENDIAN=le
+
+# Uboot stuff
+UBOOT_ARCH="mips"
+UBOOT_KERN_LOADADDR="0x80001100"
+UBOOT_KERN_STARTADDR="0x80001100"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ralink"
