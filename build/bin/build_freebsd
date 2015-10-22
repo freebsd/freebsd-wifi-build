@@ -56,8 +56,8 @@ if [ "x${LOCAL_TOOL_DIRS}" != "x" ]; then
 	X_LOCAL_TOOL_DIRS="LOCAL_TOOL_DIRS=\"${LOCAL_TOOL_DIRS}\""
 fi
 
-# Create a make.conf
-echo "MALLOC_PRODUCTION=" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
+# Create blank make.conf/src.conf
+echo "" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
 echo "" > ${X_DESTDIR}/../../src.conf.${BUILDNAME}
 
 # Make a src.conf
@@ -75,6 +75,12 @@ if [ "x${X_SKIP_AP_STUFF}" = "xYES" ]; then
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
+# For now, AP builds get MALLOC_PRODUCTION, but full-root builds
+# don't.
+
+if [ "x${X_SKIP_AP_STUFF}" = "xYES" ]; then
+	echo "MALLOC_PRODUCTION=" >> ${X_DESTDIR}/../make.conf.${BUILDNAME}
+fi
 if [ "x$X_SKIP_MORE_STUFF" = "xYES" ]; then
 	echo 'WITHOUT_GAMES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_DOCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
