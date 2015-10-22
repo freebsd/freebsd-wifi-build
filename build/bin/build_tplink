@@ -37,6 +37,14 @@ make -C ${SCRIPT_DIR}/../../programs/mktplinkfw2  || exit 1
 # that the f/w image will exceed the capacity of the flash on the
 # device.
 
+X_ROOTFS_CMDOPT=""
+X_ROOTFS_SKIPOPT="-c"
+
+if [ "x${TPLINK_SKIP_ROOTFS}" = "xNO" ]; then
+	X_ROOTFS_CMDOPT="-r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX}"
+	X_ROOTFS_SKIPOPT="-a 0x10000"
+fi
+
 if [ "x${TPLINK_CONFIG_STYLE}" = "xNEW" ]; then
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw \
 		-H ${TPLINK_HARDWARE_ID} \
@@ -49,8 +57,8 @@ if [ "x${TPLINK_CONFIG_STYLE}" = "xNEW" ]; then
 		-s \
 		-X ${TPLINK_FIRMWARE_RESERV} \
 		-k ${TPLINK_KERNEL} \
-		-r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
-		-a 0x10000 \
+		${X_ROOTFS_CMDOPT} \
+		${X_ROOTFS_SKIPOPT} \
 		-o ${X_TFTPBOOT}/${CFGNAME}.factory.bin
 elif [ "x${X_MFSROOT}" = "xYES" ]; then
 # Create firmware suitable for TFTP
@@ -67,7 +75,8 @@ else
 	    -B ${TPLINK_BOARDTYPE} -R ${TPLINK_ROOTFS_START} \
 	    -L ${TPLINK_KERN_LOADADDR} -E ${TPLINK_KERN_STARTADDR} \
 	    -k ${TPLINK_KERNEL} -N ${TPLINK_IMG_NAME} \
-	    -V ${TPLINK_IMG_VERSION} -r ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} \
+	    -V ${TPLINK_IMG_VERSION} \
+	    ${X_ROOTFS_CMDOPT} \
 	    -o ${X_TFTPBOOT}/${CFGNAME}.factory.bin \
 	|| exit 1
 fi
