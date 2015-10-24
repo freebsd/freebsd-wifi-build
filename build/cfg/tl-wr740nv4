@@ -1,0 +1,39 @@
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
+
+KERNCONF=TL-WR740Nv4
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/map/cfg"
+BIN_CFG_SIZE="65536"
+
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre"
+
+# Make a ulzma image
+X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_ARGS="-s 65536 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
+
+# Use LZMA to compress the kernel
+TPLINK_COMPRESSION_LZMA=YES
+TPLINK_CONFIG_STYLE=NEW
+
+TPLINK_ROOTFS_START="0x00180000"
+TPLINK_KERN_LOADADDR="0x80050000"
+TPLINK_KERN_STARTADDR="0x80050100"
+TPLINK_IMG_NAME="FreeBSD"
+TPLINK_IMG_VERSION="FreeBSD-HEAD"
+# New-style board config
+TPLINK_HARDWARE_ID=0x07400004
+TPLINK_HARDWARE_VER=1
+TPLINK_HARDWARE_FLASHID=4M
+TPLINK_FIRMWARE_RESERV=0x20000
+
+# Skip the rootfs; only put the kernel in!
+# TPLINK_SKIP_ROOTFS=YES
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage tplink"
