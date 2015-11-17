@@ -3,6 +3,8 @@ X_BUILD_BASE_CFG="mips_ap"
 
 KERNCONF=AP135
 
+X_CFG_DEFAULT_HOSTNAME="freebsd-ap135"
+
 # The configuration load/save script needs to know the
 # configuration partition name and location.
 BIN_CFG_PARTITION="/dev/map/cfg"
