@@ -73,6 +73,10 @@ case $cmd in
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
 				    wlanmode hostap bssid
 			;;
+			'ibss-open')
+				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
+				    wlanmode ibss bssid
+			;;
 			'ibss')
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
 				    wlanmode ibss bssid
@@ -112,6 +116,13 @@ case $cmd in
 			'ibss')
 				generate_wpa_cfg_ibss ${netif_name} || exit 1
 				wpa_supplicant -B -P /var/run/wpa_supplicant.${netif_name}.pid -i ${netif_name} -c /var/run/wpa_supplicant.${netif_name}.conf || exit 1
+				sleep 1
+				;;
+			'ibss-open')
+				# Cheat for now; just bring it up and let net80211
+				# take care of it.
+				_wpa_ssid=`get_if_var ${netif_name} netif_IF_wifi_ibss_ssid FREEBSD_IBSS`
+				ifconfig ${netif_name} ssid ${_wpa_ssid} up
 				sleep 1
 				;;
 		esac
