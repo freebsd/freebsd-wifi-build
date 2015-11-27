@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Support routines to generate a suitable wpa_supplicant.conf the rc.conf
+# file when in IBSS mode.
+
+generate_wpa_cfg_ibss()
+{
+	local _ifname _wpa_pairwise _wpa_proto
+	local _wpa_ssid _wpa_passphrase _wpa_group
+	local _wpa_cfg _wpa_key_mgmt _wpa_mode
+	local _wpa_cfg_tmp
+	local _prefix="/var/run"
+
+	_ifname=$1
+
+	# Bring in the variables, complete with defaults
+	_wpa_ssid=`get_if_var ${_ifname} netif_IF_wifi_ibss_ssid FREEBSD_IBSS_ENCRYPT`
+	_wpa_passphrase=`get_if_var ${_ifname} netif_IF_wifi_ibss_passphrase FREEBSD_PASSWORD`
+	_wpa_proto=`get_if_var ${_ifname} netif_IF_wifi_ibss_proto WPA`
+	_wpa_mode=`get_if_var ${_ifname} netif_IF_wifi_ibss_mode 1`
+	_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_ibss_key_mgmt WPA-NONE`
+	_wpa_pairwise=`get_if_var ${_ifname} netif_IF_wifi_ibss_pairwise "NONE"`
+	_wpa_group=`get_if_var ${_ifname} netif_IF_wifi_ibss_group "CCMP TKIP"`
+
+	_wpa_cfg="${_prefix}/wpa_supplicant.${_ifname}.conf"
+	# XXX temp file!
+	_wpa_cfg_tmp="${_prefix}/wpa_supplicant.${_ifname}.conf.$$"
+
+	# For now, assume it's a straight wpa shared key config.
+	# Later on this should grow other options for things.
+
+	cat > ${_wpa_cfg_tmp} <<EOF
+# This is automatically generated!
+# it's documented as required for mode=1 (ibss)
+ap_scan=2
+
+network={
+	ssid="${_wpa_ssid}"
+	psk="${_wpa_passphrase}"
+	# set ibss
+	mode=${_wpa_mode}
+	proto=${_wpa_proto}
+	key_mgmt=${_wpa_key_mgmt}
+	pairwise=${_wpa_pairwise}
+	group=${_wpa_group}
+}
+EOF
+	mv ${_wpa_cfg_tmp} ${_wpa_cfg}
+	return 0
+}

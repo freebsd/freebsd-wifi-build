@@ -7,7 +7,7 @@ PKG_LIST="uboot-mkimage-2010.12 lzma perl5 rsync"
 retval=0
 for i in ${PKG_LIST}; do
 	echo -n "Checking - ${i} .. "
-	pkg info -e ${i}
+	pkg-static info -e ${i}
 	if [ $? -ne 0 ]; then
 		echo "ERROR."
 		echo "Please install the ${i} package (pkg install ${i})."
