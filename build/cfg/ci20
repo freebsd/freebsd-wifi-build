@@ -1,0 +1,12 @@
+# Base configuration
+X_BUILD_BASE_CFG="mipsel"
+
+KERNCONF=CI20
+
+X_MAKEFS_ENDIAN=le
+X_ROOTFS_DEV="/dev/da0"
+X_FULL_FSSIZE="1073741824"
+X_KERNSUFFIX=CI20
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="fullroot fullfsimage"
