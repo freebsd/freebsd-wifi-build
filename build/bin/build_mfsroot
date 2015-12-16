@@ -293,6 +293,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libm.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libjail.so.1 ${X_STAGING_FSROOT}/lib/
+${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/lib80211.so.1 ${X_STAGING_FSROOT}/lib/
 
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
