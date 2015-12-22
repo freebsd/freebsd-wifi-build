@@ -322,10 +322,10 @@ ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/manifest ${X_STAGING_FSROOT}/c/etc/cfg/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/rc.conf.default ${X_STAGING_FSROOT}/c/etc/
 
 # pmc
-${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/pmcstat ${X_STAGING_FSROOT}/usr/sbin/
-${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/pmccontrol ${X_STAGING_FSROOT}/usr/sbin/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libpmc.so.5 ${X_STAGING_FSROOT}/usr/lib/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libelf.so.2 ${X_STAGING_FSROOT}/usr/lib/
+#${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/pmcstat ${X_STAGING_FSROOT}/usr/sbin/
+#${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/pmccontrol ${X_STAGING_FSROOT}/usr/sbin/
+#${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libpmc.so.5 ${X_STAGING_FSROOT}/usr/lib/
+#${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libelf.so.2 ${X_STAGING_FSROOT}/usr/lib/
 
 # rc stuff
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
