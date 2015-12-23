@@ -1,0 +1,12 @@
+# Build environment and configuration for mips32 little-endian
+# .. but with the access point cut down options set.
+
+BUILDNAME=mipsel_ap
+TARGET=mips
+TARGET_ARCH=mipsel
+TARGET_CPUTYPE=mips32
+LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch tools/bsdbox"
+LOCAL_TOOL_DIRS="tools/bsdbox/"
+
+# .. build with a bunch of things disabled.
+X_SKIP_AP_STUFF="YES"
