@@ -3,4 +3,4 @@
 console none			unknown off secure
 
 # Serial terminals
-ttyu0	"/usr/libexec/getty 3wire"	vt100	on	secure
+@DEF_TTY@	"/usr/libexec/getty 3wire"	vt100	on	secure
