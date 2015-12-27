@@ -1,0 +1,27 @@
+# Base configuration
+X_BUILD_BASE_CFG="mipsel"
+
+# board configuration
+KERNCONF=RT5350
+X_MAKEFS_ENDIAN=le
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+#BIN_CFG_PARTITION="/dev/map/cfg"
+#BIN_CFG_SIZE="65536"
+
+UBOOT_ARCH="mips"
+UBOOT_KERN_LOADADDR="0x80001100"
+UBOOT_KERN_STARTADDR="0x80001100"
+
+X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
+
+# If no build options are provided, which build options
+# should be run when building
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ralink"
+
+# Configuration file overrides
+X_CFG_DEFAULT_ETHER="rt0"
+X_CFG_DEFAULT_TTY="ttyu1"
