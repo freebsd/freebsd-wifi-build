@@ -1,5 +1,5 @@
 # Base configuration
-X_BUILD_BASE_CFG="mipsel"
+X_BUILD_BASE_CFG="mipsel_ap"
 
 # board configuration
 KERNCONF=RT5350

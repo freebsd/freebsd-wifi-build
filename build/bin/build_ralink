@@ -21,7 +21,7 @@ fi
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
 
 # refer at ZRouter
-../obj/mipsel/mips.mipsel${CUR_DIR}/tmp/usr/bin/objcopy -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin || exit 1
+../obj/${X_BUILD_BASE_CFG}/mips.mipsel${CUR_DIR}/tmp/usr/bin/objcopy -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin || exit 1
 
 /usr/local/bin/lzma e ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma || exit 1
 
