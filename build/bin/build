@@ -16,7 +16,7 @@ USER_SETTINGS=${USER_SETTINGS:-${HOME}/.freebsd-wifi-build-settings.cfg}
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 
 # If X_BUILD_BASE_CFG is set, also load that in.
-if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+if [ -n "${X_BUILD_BASE_CFG}" ]; then
 	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
 fi
 
@@ -31,7 +31,7 @@ USER_ID="`id -u`"
 if [ "${USER_ID}" -eq "0" ]; then
 	echo "*** NOTE: running as root - you don't have to do this!"
 	echo "*** These build scripts will function correctly as non-root!"
-	if [ "x${BUILD_AS_ROOT}" != "xYES" ]; then
+	if [ "${BUILD_AS_ROOT}" != "YES" ]; then
 		echo "*** To run as root, set BUILD_AS_ROOT=YES when building"
 		exit 1
 	fi
@@ -49,13 +49,13 @@ echo "*** Platform		: $BUILDNAME"
 # If it's buildimg, then BUILDIMG target list.
 # If it's cleanimg, then CLEANIMG target list.
 # If it's cleanall, then CLEANALL target list.
-if [ "x$1" = "x" ]; then
+if [ -z "$1" ]; then
 	X_BUILD_LIST="${X_BUILD_BUILD_THINGS_DEFAULTS} ${X_BUILD_BUILD_IMG_DEFAULTS}"
-elif [ "x$1" = "xbuildimg" ]; then
+elif [ "$1" = "buildimg" ]; then
 	X_BUILD_LIST=${X_BUILD_BUILD_IMG_DEFAULTS}
-elif [ "x$1" = "xcleanimg" ]; then
+elif [ "$1" = "cleanimg" ]; then
 	X_BUILD_LIST=${X_BUILD_CLEANIMG_DEFAULTS}
-elif [ "x$1" = "xcleanall" ]; then
+elif [ "$1" = "cleanall" ]; then
 	X_BUILD_LIST=${X_BUILD_CLEANALL_DEFAULTS}
 else
 	X_BUILD_LIST=$*
