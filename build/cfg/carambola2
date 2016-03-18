@@ -25,10 +25,10 @@ UBOOT_KERN_LOADADDR="0x80050000"
 UBOOT_KERN_STARTADDR="0x80050100"
 
 # Make a ulzma image
-X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_CMD="mkuzip"
 # XXX this is so high right now in order to get this
 # squeezed onto 4MB of flash. Sigh.
-X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_ARGS="-L -d -s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # If no build options are provided, which build options

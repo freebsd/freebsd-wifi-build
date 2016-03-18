@@ -61,8 +61,11 @@ echo "" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
 echo "" > ${X_DESTDIR}/../../src.conf.${BUILDNAME}
 
 # Make a src.conf
+echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
+
+# Stuff for AP builds
 if [ "x${X_SKIP_AP_STUFF}" = "xYES" ]; then
-	echo 'WITHOUT_KERBEROS="YES"' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_KERBEROS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
