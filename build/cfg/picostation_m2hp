@@ -20,12 +20,12 @@ UBOOT_KERN_LOADADDR="0x80050000"
 UBOOT_KERN_STARTADDR="0x80050100"
 
 # Make a ulzma image
-X_FSIMAGE_CMD="mkulzma"
+X_FSIMAGE_CMD="mkuzip"
 
-# XXX This argument "-s" is cluster_size to mkulzma.
+# XXX This argument "-s" is cluster_size to mkuzip.
 # Such low value is needed for 4MB flash. We have 8MB.
 # We can tweak/improve/increase this number.
-X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_ARGS="-L -d -s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # This board needs uboot friendly image

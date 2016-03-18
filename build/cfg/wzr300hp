@@ -19,8 +19,8 @@ UBOOT_KERN_LOADADDR="0x80050000"
 UBOOT_KERN_STARTADDR="0x80050100"
 
 # Make a ulzma image
-X_FSIMAGE_CMD="mkulzma"
-X_FSIMAGE_ARGS="-s 131072 -v"
+X_FSIMAGE_CMD="mkuzip"
+X_FSIMAGE_ARGS="-L -d -s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image

@@ -26,8 +26,8 @@ X_DLINK_MAX_IMG_SIZE=8126464
 X_DLINK_SIGNATURE=00DB120AR9344-RT-101214-00
 
 # Make a ulzma image
-X_FSIMAGE_CMD="mkulzma"
-X_FSIMAGE_ARGS="-s 65536 -v"
+X_FSIMAGE_CMD="mkuzip"
+X_FSIMAGE_ARGS="-L -d -s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image

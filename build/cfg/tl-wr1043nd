@@ -8,9 +8,9 @@ KERNCONF=TP-WN1043ND
 BIN_CFG_PARTITION="/dev/map/cfg"
 BIN_CFG_SIZE="65536"
 
-# Use mkulzma for rootfs
-X_FSIMAGE_CMD="mkulzma"
-X_FSIMAGE_ARGS="-s 131072 -v"
+# Use lzma for rootfs
+X_FSIMAGE_CMD="mkuzip"
+X_FSIMAGE_ARGS="-L -d -s 131072 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Use GZIP to compress the kernel
