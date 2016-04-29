@@ -219,7 +219,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_securetty.so ${X_STAGING_FSROOT}/usr
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_self.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_unix.so ${X_STAGING_FSROOT}/usr/lib
-# install ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
+${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/usr/share/misc/termcap ${X_STAGING_FSROOT}/usr/share/misc/
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/usr/share/tabset/vt100 ${X_STAGING_FSROOT}/usr/share/tabset/
