@@ -12,3 +12,4 @@ UBOOT_KERN_STARTADDR="0x80001100"
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ralink"
+X_UBOOT_AIRSTATION_PREAMBLE="YES"

@@ -16,14 +16,12 @@ fi
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
-# This builds a buffalo airstation system image from the given kernel and MFS.
-
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
 
 # refer at ZRouter
-../obj/mipsel/mips.mipsel${CUR_DIR}/tmp/usr/bin/objcopy -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin || exit 1
+../obj/${X_BUILD_BASE_CFG}/mips.mipsel${CUR_DIR}/tmp/usr/bin/objcopy -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin || exit 1
 
 /usr/local/bin/lzma e ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma || exit 1
 
@@ -34,11 +32,12 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage \
   || exit 1
 
-# Format requires the string as a preamble for validation
-(
-	printf "# Airstation Public Fmt1\0\0\0\0\0\0\0\0"
-        dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=1M conv=sync;
-        dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
-) > ${X_TFTPBOOT}/${CFGNAME}-tftp.bin
-
+if [ "x${X_UBOOT_AIRSTATION_PREAMBLE}" = "xYES" ] ; then
+  # Format requires the string as a preamble for validation
+  (
+    printf "# Airstation Public Fmt1\0\0\0\0\0\0\0\0"
+    dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=1M conv=sync;
+    dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
+  ) > ${X_TFTPBOOT}/${CFGNAME}-tftp.bin
+fi
 exit 0
