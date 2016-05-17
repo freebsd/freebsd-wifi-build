@@ -158,6 +158,7 @@ while [ "x$1" != "x" ]; do
 		mkdir -p ${X_TFTPBOOT}
 		cp ${X_CP_OPTS} ${X_KERNEL} ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}
 		cp ${X_CP_OPTS} ${X_KERNEL}.debug ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.debug
+		cp ${X_CP_OPTS} ${X_KERNEL}.tramp.bin ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.tramp.bin
 	fi
 	shift
 done
