@@ -96,6 +96,9 @@ for BUILD_TARGET in ${X_BUILD_LIST}; do
 		'ralink')
 			${SCRIPT_DIR}/build_ralink ${CFGNAME} || exit 1
 		;;
+		'trx')
+			${SCRIPT_DIR}/build_trx ${CFGNAME} || exit 1
+		;;
 		'fsimage')
 			${SCRIPT_DIR}/build_fsimage ${CFGNAME} || exit 1
 		;;
