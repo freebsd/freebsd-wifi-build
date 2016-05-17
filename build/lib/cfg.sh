@@ -50,7 +50,7 @@ X_KERNSUFFIX=${X_KERNSUFFIX:="${KERNCONF}"}
 X_MAKEFS_ENDIAN=${X_MAKEFS_ENDIAN:="be"}
 
 # X_MAKEFS_FLAGS - what flags to pass to makefs when building the MFS image
-X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"
+X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512,${X_MAKEFS_FLAGS_EXT}"
 
 # X_MAKEFS_FULL_FLAGS - what flags to pass to makefs when building the full image
 X_MAKEFS_FULL_FLAGS="version=2"
