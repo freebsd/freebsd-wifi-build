@@ -134,3 +134,4 @@ X_ROOTFS_DEV=${X_ROOTFS_DEV:="/dev/da0"}
 # Configuration file template defaults
 X_CFG_DEFAULT_ETHER=${X_CFG_DEFAULT_ETHER:="arge0"}
 X_CFG_DEFAULT_HOSTNAME=${X_CFG_DEFAULT_HOSTNAME:="freebsd-wifi"}
+X_CFG_DEFAULT_TTY=${X_CFG_DEFAULT_TTY:="ttyu0"}

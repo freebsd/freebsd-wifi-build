@@ -314,7 +314,6 @@ ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc ${X_STAGING_FSROOT}/etc/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc2 ${X_STAGING_FSROOT}/c/etc/
 
 # local etc stuff - eg local password file
-${INSTALL_DEF_FILE} ${X_BASEDIR}/files/ttys ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/login.conf ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/gettytab ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/passwd ${X_STAGING_FSROOT}/c/etc/
@@ -366,6 +365,11 @@ cat ${X_BASEDIR}/files/rc.conf | sed "s|@DEF_ETH@|${X_CFG_DEFAULT_ETHER}|g" \
     | sed "s|@DEF_HOSTNAME@|${X_CFG_DEFAULT_HOSTNAME}|" \
     > ${X_STAGING_TMPDIR}/rc.conf
 ${INSTALL_DEF_FILE} ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_FSROOT}/c/etc/cfg/
+
+# Set the console tty
+cat ${X_BASEDIR}/files/ttys | sed "s|@DEF_TTY@|${X_CFG_DEFAULT_TTY}|" \
+    > ${X_STAGING_TMPDIR}/ttys
+${INSTALL_DEF_FILE} ${X_STAGING_TMPDIR}/ttys ${X_STAGING_FSROOT}/c/etc/
 
 # kernel modules - if required
 if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
