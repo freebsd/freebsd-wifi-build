@@ -1,0 +1,56 @@
+# Base configuration
+X_BUILD_BASE_CFG="mipsel_ap"
+
+if [ "x" = "x${X_DTS_FILE}" ]; then
+	X_DTS_FILE=$1
+	shift
+
+	if [ "x${X_DTS_FILE}" = "x" ]; then
+		echo "DTS file not specified"
+		exit 1
+	fi
+
+	T_DTS_FILE=`basename ${X_DTS_FILE}`
+	T_DTS_FILE_NO_SUFFIX=`basename ${X_DTS_FILE} .dts`
+
+	if [ "x${T_DTS_FILE}" = "x${T_DTS_FILE_NO_SUFFIX}" ]; then
+		echo "Invalid DTS filename specified ${T_DTS_FILE}";
+		exit 1
+	fi
+
+	if [ ! -f ${CUR_DIR}/sys/boot/fdt/dts/mips/${X_DTS_FILE} ] && 
+	   [ ! -f ${CUR_DIR}/sys/gnu/dts/mips/${X_DTS_FILE} ]; then
+		echo "DTS file ${X_DTS_FILE} does not exist"
+		exit 1
+	fi
+
+	KERNCONF=`cpp -P -x assembler-with-cpp	\
+	    -I ${CUR_DIR}/sys/gnu/dts/include	\
+	    -I ${CUR_DIR}/sys/boot/fdt/dts/mips	\
+	    -I ${CUR_DIR}/sys/gnu/dts/mips	\
+	    -include ${X_DTS_FILE} /dev/null |	\
+	    grep compatible | grep "\-soc" |	\
+	    head -1 |				\
+	    sed 's|^.*= "[[:alpha:]]*,||g;s|-soc.*$||g;s|mtk|mt|g;s|$|_fdt|g' |\
+	    sed 's|mt7628an|mt7628|g' |		\
+	    tr [a-z] [A-Z]`
+
+	if [ ! -f ${CUR_DIR}/sys/mips/conf/${KERNCONF} ]; then
+		echo "Kernel config for ${KERNCONF} doesn't exist."
+		exit 1
+	fi
+
+	X_KERNSUFFIX=${T_DTS_FILE_NO_SUFFIX}
+
+	export KERNCONF
+	export X_KERNSUFFIX
+	export X_DTS_FILE
+fi
+
+X_MAKEFS_ENDIAN=le
+
+# Uboot stuff
+UBOOT_ARCH="mips"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ralink"
