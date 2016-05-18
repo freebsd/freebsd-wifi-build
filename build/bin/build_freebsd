@@ -104,6 +104,12 @@ fi
 # the stuff we've placed in ${X_TFTPBOOT}/
 X_CP_OPTS="-f"
 
+# Set FDT_DTS_FILE kernel build option if any
+X_FDT_DTS_FILE=""
+if [ "x${X_DTS_FILE}" != "x" ]; then
+	X_FDT_DTS_FILE="FDT_DTS_FILE=${X_DTS_FILE}"
+fi
+
 while [ "x$1" != "x" ]; do
 	echo "*** Stage		: $1"
 	if [ "$1" = "installworld" ]; then
@@ -150,6 +156,7 @@ while [ "x$1" != "x" ]; do
 	    __MAKE_CONF=${X_DESTDIR}/../make.conf.${BUILDNAME}	\
 	    SRCCONF=${X_DESTDIR}/../src.conf.${BUILDNAME}	\
 	    LOCAL_DIRS="${LOCAL_DIRS}"				\
+	    ${X_FDT_DTS_FILE}					\
 	    ${X_LOCAL_TOOL_DIRS}				\
 	    $1							\
 	|| exit 1

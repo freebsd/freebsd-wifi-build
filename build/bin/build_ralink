@@ -20,16 +20,34 @@ fi
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
 
-# refer at ZRouter
-../obj/mipsel/mips.mipsel${CUR_DIR}/tmp/usr/bin/objcopy -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin || exit 1
+if [ -f ${X_KERNEL}.netboot ]; then
+	X_KERNEL=${X_KERNEL}.netboot
+	X_KERNSUFFIX=${X_KERNSUFFIX}.netboot
+fi
 
-/usr/local/bin/lzma e ${X_TFTPBOOT}/kernel.${KERNCONF}.kbin ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma || exit 1
+# refer at ZRouter
+T_OBJCOPY_DIR="${CUR_DIR}/../obj/${X_BUILD_BASE_CFG}/${TARGET}.${TARGET_ARCH}"
+T_OBJCOPY="${T_OBJCOPY_DIR}/${CUR_DIR}/tmp/usr/bin/objcopy"
+${T_OBJCOPY} -O binary ${X_KERNEL} ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.kbin \
+    || exit 1
+
+/usr/local/bin/lzma e ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.kbin \
+    ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.lzma || exit 1
+
+if [ "x" = "x${UBOOT_KERN_LOADADDR}" ]; then
+	UBOOT_KERN_LOADADDR=`readelf -h ${X_KERNEL} | \
+	    grep 'Entry point address:' | awk '{print $4}'`
+fi
+
+if [ "x" = "x${UBOOT_KERN_STARTADDR}" ]; then
+	UBOOT_KERN_STARTADDR=${UBOOT_KERN_LOADADDR}
+fi
 
 # Create the firmware
 mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   -a ${UBOOT_KERN_LOADADDR} -e ${UBOOT_KERN_STARTADDR} \
-  -n "FreeBSD" -d ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma \
-  ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage \
+  -n "FreeBSD" -d ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.lzma \
+  ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.lzma.uImage \
   || exit 1
 
 T_UBOOT_PREAMBLE=""
@@ -40,7 +58,7 @@ fi
 
 (
 	printf "${T_UBOOT_PREAMBLE}"
-       	dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=1M \
+       	dd if=${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.lzma.uImage bs=1M \
 	    conv=sync;
        	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
 ) > ${X_TFTPBOOT}/${CFGNAME}-tftp.bin
