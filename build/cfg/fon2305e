@@ -1,5 +1,5 @@
 # Base configuration
-X_BUILD_BASE_CFG="mipsel"
+X_BUILD_BASE_CFG="mipsel_ap"
 
 KERNCONF=RT305X
 
@@ -12,3 +12,4 @@ UBOOT_KERN_STARTADDR="0x80001100"
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ralink"
+X_UBOOT_AIRSTATION_PREAMBLE="YES"
