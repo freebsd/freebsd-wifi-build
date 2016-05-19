@@ -20,9 +20,11 @@ fi
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
 # from base, as EOS (end of stream) markers aren't allowed for uboot.
 
+T_NETBOOT="NO"
 if [ -f ${X_KERNEL}.netboot ]; then
 	X_KERNEL=${X_KERNEL}.netboot
 	X_KERNSUFFIX=${X_KERNSUFFIX}.netboot
+	T_NETBOOT="YES"
 fi
 
 # refer at ZRouter
@@ -58,9 +60,11 @@ fi
 
 (
 	printf "${T_UBOOT_PREAMBLE}"
-       	dd if=${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.lzma.uImage bs=1M \
+	dd if=${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.lzma.uImage bs=1M \
 	    conv=sync;
-       	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
+	if [ "NO" = "${T_NETBOOT}" ]; then
+		dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=1M conv=sync
+	fi
 ) > ${X_TFTPBOOT}/${CFGNAME}-tftp.bin
 
 exit 0
