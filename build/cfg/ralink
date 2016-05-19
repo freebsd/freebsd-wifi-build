@@ -52,5 +52,8 @@ X_MAKEFS_ENDIAN=le
 # Uboot stuff
 UBOOT_ARCH="mips"
 
+# Ethernet port
+X_CFG_DEFAULT_ETHER="rt0"
+
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ralink"
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage netboot ralink"
