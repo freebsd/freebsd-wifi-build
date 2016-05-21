@@ -51,6 +51,9 @@ X_MAKEFS_ENDIAN=${X_MAKEFS_ENDIAN:="be"}
 
 # X_MAKEFS_FLAGS - what flags to pass to makefs when building the MFS image
 X_MAKEFS_FLAGS="version=1,bsize=4096,fsize=512"
+if [ "x" != "x${X_MAKEFS_FLAGS_EXT}" ]; then
+	X_MAKEFS_FLAGS="${X_MAKEFS_FLAGS},${X_MAKEFS_FLAGS_EXT}"
+fi
 
 # X_MAKEFS_FULL_FLAGS - what flags to pass to makefs when building the full image
 X_MAKEFS_FULL_FLAGS="version=2"
@@ -123,6 +126,7 @@ X_CFGFS="${CUR_DIR}/../cfgfs-${CFGNAME}.img"
 
 X_UBOOT_KERNROOTIMG=${X_UBOOT_KERNROOTIMG:="NO"}
 TPLINK_SKIP_ROOTFS=${TPLINK_SKIP_ROOTFS:="NO"}
+X_UBOOT_AIRSTATION_PREAMBLE=${X_UBOOT_AIRSTATION_PREAMBLE:="NO"}
 
 # Defaults!
 X_FSIMAGE_CMD=${X_FSIMAGE_CMD:="mkuzip"}
@@ -133,3 +137,4 @@ X_ROOTFS_DEV=${X_ROOTFS_DEV:="/dev/da0"}
 # Configuration file template defaults
 X_CFG_DEFAULT_ETHER=${X_CFG_DEFAULT_ETHER:="arge0"}
 X_CFG_DEFAULT_HOSTNAME=${X_CFG_DEFAULT_HOSTNAME:="freebsd-wifi"}
+X_CFG_DEFAULT_TTY=${X_CFG_DEFAULT_TTY:="ttyu0"}

@@ -1,21 +1,5 @@
 #!/bin/sh
 
-get_mfs_size()
-{
-	kernel=$1
-	set 0 0 # reset variables
-	# $1 takes the offset of the MFS filesystem
-	set `strings -at d $kernel | grep "MFS Filesystem goes here"`
-	mfs_start=$1
-	set 0 0 # reset variables
-	set `strings -at d $kernel | grep "MFS Filesystem had better"`
-	mfs_end=$1
-	mfs_size="$((${mfs_end} - ${mfs_start}))"
-	mfs_ofs=$((${mfs_start}))
-	echo "start: $mfs_start ; end: $mfs_end; size: $mfs_size"
-	echo "offset for mfs in kernel: $mfs_ofs"
-}
-
 SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="`dirname $0`"
 CUR_DIR="`pwd`"
@@ -35,15 +19,33 @@ fi
 # get the kernel MFS size
 # this sets mfs_ofs, mfs_end, mfs_start, mfs_size
 cp ${X_KERNEL} ${X_KERNEL}.netboot
-get_mfs_size ${X_KERNEL}.netboot
 
-# add it to the kernel
+mfs_size=`stat -f '%z' ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} 2> /dev/null`
+# If we can't determine MFS image size - bail.
+[ -z ${mfs_size} ] && echo "Can't determine MFS image size" && exit 1
+
+T_OBJDUMP_DIR="${CUR_DIR}/../obj/${X_BUILD_BASE_CFG}/${TARGET}.${TARGET_ARCH}"
+T_OBJDUMP="${T_OBJDUMP_DIR}/${CUR_DIR}/tmp/usr/bin/objdump"
+sec_info=`${T_OBJDUMP} -h ${X_KERNEL}.netboot 2> /dev/null | grep " oldmfs "`
+# If we can't find the mfs section within the given kernel - bail.
+[ -z "${sec_info}" ] && echo "Can't locate mfs section within kernel" && exit 1
+
+sec_size=`echo ${sec_info} | awk '{printf("%d", "0x" $3)}' 2> /dev/null`
+sec_start=`echo ${sec_info} | awk '{printf("%d", "0x" $6)}' 2> /dev/null`
+
+# If the mfs section size is smaller than the mfs image - bail.
+[ ${sec_size} -lt ${mfs_size} ] && echo "MFS image too large" && exit 1
+
 echo "*** copying the mfsroot into the kernel image"
-dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ibs=8192 iseek=0 of=${X_KERNEL}.netboot obs=${mfs_ofs} oseek=1 conv=notrunc
+# Dump the mfs image into the mfs section
+dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ibs=8192 \
+    of=${X_KERNEL}.netboot obs=${sec_start} oseek=1 \
+    conv=notrunc 2> /dev/null && \
+    echo "MFS image embedded into kernel" && exit 0
 
 echo "*** generate md5 for ${X_KERNEL}.netboot"
 md5 -q ${X_KERNEL}.netboot > ${X_KERNEL}.netboot.md5
 
-cp ${X_KERNEL}.netboot ${X_TFTPBOOT}/kernel.${KERNCONF}.netboot
+cp ${X_KERNEL}.netboot ${X_TFTPBOOT}/kernel.${X_KERNSUFFIX}.netboot
 
 echo "*** Complete."
