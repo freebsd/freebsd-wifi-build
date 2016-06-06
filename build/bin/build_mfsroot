@@ -56,6 +56,7 @@ ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/net
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/pam.d
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/etc
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/lib
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/lib/casper
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/bin
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/data
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/data/1
@@ -298,6 +299,8 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libjail.so.1 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/lib80211.so.1 ${X_STAGING_FSROOT}/lib/
+${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libcasper.so.0 ${X_STAGING_FSROOT}/lib/
+${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/casper/libcap_dns.so.0 ${X_STAGING_FSROOT}/lib/casper
 
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
