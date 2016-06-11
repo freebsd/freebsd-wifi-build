@@ -10,7 +10,9 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_otus otusfw_init otusfw_main"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_urtwn urtwn-rtl8188eufw urtwn-rtl8192cfwT urtwn-rtl8192cfwU"
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkuzip"
