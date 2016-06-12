@@ -4,13 +4,13 @@ usr/local/sbin/dropbear uid=0 gid=0 mode=0755 type=link link=../bin/dropbearmult
 usr/local/share uid=0 gid=0 mode=0755 type=dir
 usr/local/share/man uid=0 gid=0 mode=0755 type=dir
 usr/local/share/man/man8 uid=0 gid=0 mode=0755 type=dir
-usr/local/share/man/man8/dropbear.8 uid=0 gid=0 mode=0644 type=file content=dropbear.8
+usr/local/share/man/man8/dropbear.8 uid=0 gid=0 mode=0644 type=file content=usr/local/share/man/man8/dropbear.8
 usr/local/share/man/man1 uid=0 gid=0 mode=0755 type=dir
-usr/local/share/man/man1/dbclient.1 uid=0 gid=0 mode=0644 type=file content=dbclient.1
-usr/local/share/man/man1/dropbearkey.1  uid=0 gid=0 mode=0644 type=file content=dropbearkey.1
-usr/local/share/man/man1/dropbearconvert.1 uid=0 gid=0 mode=0644 type=file content=dropbearconvert.1
+usr/local/share/man/man1/dbclient.1 uid=0 gid=0 mode=0644 type=file content=usr/local/share/man/man1/dbclient.1
+usr/local/share/man/man1/dropbearkey.1  uid=0 gid=0 mode=0644 type=file content=usr/local/share/man/man1/dropbearkey.1
+usr/local/share/man/man1/dropbearconvert.1 uid=0 gid=0 mode=0644 type=file content=usr/local/share/man/man1/dropbearconvert.1
 usr/local/bin uid=0 gid=0 mode=0755 type=dir
 usr/local/bin/dbclient uid=0 gid=0 mode=0755 type=link link=dropbearmulti
 usr/local/bin/dropbearkey uid=0 gid=0 mode=0755 type=link link=dropbearmulti
 usr/local/bin/dropbearconvert uid=0 gid=0 mode=0755 type=link link=dropbearmulti
-usr/local/bin/dropbearmulti uid=0 gid=0 mode=0755 type=file content=dropbearmulti
+usr/local/bin/dropbearmulti uid=0 gid=0 mode=0755 type=file content=usr/local/bin/dropbearmulti
