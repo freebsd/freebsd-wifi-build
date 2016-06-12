@@ -1,5 +1,11 @@
 #!/bin/sh
 
+port_incplatform()
+{
+	# XXX verify it exists first
+	. ${X_PORTBUILD_DIR}/scripts/cross_build.${X_PORTBUILD_PLATFORM}
+}
+
 port_incrules()
 {
 	# Verify the port config exists
@@ -40,7 +46,12 @@ port_unpack()
 
 port_patch()
 {
-	echo "TODO: patch"
+	echo "Patching.."
+	for i in ${PKG_PRE_BUILD_PATCHLIST}; do
+		echo "*** ${i}"
+		cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}"
+	done
 }
 
 port_configure()
@@ -56,12 +67,13 @@ port_configure()
 
 port_build()
 {
-	echo "Running configure ${CONFIGURE_HOSTFLAGS}"
+	echo "Building ${CONFIGURE_HOSTFLAGS}"
 
 	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
 
 	# For now, hard-code gmake. Later on we'll allow this to be
 	# something other than gmake as appropriate.
+	echo $CC
 	gmake ${PKG_MAKE_BUILD_FLAGS}
 }
 
@@ -73,7 +85,7 @@ port_staging()
 	# Obviously this isn't always going to be the case, but for
 	# ./configure based bits it should work.
 	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
 	gmake ${PKG_INSTALL_BUILD_FLAGS} install DESTDIR="${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/" install
 }
 
@@ -81,6 +93,6 @@ port_package()
 {
 	echo "Creating package!"
 	mkdir -p "${X_PORTBUILD_DIR}/pkgfiles/"
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
-	tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}-${PKGVERSION}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
+	tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}-${PKGVERSION}_${PKGREVISION}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
 }

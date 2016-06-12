@@ -32,6 +32,7 @@ fi
 X_PORTBUILD_PORT=$1
 shift
 
+port_incplatform
 port_incrules
 
 case $1 in
