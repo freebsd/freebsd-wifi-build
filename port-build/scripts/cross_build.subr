@@ -56,6 +56,10 @@ port_patch()
 
 port_configure()
 {
+	if [ "x${USE_CONFIGURE}" != "xYES" ]; then
+		echo "Skipping configure; not needed"
+		return
+	fi
 	echo "Running configure ${CONFIGURE_HOSTFLAGS}"
 
 	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
@@ -85,8 +89,8 @@ port_staging()
 	# Obviously this isn't always going to be the case, but for
 	# ./configure based bits it should work.
 	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
-	gmake ${PKG_INSTALL_BUILD_FLAGS} install DESTDIR="${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/" install
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
+	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
 }
 
 port_package()
