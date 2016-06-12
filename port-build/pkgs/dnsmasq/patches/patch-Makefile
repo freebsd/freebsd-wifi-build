@@ -1,0 +1,31 @@
+--- Makefile.orig	2016-06-11 23:54:57.691477000 -0700
++++ Makefile	2016-06-11 23:56:06.963259000 -0700
+@@ -18,17 +18,17 @@
+ 
+ # Variables you may well want to override.
+ 
+-PREFIX        = /usr/local
+-BINDIR        = $(PREFIX)/sbin
+-MANDIR        = $(PREFIX)/share/man
+-LOCALEDIR     = $(PREFIX)/share/locale
+-BUILDDIR      = $(SRC)
+-DESTDIR       = 
+-CFLAGS        = -Wall -W -O2
+-LDFLAGS       = 
+-COPTS         = 
+-RPM_OPT_FLAGS = 
+-LIBS          = 
++PREFIX        ?= /usr/local
++BINDIR        ?= $(PREFIX)/sbin
++MANDIR        ?= $(PREFIX)/share/man
++LOCALEDIR     ?= $(PREFIX)/share/locale
++BUILDDIR      ?= $(SRC)
++DESTDIR       ?= 
++CFLAGS        ?= -Wall -W -O2
++LDFLAGS       ?= 
++COPTS         ?= 
++RPM_OPT_FLAGS ?= 
++LIBS          ?= 
+ 
+ #################################################################
+ 
