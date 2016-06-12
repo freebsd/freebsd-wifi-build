@@ -1,29 +1,25 @@
 #!/bin/sh
 
-X_ROOTDIR=/home/adrian/work/freebsd/head-embedded/root/mips_ap
+X_ROOTDIR=/home/adrian/work/freebsd/head-embedded/root/mips_ap ; export X_ROOTDIR
 
-CPU_ARGS="-march=mips32 -msoft-float -Wa,-msoft-float"
-INCS="-I${X_ROOTDIR}/usr/include"
+CPU_ARGS="-march=mips32 -msoft-float -Wa,-msoft-float" ; export CPU_ARGS
+INCS="-I${X_ROOTDIR}/usr/include" ; export INCS
 
-export CROSS_COMPILE=mips-portbld-freebsd11.0
-export CC=${CROSS_COMPILE}-gcc
-export CXX=${CROSS_COMPILE}-g++
-#export LD=${CROSS_COMPILE}-ld
-#export AR=${CROSS_COMPILE}-ar
-#export RANLIB=${CROSS_COMPILE}-ranlib
-#export STRIP=${CROSS_COMPILE}-strip
-export LD=mips-freebsd-l
-export AR=mips-freebsd-ar
-export RANLIB=mips-freebsd-ranlib
-export STRIP=mips-freebsd-strip
+CROSS_COMPILE=mips-portbld-freebsd11.0 ; export CROSS_COMPILE
+CC=${CROSS_COMPILE}-gcc ; export CC
+CXX=${CROSS_COMPILE}-g++ ; export CXX
+LD=mips-freebsd-ld ; export LD
+AR=mips-freebsd-ar ; export AR
+RANLIB=mips-freebsd-ranlib ; export RANLIB
+STRIP=mips-freebsd-strip ; export STRIP
 
-export SYSROOT=${X_ROOTDIR}
-export CFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O"
-export CXXFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O"
-export CPPFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O"
-export LDFLAGS=--sysroot=${SYSROOT}
+SYSROOT=${X_ROOTDIR} ; export SYSROOT
+CFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O" ; export CFLAGS
+CXXFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O" ; export CXXFLAGS
+CPPFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O" ; export CPPFLAGS
+LDFLAGS=--sysroot=${SYSROOT} ; export LDFLAGS
 
-export CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd11.0"
+CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd11.0" ; export CONFIGURE_HOSTFLAGS
 
 # now run:
 # /configure --host=mips-portbld-freebsd11.0
