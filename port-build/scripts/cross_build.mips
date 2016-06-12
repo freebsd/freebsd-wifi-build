@@ -1,0 +1,32 @@
+#!/bin/sh
+
+X_ROOTDIR=/home/adrian/work/freebsd/head-embedded/root/mips_ap
+
+CPU_ARGS="-march=mips32 -msoft-float -Wa,-msoft-float"
+INCS="-I${X_ROOTDIR}/usr/include"
+
+export CROSS_COMPILE=mips-portbld-freebsd11.0
+export CC=${CROSS_COMPILE}-gcc
+export CXX=${CROSS_COMPILE}-g++
+#export LD=${CROSS_COMPILE}-ld
+#export AR=${CROSS_COMPILE}-ar
+#export RANLIB=${CROSS_COMPILE}-ranlib
+#export STRIP=${CROSS_COMPILE}-strip
+export LD=mips-freebsd-l
+export AR=mips-freebsd-ar
+export RANLIB=mips-freebsd-ranlib
+export STRIP=mips-freebsd-strip
+
+export SYSROOT=${X_ROOTDIR}
+export CFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O"
+export CXXFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O"
+export CPPFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O"
+export LDFLAGS=--sysroot=${SYSROOT}
+
+export CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd11.0"
+
+# now run:
+# /configure --host=mips-portbld-freebsd11.0
+# gmake
+
+$*

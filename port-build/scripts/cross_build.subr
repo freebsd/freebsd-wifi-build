@@ -1,0 +1,74 @@
+#!/bin/sh
+
+port_incrules()
+{
+	# Verify the port config exists
+	if [ ! -e "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules" ]; then
+		echo "ERROR: couldn't find ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules"
+		exit 1
+	fi
+
+	. ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules
+}
+
+port_fetch()
+{
+
+	if [ "x${PKGDISTFILE}" = "x" ]; then
+		echo "ERROR: need PKGDISTFILE to fetch"
+		exit 1
+	fi
+
+	cd "${X_PORTBUILD_DIR}/distfiles/"
+	fetch ${PKGDISTFILE}
+}
+
+port_clean()
+{
+	echo "TODO: clean"
+	#rm -rf "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
+}
+
+port_unpack()
+{
+	local X_PKGFILE="`basename ${PKGDISTFILE}`"
+	echo "Unpacking..."
+	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
+	tar zxvf ${X_PORTBUILD_DIR}/distfiles/${X_PKGFILE}
+}
+
+port_patch()
+{
+	echo "TODO: patch"
+}
+
+port_configure()
+{
+	echo "Running configure ${CONFIGURE_HOSTFLAGS}"
+
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+
+	# The rest of the build environment is already setup for us;
+	# but here is where we'd manually do things
+	./configure ${CONFIGURE_HOSTFLAGS}
+}
+
+port_build()
+{
+	echo "Running configure ${CONFIGURE_HOSTFLAGS}"
+
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+
+	# For now, hard-code gmake. Later on we'll allow this to be
+	# something other than gmake as appropriate.
+	gmake
+}
+
+port_install()
+{
+}
+
+port_package()
+{
+}
