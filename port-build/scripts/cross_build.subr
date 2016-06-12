@@ -25,8 +25,8 @@ port_fetch()
 
 port_clean()
 {
-	echo "TODO: clean"
-	#rm -rf "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
+	echo "Cleaning.."
+	rm -rf "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
 }
 
 port_unpack()
@@ -62,13 +62,25 @@ port_build()
 
 	# For now, hard-code gmake. Later on we'll allow this to be
 	# something other than gmake as appropriate.
-	gmake
+	gmake ${PKG_MAKE_BUILD_FLAGS}
 }
 
-port_install()
+port_staging()
 {
+	echo "Staging install.."
+
+	# For now, this assumes DESTDIR is obeyed.
+	# Obviously this isn't always going to be the case, but for
+	# ./configure based bits it should work.
+	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	gmake ${PKG_INSTALL_BUILD_FLAGS} install DESTDIR="${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/" install
 }
 
 port_package()
 {
+	echo "Creating package!"
+	mkdir -p "${X_PORTBUILD_DIR}/pkgfiles/"
+	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}-${PKGVERSION}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
 }
