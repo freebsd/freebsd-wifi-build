@@ -35,33 +35,46 @@ shift
 port_incplatform
 port_incrules
 
-case $1 in
-	'clean')
-		port_clean
-	;;
-	'fetch')
-		port_fetch
-	;;
-	'unpack')
-		port_unpack
-	;;
-	'patch')
-		port_patch
-	;;
-	'configure')
-		port_configure
-	;;
-	'build')
-		port_build
-	;;
-	'staging')
-		port_staging
-	;;
-	'package')
-		port_package
-	;;
-	*)
-		echo "Unknown command ($1)"
-		exit 1
-	;;
-esac
+runcmd()
+{
+	case $1 in
+		'clean')
+			port_clean
+		;;
+		'fetch')
+			port_fetch
+		;;
+		'unpack')
+			port_unpack
+		;;
+		'patch')
+			port_patch
+		;;
+		'configure')
+			port_configure
+		;;
+		'build')
+			port_build
+		;;
+		'staging')
+			port_staging
+		;;
+		'package')
+			port_package
+		;;
+		*)
+			echo "Unknown command ($1)"
+			exit 1
+		;;
+	esac
+}
+
+if [ "x$1" = "x" ]; then
+	CMDLIST="clean unpack patch configure build staging package"
+else
+	CMDLIST="$*"
+fi
+
+for i in ${CMDLIST}; do
+	runcmd ${i}
+done
