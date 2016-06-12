@@ -1,0 +1,5 @@
+PKGNAME=dropbear
+PKGVERSION=1.0
+PKGDISTFILE=https://matt.ucc.asn.au/dropbear/releases/dropbear-2016.73.tar.bz2
+USE_CONFIGURE=YES
+CONFIGURE_OPTIONS=""
