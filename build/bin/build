@@ -117,6 +117,15 @@ for BUILD_TARGET in ${X_BUILD_LIST}; do
 		'netboot')
 			${SCRIPT_DIR}/build_netboot ${CFGNAME} || exit 1
 		;;
+		'fetchpkgs')
+			${SCRIPT_DIR}/build_fetchpkgs ${CFGNAME} || exit 1
+		;;
+		'makepkgs')
+			${SCRIPT_DIR}/build_makepkgs ${CFGNAME} || exit 1
+		;;
+		'addpkgs')
+			${SCRIPT_DIR}/build_addpkgs ${CFGNAME} || exit 1
+		;;
 		*)
 			echo "*** ERROR: Unknown target: $BUILD_TARGET"
 		;;
