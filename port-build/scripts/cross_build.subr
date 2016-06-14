@@ -98,5 +98,6 @@ port_package()
 	echo "Creating package!"
 	mkdir -p "${X_PORTBUILD_DIR}/pkgfiles/"
 	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
-	tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}-${PKGVERSION}_${PKGREVISION}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
+	#tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}-${PKGVERSION}_${PKGREVISION}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
+	tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
 }
