@@ -43,3 +43,5 @@ X_UBOOT_KERNROOTIMG="YES"
 # Configuration file overrides
 X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-carambola2"
+
+X_PACKAGELIST="dropbear dnsmasq"
