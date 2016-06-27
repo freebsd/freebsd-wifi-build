@@ -15,3 +15,7 @@ X_MAKEFS_FLAGS_EXT="label=FBSD"
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage trx"
+
+# MFS options
+X_MFS_USB=yes
+
