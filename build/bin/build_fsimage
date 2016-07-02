@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="`dirname $0`"
 CUR_DIR="`pwd`"
@@ -19,6 +21,15 @@ fi
 echo "*** Running makefs to build compressed image .. "
 echo "*** from ${X_STAGING_FSROOT} .."
 mkdir -p ${X_IMGBASE} || exit 1
+
+# If there's a package manifest, filter it in
+if [ -e "${CUR_DIR}/../mfsroot/pkgs.mtree" ]; then
+	echo "*** Adding in packages into manifest"
+	${SCRIPT_DIR}/filter.pl ${X_STAGING_METALOG} ${CUR_DIR}/../mfsroot/pkgs.mtree ${X_STAGING_METALOG_TMP}
+	mv ${X_STAGING_METALOG_TMP} ${X_STAGING_METALOG}
+fi
+
+# Ok, make the filesystem
 makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FLAGS} -x -F ${X_STAGING_METALOG} -f 1000 ${X_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
 
 echo "*** Running ${X_FSIMAGE_CMD} to create a compressed filesystem .. "

@@ -1,0 +1,56 @@
+#!/bin/sh
+
+set -e
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+X_SRCDIR=${CUR_DIR}
+
+# suck in the per-device options
+CFGNAME=$1
+shift
+. ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
+# If X_BUILD_BASE_CFG is set, also load that in.
+if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
+fi
+
+# include the config variable generation code
+. ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
+
+# calculate basedir
+# XXX this should be generated in cfg.pm!
+X_BASEDIR=${SCRIPT_DIR}/../
+
+# Add in the required packages.
+# This step requires the packages exist in the staging root.
+
+# XXX for now, hard-code mips
+X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/
+X_PORTBUILD_PLATFORM=mips
+
+# Iterate through and install.
+# We need to figure out how to populate a metadata file with
+# the right contents.
+
+for i in ${X_PACKAGELIST}; do
+	echo "*** Adding package $i to rootfs"
+	cd ${X_STAGING_FSROOT}
+	tar zxpvf ${X_PORTBUILD_DIR}/pkgfiles/${i}.tar.gz
+
+	# Yes, we need to figure out the actual staging root for this
+	# stuff.
+	tar -cf ${X_STAGING_FSROOT}/../${i}.mtree --format=mtree --options='!all,type,uname,mode,size,link' @${X_PORTBUILD_DIR}/pkgfiles/${i}.tar.gz
+
+	echo "*** Done"
+done
+
+# Now, populate a complete mtree file from all of them, so we can
+# feed it to the big filter for the 'fsimage' target.
+rm -f ${X_STAGING_FSROOT}/../pkgs.mtree
+for i in ${X_PACKAGELIST}; do
+	cat ${X_STAGING_FSROOT}/../${i}.mtree >> ${X_STAGING_FSROOT}/../pkgs.mtree
+done
+

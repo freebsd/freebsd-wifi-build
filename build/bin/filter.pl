@@ -42,10 +42,11 @@ my (%modify_hash);
 my ($mfh) = new IO::File;
 $mfh->open($modify_file, "r") || die "Couldn't read $modify_file: $!\n";
 
-
 while (<$mfh>) {
 	my $s = $_;
 	my @param = split(/ /, $s);
+
+	# XXX TODO: skip over comments
 
 	$modify_hash{$param[0]} = $s;
 }
