@@ -45,9 +45,8 @@ $mfh->open($modify_file, "r") || die "Couldn't read $modify_file: $!\n";
 while (<$mfh>) {
 	my $s = $_;
 	my @param = split(/ /, $s);
-
-	# XXX TODO: skip over comments
-
+	# skip over comments
+	next if $s =~ m/^\#/;
 	$modify_hash{$param[0]} = $s;
 }
 
