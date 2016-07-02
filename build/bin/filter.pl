@@ -36,6 +36,7 @@ my ($modify_file) = shift;
 my ($result_file) = shift;
 
 my (%modify_hash);
+my (@modify_list);
 
 # Suck in modify_file into a hash; each hash entry has the original string.
 
@@ -45,9 +46,11 @@ $mfh->open($modify_file, "r") || die "Couldn't read $modify_file: $!\n";
 while (<$mfh>) {
 	my $s = $_;
 	my @param = split(/ /, $s);
+	my $v;
 	# skip over comments
 	next if $s =~ m/^\#/;
-	$modify_hash{$param[0]} = $s;
+	$v = push @modify_list, $s;
+	$modify_hash{$param[0]} = $v;
 }
 
 $mfh->close();
@@ -72,18 +75,19 @@ while (<$sfh>) {
 	}
 
 	# It's in modify_hash; bait and switch
-	print $dfh $modify_hash{$param[0]};
+	print $dfh $modify_list[$modify_hash{$param[0]}];
 
 	# Now we've seen it; remove that key and its value.
+	$modify_list[$modify_hash{$param[0]}] = "";
 	delete $modify_hash{$param[0]};
 }
 
 $sfh->close();
 
 #.. now, print out any modify_hash entries we've not yet seen
-
-foreach (keys %modify_hash) {
-	print $dfh $modify_hash{$_};
+foreach (@modify_list) {
+	next if $_ eq "";
+	print $dfh $_;
 }
 
 $dfh->close();
