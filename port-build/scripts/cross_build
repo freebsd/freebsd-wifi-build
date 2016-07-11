@@ -6,6 +6,7 @@ SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="`dirname $0`"
 CUR_DIR="`pwd`"
 
+# need a root directory!
 if [ "x${X_PACKAGE_ROOTDIR}" = "x" ]; then
 	echo "ERROR: need X_PACKAGE_ROOTDIR defined (for rootfs)."
 	exit 1
@@ -17,11 +18,11 @@ fi
 # later on we should automate it somewhat.
 
 # Need a port basedir
-
 if [ "x${X_PORTBUILD_DIR}" = "x" ]; then
 	echo "ERROR: need X_PORTBUILD_DIR defined."
 	exit 1
 fi
+
 # And, need a target platform
 if [ "x${X_PORTBUILD_PLATFORM}" = "x" ]; then
 	echo "ERROR: need X_PORTBUILD_PLATFORM defined."
@@ -40,6 +41,11 @@ if [ "x${X_PACKAGE_DISTFILE_DIR}" = "x" ]; then
 	exit 1
 fi
 
+# .. and a build artefacts directory for the given platform
+if [ "x${X_PACKAGE_BUILDROOT_DIR}" = "x" ]; then
+	echo "ERROR: need X_PACKAGE_BUILDROOT_DIR defined."
+	exit 1
+fi
 
 X_PORTBUILD_PORT=$1
 shift

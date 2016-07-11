@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# private functions
+
+# TODO items:
+#
+# * Migrate the work directory out from the checkout directory
+#   to the top-level build directory, indexed by platform.
+# * .. and nothing else should be writing into the git repo, so
+#   fix that!
+
+# public functions
+
 port_incplatform()
 {
 	# XXX verify it exists first
@@ -33,15 +44,15 @@ port_fetch()
 port_clean()
 {
 	echo "Cleaning.."
-	rm -rf "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
+	rm -rf "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
 }
 
 port_unpack()
 {
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
 	echo "Unpacking..."
-	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
-	( cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
+	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+	( cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
 }
 
 port_patch()
@@ -49,7 +60,7 @@ port_patch()
 	echo "Patching.."
 	for i in ${PKG_PRE_BUILD_PATCHLIST}; do
 		echo "*** ${i}"
-		cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+		cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
 		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}"
 	done
 }
@@ -62,7 +73,7 @@ port_configure()
 	fi
 	echo "Running configure ${CONFIGURE_HOSTFLAGS}"
 
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
 
 	# The rest of the build environment is already setup for us;
 	# but here is where we'd manually do things
@@ -73,7 +84,7 @@ port_build()
 {
 	echo "Building ${CONFIGURE_HOSTFLAGS}"
 
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
 
 	# For now, hard-code gmake. Later on we'll allow this to be
 	# something other than gmake as appropriate.
@@ -88,16 +99,16 @@ port_staging()
 	# For now, this assumes DESTDIR is obeyed.
 	# Obviously this isn't always going to be the case, but for
 	# ./configure based bits it should work.
-	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
-	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
+	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
+	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
 }
 
 port_package()
 {
 	echo "Creating package!"
 	mkdir -p "${X_PORTBUILD_DIR}/pkgfiles/"
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/staging/"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
 	#tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}-${PKGVERSION}_${PKGREVISION}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
 	tar zcpvf ${X_PORTBUILD_DIR}/pkgfiles/${X_PORTBUILD_PORT}.tar.gz @${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents
 }
