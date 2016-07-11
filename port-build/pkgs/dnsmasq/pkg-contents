@@ -1,6 +1,9 @@
 #mtree
+usr/local uid=0 gid=0 mode=0755 type=dir
 usr/local/sbin uid=0 gid=0 mode=0755 type=dir
-usr/local/sbin/dnsmasq uid=0 gid=0 mode=0755 type=file content=usr/local/sbin/dnsmasq
 usr/local/share uid=0 gid=0 mode=0755 type=dir
+usr/local/share/man uid=0 gid=0 mode=0755 type=dir
+usr/local/share/man8 uid=0 gid=0 mode=0755 type=dir
+usr/local/sbin/dnsmasq uid=0 gid=0 mode=0755 type=file content=usr/local/sbin/dnsmasq
 usr/local/share/man/man8 uid=0 gid=0 mode=0755 type=dir
 usr/local/share/man/man8/dnsmasq.8 uid=0 gid=0 mode=0644 type=file content=usr/local/share/man/man8/dnsmasq.8

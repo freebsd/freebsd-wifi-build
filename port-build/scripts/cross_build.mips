@@ -1,6 +1,7 @@
 #!/bin/sh
 
-X_ROOTDIR=/home/adrian/work/freebsd/head-embedded/root/mips_ap ; export X_ROOTDIR
+# XXX This is the main thing provided by the caller
+X_ROOTDIR="${X_PACKAGE_ROOTDIR}"
 
 CPU_ARGS="-march=mips32 -msoft-float -Wa,-msoft-float" ; export CPU_ARGS
 INCS="-I${X_ROOTDIR}/usr/include" ; export INCS
@@ -25,4 +26,4 @@ CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd11.0" ; export CONFIGURE_HOSTFLA
 # /configure --host=mips-portbld-freebsd11.0
 # gmake
 
-$*
+#$*

@@ -26,6 +26,8 @@ X_BASEDIR=${SCRIPT_DIR}/../
 # This step requires the packages exist in the staging root.
 
 # XXX for now, hard-code mips
+export X_PACKAGE_ROOTDIR
+export X_PACKAGE_DISTFILE_DIR
 X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/ ; export X_PORTBUILD_DIR
 X_PORTBUILD_PLATFORM=mips ; export X_PORTBUILD_PLATFORM
 

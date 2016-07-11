@@ -25,8 +25,9 @@ port_fetch()
 		exit 1
 	fi
 
-	cd "${X_PORTBUILD_DIR}/distfiles/"
-	fetch ${PKGDISTFILE}
+	# XXX TODO: eliminate the cd
+	mkdir -p "${X_PACKAGE_DISTFILE_DIR}"
+	( cd "${X_PACKAGE_DISTFILE_DIR}" && fetch ${PKGDISTFILE} )
 }
 
 port_clean()
@@ -40,8 +41,7 @@ port_unpack()
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
 	echo "Unpacking..."
 	mkdir -p "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
-	cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/"
-	tar zxvf ${X_PORTBUILD_DIR}/distfiles/${X_PKGFILE}
+	( cd "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
 }
 
 port_patch()

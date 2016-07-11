@@ -1,5 +1,9 @@
 #mtree
+usr/local uid=0 gid=0 mode=0755 type=dir
+usr/local/lib uid=0 gid=0 mode=0755 type=dir
+usr/local/bin uid=0 gid=0 mode=0755 type=dir
 usr/local/sbin uid=0 gid=0 mode=0755 type=dir
+usr/local/share uid=0 gid=0 mode=0755 type=dir
 usr/local/sbin/dropbear uid=0 gid=0 mode=0755 type=link link=../bin/dropbearmulti
 usr/local/share uid=0 gid=0 mode=0755 type=dir
 usr/local/share/man uid=0 gid=0 mode=0755 type=dir

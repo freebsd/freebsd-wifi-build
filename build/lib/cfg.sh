@@ -113,6 +113,7 @@ X_STAGING_FSROOT="${CUR_DIR}/../mfsroot/${CFGNAME}"
 # X_STAGING_METALOG
 X_STAGING_METALOG="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}"
 X_STAGING_METALOG_TMP="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}.tmp"
+# XXX TODO: final destination for metalog after ports munging
 
 # X_STAGING_TMPDIR
 X_STAGING_TMPDIR="${CUR_DIR}/../tmp/${CFGNAME}"
@@ -138,3 +139,15 @@ X_ROOTFS_DEV=${X_ROOTFS_DEV:="/dev/da0"}
 X_CFG_DEFAULT_ETHER=${X_CFG_DEFAULT_ETHER:="arge0"}
 X_CFG_DEFAULT_HOSTNAME=${X_CFG_DEFAULT_HOSTNAME:="freebsd-wifi"}
 X_CFG_DEFAULT_TTY=${X_CFG_DEFAULT_TTY:="ttyu0"}
+
+#
+# Package building
+#
+# Package building location
+X_PACKAGE_BUILD_DIR="${CUR_DIR}/../pkgroot/${CFGNAME}"
+X_PACKAGE_DISTFILE_DIR="${CUR_DIR}/../distfiles/"
+
+# Port-build base
+#X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/ ; export X_PORTBUILD_DIR
+#X_PORTBUILD_PLATFORM=mips ; export X_PORTBUILD_PLATFORM
+X_PACKAGE_ROOTDIR=${X_DESTDIR}
