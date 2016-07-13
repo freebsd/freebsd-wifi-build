@@ -38,11 +38,11 @@ X_PORTBUILD_PLATFORM=mips
 for i in ${X_PACKAGELIST}; do
 	echo "*** Adding package $i to rootfs"
 	cd ${X_STAGING_FSROOT}
-	tar zxpvf ${X_PORTBUILD_DIR}/pkgfiles/${i}.tar.gz
+	tar zxpvf ${X_PACKAGE_PKGDIR}/${i}.tar.gz
 
 	# Yes, we need to figure out the actual staging root for this
 	# stuff.
-	tar -cf ${X_STAGING_FSROOT}/../${i}.mtree --format=mtree --options='!all,type,uname,gname,mode,size,link' @${X_PORTBUILD_DIR}/pkgfiles/${i}.tar.gz
+	tar -cf ${X_STAGING_FSROOT}/../${i}.mtree --format=mtree --options='!all,type,uname,gname,mode,size,link' @${X_PACKAGE_PKGDIR}/${i}.tar.gz
 
 	echo "*** Done"
 done

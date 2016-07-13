@@ -25,8 +25,7 @@ mkdir -p ${X_IMGBASE} || exit 1
 # If there's a package manifest, filter it in
 if [ -e "${CUR_DIR}/../mfsroot/pkgs.mtree" ]; then
 	echo "*** Adding in packages into manifest"
-	${SCRIPT_DIR}/filter.pl ${X_STAGING_METALOG} ${CUR_DIR}/../mfsroot/pkgs.mtree ${X_STAGING_METALOG_TMP}
-	mv ${X_STAGING_METALOG_TMP} ${X_STAGING_METALOG}
+	${SCRIPT_DIR}/filter.pl ${X_STAGING_METALOG_MFSROOT} ${CUR_DIR}/../mfsroot/pkgs.mtree ${X_STAGING_METALOG}
 fi
 
 # Ok, make the filesystem

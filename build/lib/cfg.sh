@@ -112,8 +112,8 @@ X_STAGING_FSROOT="${CUR_DIR}/../mfsroot/${CFGNAME}"
 
 # X_STAGING_METALOG
 X_STAGING_METALOG="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}"
+X_STAGING_METALOG_MFSROOT="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}.mfsroot"
 X_STAGING_METALOG_TMP="${CUR_DIR}/../mfsroot/METALOG.${CFGNAME}.tmp"
-# XXX TODO: final destination for metalog after ports munging
 
 # X_STAGING_TMPDIR
 X_STAGING_TMPDIR="${CUR_DIR}/../tmp/${CFGNAME}"
