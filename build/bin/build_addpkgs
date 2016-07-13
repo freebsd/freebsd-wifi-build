@@ -42,15 +42,15 @@ for i in ${X_PACKAGELIST}; do
 
 	# Yes, we need to figure out the actual staging root for this
 	# stuff.
-	tar -cf ${X_STAGING_FSROOT}/../${i}.mtree --format=mtree --options='!all,type,uname,gname,mode,size,link' @${X_PACKAGE_PKGDIR}/${i}.tar.gz
+	tar -cf ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-${i}.mtree --format=mtree --options='!all,type,uname,gname,mode,size,link' @${X_PACKAGE_PKGDIR}/${i}.tar.gz
 
 	echo "*** Done"
 done
 
 # Now, populate a complete mtree file from all of them, so we can
 # feed it to the big filter for the 'fsimage' target.
-rm -f ${X_STAGING_FSROOT}/../pkgs.mtree
+rm -f ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-pkgs.mtree
 for i in ${X_PACKAGELIST}; do
-	cat ${X_STAGING_FSROOT}/../${i}.mtree >> ${X_STAGING_FSROOT}/../pkgs.mtree
+	cat ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-${i}.mtree >> ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-pkgs.mtree
 done
 
