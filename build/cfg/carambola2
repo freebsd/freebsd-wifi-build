@@ -35,7 +35,7 @@ X_FSIMAGE_SUFFIX=".ulzma"
 # should be run when building
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
 
 # Build a contiguous flash image
 X_UBOOT_KERNROOTIMG="YES"
