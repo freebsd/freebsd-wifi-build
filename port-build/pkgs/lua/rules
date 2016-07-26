@@ -3,7 +3,6 @@ PKGVERSION=5.3.3
 PKGREVISION=1
 PKGDISTFILE=https://www.lua.org/ftp/lua-5.3.3.tar.gz
 PKGWORKSUBDIR=lua-5.3.3
-
+PKG_PRE_BUILD_PATCHLIST="patch-src-Makefile"
 PKG_LICENCE="BSD"
-
 PKG_MAKE_BUILD_FLAGS='freebsd'
