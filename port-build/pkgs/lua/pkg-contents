@@ -1,0 +1,22 @@
+usr type=dir uid=0 gid=0 mode=0755
+usr/local type=dir uid=0 gid=0 mode=0755
+usr/local/bin type=dir uid=0 gid=0 mode=0755
+usr/local/bin/lua type=file uid=0 gid=0 mode=0755 contents=usr/local/bin/lua
+usr/local/bin/luac type=file uid=0 gid=0 mode=0755 contents=usr/local/bin/luac
+usr/local/include type=dir uid=0 gid=0 mode=0755
+usr/local/include/lauxlib.h type=file uid=0 gid=0 mode=0644 contents=usr/local/include/lauxlib.h
+usr/local/include/lua.h type=file uid=0 gid=0 mode=0644 contents=usr/local/include/lua.h
+usr/local/include/lua.hpp type=file uid=0 gid=0 mode=0644 contents=usr/local/include/lua.hpp
+usr/local/include/luaconf.h type=file uid=0 gid=0 mode=0644 contents=usr/local/include/luaconf.h
+usr/local/include/lualib.h type=file uid=0 gid=0 mode=0644 contents=usr/local/include/lualib.h
+usr/local/lib type=dir uid=0 gid=0 mode=0755
+usr/local/lib/liblua.a type=file uid=0 gid=0 mode=0644 contents=usr/local/lib/liblua.a
+usr/local/lib/lua type=dir uid=0 gid=0 mode=0755
+usr/local/lib/lua/5.3 type=dir uid=0 gid=0 mode=0755
+usr/local/man type=dir uid=0 gid=0 mode=0755
+usr/local/man/man1 type=dir uid=0 gid=0 mode=0755
+usr/local/man/man1/lua.1 type=file uid=0 gid=0 mode=0644 contents=usr/local/man/man1/lua.1
+usr/local/man/man1/luac.1 type=file uid=0 gid=0 mode=0644 contents=usr/local/man/man1/luac.1
+usr/local/share type=dir uid=0 gid=0 mode=0755
+usr/local/share/lua type=dir uid=0 gid=0 mode=0755
+usr/local/share/lua/5.3 type=dir uid=0 gid=0 mode=0755
