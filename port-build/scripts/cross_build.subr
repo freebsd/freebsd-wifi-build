@@ -68,9 +68,20 @@ port_configure()
 
 	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
 
-	# The rest of the build environment is already setup for us;
-	# but here is where we'd manually do things
-	./configure ${CONFIGURE_HOSTFLAGS}
+	# Setup the build environment
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
+	    ./configure ${X_PKG_CONFIGURE_HOSTFLAGS} ${PKG_MAKE_CONFIGURE_FLAGS}
 }
 
 port_build()
@@ -81,7 +92,20 @@ port_build()
 
 	# For now, hard-code gmake. Later on we'll allow this to be
 	# something other than gmake as appropriate.
-	echo $CC
+
+	# Setup the build environment
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
 	gmake ${PKG_MAKE_BUILD_FLAGS}
 }
 
@@ -94,6 +118,18 @@ port_staging()
 	# ./configure based bits it should work.
 	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
 	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
 	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
 }
 

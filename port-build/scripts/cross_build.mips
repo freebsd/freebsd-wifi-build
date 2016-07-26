@@ -3,24 +3,24 @@
 # XXX This is the main thing provided by the caller
 X_ROOTDIR="${X_PACKAGE_ROOTDIR}"
 
-CPU_ARGS="-march=mips32 -msoft-float -Wa,-msoft-float" ; export CPU_ARGS
-INCS="-I${X_ROOTDIR}/usr/include" ; export INCS
+X_PKG_CPU_ARGS="-march=mips32 -msoft-float -Wa,-msoft-float"
+X_PKG_INCS="-I${X_ROOTDIR}/usr/include"
 
-CROSS_COMPILE=mips-portbld-freebsd11.0 ; export CROSS_COMPILE
-CC=${CROSS_COMPILE}-gcc ; export CC
-CXX=${CROSS_COMPILE}-g++ ; export CXX
-LD=mips-freebsd-ld ; export LD
-AR=mips-freebsd-ar ; export AR
-RANLIB=mips-freebsd-ranlib ; export RANLIB
-STRIP=mips-freebsd-strip ; export STRIP
+X_PKG_CROSS_COMPILE=mips-portbld-freebsd11.0
+X_PKG_CC=${X_PKG_CROSS_COMPILE}-gcc
+X_PKG_CXX=${X_PKG_CROSS_COMPILE}-g++
+X_PKG_LD=mips-freebsd-ld
+X_PKG_AR=mips-freebsd-ar
+X_PKG_RANLIB=mips-freebsd-ranlib
+X_PKG_STRIP=mips-freebsd-strip
 
-SYSROOT=${X_ROOTDIR} ; export SYSROOT
-CFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O" ; export CFLAGS
-CXXFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O" ; export CXXFLAGS
-CPPFLAGS="--sysroot=${SYSROOT} ${CPU_ARGS} ${INCS} -O" ; export CPPFLAGS
-LDFLAGS=--sysroot=${SYSROOT} ; export LDFLAGS
+X_PKG_SYSROOT="${X_ROOTDIR}"
+X_PKG_CFLAGS="--sysroot=${X_PKG_SYSROOT} ${X_PKG_CPU_ARGS} ${X_PKG_INCS} -O"
+X_PKG_CXXFLAGS="--sysroot=${X_PKG_SYSROOT} ${X_PKG_CPU_ARGS} ${X_PKG_INCS} -O"
+X_PKG_CPPFLAGS="--sysroot=${X_PKG_SYSROOT} ${X_PKG_CPU_ARGS} ${X_PKG_INCS} -O"
+X_PKG_LDFLAGS="--sysroot=${X_PKG_SYSROOT}"
 
-CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd11.0" ; export CONFIGURE_HOSTFLAGS
+X_PKG_CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd11.0"
 
 # now run:
 # /configure --host=mips-portbld-freebsd11.0
