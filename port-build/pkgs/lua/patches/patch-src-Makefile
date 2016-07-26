@@ -1,6 +1,6 @@
---- src/Makefile.orig	2016-07-26 15:23:59.869630000 -0700
-+++ src/Makefile	2016-07-26 15:27:58.438433000 -0700
-@@ -6,8 +6,9 @@
+--- src/Makefile.orig	2015-05-27 04:10:11.000000000 -0700
++++ src/Makefile	2016-07-26 15:39:25.183060000 -0700
+@@ -6,12 +6,14 @@
  # Your platform. See PLATS for possible values.
  PLAT= none
  
@@ -11,4 +11,28 @@
 +CFLAGS+=$(CFLAGS_EXTRA)
  LDFLAGS= $(SYSLDFLAGS) $(MYLDFLAGS)
  LIBS= -lm $(SYSLIBS) $(MYLIBS)
+ 
+-AR= ar rcu
++AR?=ar
++ARFLAGS=rsu
+ RANLIB= ranlib
+ RM= rm -f
+ 
+@@ -56,7 +58,7 @@
+ a:	$(ALL_A)
+ 
+ $(LUA_A): $(BASE_O)
+-	$(AR) $@ $(BASE_O)
++	$(AR) $(ARFLAGS) $@ $(BASE_O)
+ 	$(RANLIB) $@
+ 
+ $(LUA_T): $(LUA_O) $(LUA_A)
+@@ -77,7 +79,7 @@
+ 	@echo "CFLAGS= $(CFLAGS)"
+ 	@echo "LDFLAGS= $(SYSLDFLAGS)"
+ 	@echo "LIBS= $(LIBS)"
+-	@echo "AR= $(AR)"
++	@echo "AR= $(AR) $(ARFLAGS)"
+ 	@echo "RANLIB= $(RANLIB)"
+ 	@echo "RM= $(RM)"
  
