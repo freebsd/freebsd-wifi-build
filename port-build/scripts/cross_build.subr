@@ -2,13 +2,6 @@
 
 # private functions
 
-# TODO items:
-#
-# * Migrate the work directory out from the checkout directory
-#   to the top-level build directory, indexed by platform.
-# * .. and nothing else should be writing into the git repo, so
-#   fix that!
-
 # public functions
 
 port_incplatform()
