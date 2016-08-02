@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# XXX ideally these will be installed as part of the package;
+# I'll do that later.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# dnsmasq_cmd_options=""
+
+case $1 in
+	'start')
+		/usr/local/sbin/dnsmasq ${dnsmasq_cmd_options} || exit 127
+		exit 0
+		;;
+	'stop')
+		kill `cat /var/run/dnsmasq.pid` || exit 127
+		exit 0
+		;;
+	*)
+		echo "$0: start|stop"
+		exit 127
+		;;
+esac
+
+exit 0
