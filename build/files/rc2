@@ -47,8 +47,8 @@ echo "*** Default password/login databases .."
 echo "*** Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
 
-echo "*** inetd"
-/usr/sbin/inetd
+# Start services
+/etc/rc.d/base/srv start
 
 echo "*** Done!"
 

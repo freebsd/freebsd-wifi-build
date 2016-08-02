@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# This configures devices in the "services_list" configuration
+# file.
+
+. /etc/rc.subr
+
+# default
+. /etc/rc.conf.default
+
+# local config
+. /etc/cfg/rc.conf
+
+cmd=$1
+shift
+
+for i in ${services_list}; do
+	/etc/rc.d/srv/${i} ${cmd}
+done
+
+exit 0
