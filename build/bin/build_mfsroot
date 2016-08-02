@@ -182,6 +182,11 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libxo.so.0 ${X_STAGING_FSROOT}/lib/
 # libraries for wlanstats, athstats
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libprivatebsdstat.so.1 ${X_STAGING_FSROOT}/usr/lib/
 
+# dhclient
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient ${X_STAGING_FSROOT}/sbin/dhclient
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient-script ${X_STAGING_FSROOT}/sbin/dhclient-script
+${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/dhclient.conf ${X_STAGING_FSROOT}/c/etc
+
 # ath tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/ath_ee_v14_print ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/ath_prom_read ${X_STAGING_FSROOT}/usr/bin/
