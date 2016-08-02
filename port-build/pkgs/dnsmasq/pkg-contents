@@ -1,4 +1,5 @@
 #mtree
+usr uid=0 gid=0 mode=755 type=dir
 usr/local uid=0 gid=0 mode=0755 type=dir
 usr/local/sbin uid=0 gid=0 mode=0755 type=dir
 usr/local/share uid=0 gid=0 mode=0755 type=dir

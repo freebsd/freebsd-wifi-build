@@ -1,4 +1,5 @@
 #mtree
+usr uid=0 gid=0 mode=755 type=dir
 usr/local uid=0 gid=0 mode=0755 type=dir
 usr/local/lib uid=0 gid=0 mode=0755 type=dir
 usr/local/bin uid=0 gid=0 mode=0755 type=dir
