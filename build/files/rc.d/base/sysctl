@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+cmd=$1
+shift
+
+# XXX todo; should escape things appropriately
+for i in ${sysctl_list}; do
+	echo " -> $i"
+	type=`get_if_var $i sysctl_IF`
+	/sbin/sysctl "${i}"
+done
+
+exit 0
