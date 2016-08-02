@@ -50,7 +50,7 @@ while (<$mfh>) {
 	# skip over comments
 	next if $s =~ m/^\#/;
 	$v = push @modify_list, $s;
-	$modify_hash{$param[0]} = $v;
+	$modify_hash{$param[0]} = ($v - 1);
 }
 
 $mfh->close();
