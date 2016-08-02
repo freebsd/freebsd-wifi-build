@@ -14,7 +14,7 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif ipfw"
+MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif libalias ipfw ipfw_nat ipfw_nptv6"
 
 # Netboot
 NETBOOT_KERNEL="YES"
