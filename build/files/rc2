@@ -53,6 +53,7 @@ echo "*** Starting networking via /etc/rc.d/base/net"
 
 # Start firewall; needs networking up
 /etc/rc.d/base/firewall start
+/etc/rc.d/base/routing start
 
 # Start services
 /etc/rc.d/base/srv start

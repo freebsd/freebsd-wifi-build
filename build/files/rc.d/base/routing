@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+# This configures an optional routing.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+routing_start()
+{
+	if [ "${forwarding_enable}" = "YES" ]; then
+		sysctl net.inet.ip.forwarding=1
+	fi
+}
+
+case $1 in
+	'start')
+		routing_start
+		exit 0
+	;;
+	'stop')
+		exit 0
+	;;
+	*)
+		echo "Usage: $0 {start|stop}"
+esac
+
+exit 0
