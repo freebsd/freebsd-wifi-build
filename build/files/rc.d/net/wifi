@@ -140,8 +140,8 @@ case $cmd in
 		if [ "x${netif_addrtype}" = "xstatic" ]; then
 			ifconfig ${netif_name} inet ${netif_ipv4_address} \
 			    netmask ${netif_ipv4_netmask}
-		elif [ "x${netif_addrtype}" = "xdhcp" ]; then
-			dhclient -b ${netif_name}
+		elif [ "${netif_addrtype}" = "dhcp" ]; then
+			dhclient -b ${netif_name} &
 		fi
 		echo "*** Interface: ${ifname}: done"
 		exit 0
