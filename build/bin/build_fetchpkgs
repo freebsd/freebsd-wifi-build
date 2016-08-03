@@ -25,18 +25,18 @@ X_BASEDIR=${SCRIPT_DIR}/../
 # Add in the required packages.
 # This step requires the packages exist in the staging root.
 
-# XXX for now, hard-code mips
-export X_PACKAGE_ROOTDIR
-export X_PACKAGE_DISTFILE_DIR
-export X_PACKAGE_BUILDROOT_DIR
-export X_PACKAGE_PKGDIR
-export X_PACKAGE_ARCHSTR
-
-X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/ ; export X_PORTBUILD_DIR
-X_PORTBUILD_PLATFORM=mips ; export X_PORTBUILD_PLATFORM
+X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/
+X_PORTBUILD_PLATFORM=mips
 
 for i in ${X_PACKAGELIST}; do
 	echo "*** Fetching upstream for $i"
-	${X_PORTBUILD_DIR}/scripts/cross_build $i fetch
+	env \
+	    X_PACKAGE_ROOTDIR="${X_PACKAGE_ROOTDIR}" \
+	    X_PACKAGE_DISTFILE_DIR="${X_PACKAGE_DISTFILE_DIR}" \
+	    X_PACKAGE_BUILDROOT_DIR="${X_PACKAGE_BUILDROOT_DIR}" \
+	    X_PACKAGE_PKGDIR="${X_PACKAGE_PKGDIR}" \
+	    X_PACKAGE_ARCHSTR="${X_PACKAGE_ARCHSTR}" \
+	    X_PORTBUILD_DIR="${X_PORTBUILD_DIR}" \
+	    X_PORTBUILD_PLATFORM="${X_PORTBUILD_PLATFORM}" \
+	    ${X_PORTBUILD_DIR}/scripts/cross_build $i fetch
 done
-
