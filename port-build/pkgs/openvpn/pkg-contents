@@ -1,0 +1,11 @@
+./usr type=dir uid=0 gid=0 mode=0755 time=1470258841.624663000 flags=none
+./usr/local type=dir uid=0 gid=0 mode=0755 time=1470258841.951077000 flags=none
+./usr/local/lib type=dir uid=0 gid=0 mode=0755 time=1470258841.951134000 flags=none
+./usr/local/lib/openvpn type=dir uid=0 gid=0 mode=0755 time=1470258841.951189000 flags=none
+./usr/local/lib/openvpn/plugins type=dir uid=0 gid=0 mode=0755 time=1470258842.004862000 flags=none
+./usr/local/lib/openvpn/plugins/openvpn-plugin-auth-pam.la type=file uid=0 gid=0 mode=0755 size=1017 time=1470258841.959141000 flags=none content=usr/local/lib/openvpn/plugins/openvpn-plugin-auth-pam.la
+./usr/local/lib/openvpn/plugins/openvpn-plugin-auth-pam.so type=file uid=0 gid=0 mode=0755 size=13060 time=1470258841.958109000 flags=none content=usr/local/lib/openvpn/plugins/openvpn-plugin-auth-pam.so
+./usr/local/lib/openvpn/plugins/openvpn-plugin-down-root.la type=file uid=0 gid=0 mode=0755 size=1017 time=1470258842.004904000 flags=none content=usr/local/lib/openvpn/plugins/openvpn-plugin-down-root.la
+./usr/local/lib/openvpn/plugins/openvpn-plugin-down-root.so type=file uid=0 gid=0 mode=0755 size=10264 time=1470258842.003851000 flags=none content=usr/local/lib/openvpn/plugins/openvpn-plugin-down-root.so
+./usr/local/sbin type=dir uid=0 gid=0 mode=0755 time=1470258841.866285000 flags=none
+./usr/local/sbin/openvpn type=file uid=0 gid=0 mode=0755 size=844428 time=1470258841.868293000 flags=none content=usr/local/sbin/openvpn
