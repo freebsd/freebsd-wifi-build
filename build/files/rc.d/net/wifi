@@ -81,6 +81,10 @@ case $cmd in
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
 				    wlanmode ibss bssid
 			;;
+			'sta')
+				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
+				    wlanmode sta -bgscan powersave
+			;;
 			*)
 				echo "*** ${ifname}: unknown wifi mode '${netif_wifi_mode}'"
 				exit 1
@@ -152,12 +156,15 @@ case $cmd in
 				sleep 1
 			;;
 			'ibss')
+				echo "*** Terminating wpa_supplicant.."
+				kill `cat /var/run/wpa_supplicant.${netif_name}.pid`
+				sleep 1
+			;;
 			'sta')
 				echo "*** Terminating wpa_supplicant.."
 				kill `cat /var/run/wpa_supplicant.${netif_name}.pid`
 				sleep 1
 			;;
-
 		esac
 
 		ifconfig ${netif_name} down

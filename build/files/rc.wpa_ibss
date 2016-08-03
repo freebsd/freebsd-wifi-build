@@ -56,21 +56,21 @@ generate_wpa_cfg_sta()
 	local _wpa_cfg _wpa_key_mgmt _wpa_mode
 	local _wpa_cfg_tmp
 	local _prefix="/var/run"
-	local _wpa_keymgmt
+	local _wpa_key_mgmt _psk
 
 	_ifname=$1
 
 	# Bring in the variables, complete with defaults
 	_wpa_ssid=`get_if_var ${_ifname} netif_IF_wifi_sta_ssid FREEBSD_IBSS_ENCRYPT`
 	_wpa_passphrase=`get_if_var ${_ifname} netif_IF_wifi_sta_passphrase FREEBSD_PASSWORD`
-	_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_sta_key_mgmt`
+	_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_sta_key_mgmt UNSET`
 
 	if [ "${_wpa_key_mgmt}" = "NONE" ]; then
-		_wpa_key_mgmt="	key_mgmt=NONE"
-		psk=""
+		_wpa_key_mgmt="key_mgmt=NONE"
+		_psk=""
 	else
 		_wpa_key_mgmt=""
-		psk="	psk=\"${_wpa_passphrase}\""
+		_psk="psk=\"${_wpa_passphrase}\""
 	fi
 
 #	_wpa_proto=`get_if_var ${_ifname} netif_IF_wifi_ibss_proto WPA`
@@ -88,6 +88,7 @@ generate_wpa_cfg_sta()
 
 	cat > ${_wpa_cfg_tmp} <<EOF
 # This is automatically generated!
+ctrl_interface=/var/run/wpa_supplicant.${_ifname}
 
 network={
 	ssid="${_wpa_ssid}"

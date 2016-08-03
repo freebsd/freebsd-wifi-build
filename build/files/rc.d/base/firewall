@@ -37,7 +37,7 @@ firewall_nat_start()
 	fw_nat_cfg=""
 
 	if [ "${firewall_nat_alias_interface}" != "" ]; then
-		fw_nat_cfg="${$fw_nat_cfg} if ${firewall_nat_alias_interface}"
+		fw_nat_cfg="${fw_nat_cfg} if ${firewall_nat_alias_interface}"
 	fi
 	if [ "${firewall_nat_alias_ipv4_addr}" != "" ]; then
 		fw_nat_cfg="${fw_nat_cfg} ip ${firewall_nat_alias_ipv4_addr}"
