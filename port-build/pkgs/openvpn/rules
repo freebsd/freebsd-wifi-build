@@ -1,0 +1,9 @@
+PKGNAME=openvpn
+PKGVERSION=2.3.10
+PKGREVISION=1
+PKGDISTFILE=http://swupdate.openvpn.net/community/releases/openvpn-2.3.10.tar.gz
+PKGWORKSUBDIR=openvpn-2.3.10
+USE_CONFIGURE=YES
+PKG_MAKE_CONFIGURE_FLAGS="--disable-lzo"
+PKG_MAKE_BUILD_FLAGS=""
+PKG_INSTALL_BUILD_FLAGS=""
