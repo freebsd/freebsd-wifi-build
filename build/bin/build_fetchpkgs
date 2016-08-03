@@ -26,7 +26,6 @@ X_BASEDIR=${SCRIPT_DIR}/../
 # This step requires the packages exist in the staging root.
 
 X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/
-X_PORTBUILD_PLATFORM=mips
 
 for i in ${X_PACKAGELIST}; do
 	echo "*** Fetching upstream for $i"

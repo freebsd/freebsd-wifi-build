@@ -27,9 +27,7 @@ X_BASEDIR=${SCRIPT_DIR}/../
 # Add in the required packages.
 # This step requires the packages exist in the staging root.
 
-# XXX for now, hard-code mips
 X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/
-X_PORTBUILD_PLATFORM=mips
 
 # Iterate through and install.
 # We need to figure out how to populate a metadata file with
