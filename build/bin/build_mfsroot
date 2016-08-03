@@ -75,6 +75,7 @@ ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/proc
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/var
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/sbin
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/libexec
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/libexec/resolvconf
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/usr
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/usr/libexec
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/usr/lib
@@ -188,6 +189,9 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libprivatebsdstat.so.1 ${X_STAGING_FSROO
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient ${X_STAGING_FSROOT}/sbin/dhclient
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient-script ${X_STAGING_FSROOT}/sbin/dhclient-script
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/dhclient.conf ${X_STAGING_FSROOT}/c/etc
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/cmp ${X_STAGING_FSROOT}/usr/bin/cmp
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/resolvconf ${X_STAGING_FSROOT}/sbin/resolvconf
+${INSTALL_DEF_BIN} ${X_DESTDIR}/libexec/resolvconf/libc ${X_STAGING_FSROOT}/libexec/resolvconf/libc
 
 # ath tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/ath_ee_v14_print ${X_STAGING_FSROOT}/usr/bin/
