@@ -118,6 +118,11 @@ case $cmd in
 				wpa_supplicant -B -P /var/run/wpa_supplicant.${netif_name}.pid -i ${netif_name} -c /var/run/wpa_supplicant.${netif_name}.conf || exit 1
 				sleep 1
 				;;
+			'sta')
+				generate_wpa_cfg_sta ${netif_name} || exit 1
+				wpa_supplicant -B -P /var/run/wpa_supplicant.${netif_name}.pid -i ${netif_name} -c /var/run/wpa_supplicant.${netif_name}.conf || exit 1
+				sleep 1
+				;;
 			'ibss-open')
 				# Cheat for now; just bring it up and let net80211
 				# take care of it.
@@ -147,6 +152,7 @@ case $cmd in
 				sleep 1
 			;;
 			'ibss')
+			'sta')
 				echo "*** Terminating wpa_supplicant.."
 				kill `cat /var/run/wpa_supplicant.${netif_name}.pid`
 				sleep 1
