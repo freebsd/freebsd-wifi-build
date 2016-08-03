@@ -51,6 +51,9 @@ echo "*** Customising sysctl .."
 echo "*** Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
 
+# Start firewall; needs networking up
+/etc/rc.d/base/firewall start
+
 # Start services
 /etc/rc.d/base/srv start
 

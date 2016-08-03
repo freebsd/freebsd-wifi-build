@@ -1,0 +1,79 @@
+#!/bin/sh
+
+set -e
+
+# This configures an optional firewall instance, mostly for
+# NAT and/or routing.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# variables:
+#
+# NAT:
+#
+# firewall_nat_enable="YES"
+# firewall_nat_alias_interface="ifname"
+# firewall_nat_public_interface="ifname"
+# firewall_nat_alias_ipv4_addr="ipv4"
+# firewall_nat_deny_in="YES"
+# firewall_nat_same_ports="YES"
+# firewall_nat_log="YES"
+
+# firewall rules (TODO)
+
+firewall_nat_start()
+{
+	local fw_nat_cfg
+
+	# See if NAT needs configuring
+	if [ "${firewall_nat_enable}" != "YES" ]; then
+		return 0
+	fi
+
+	# Ok, we have one global NAT table for now, so
+	# configure it up.
+	fw_nat_cfg=""
+
+	if [ "${firewall_nat_alias_interface}" != "" ]; then
+		fw_nat_cfg="${$fw_nat_cfg} if ${firewall_nat_alias_interface}"
+	fi
+	if [ "${firewall_nat_alias_ipv4_addr}" != "" ]; then
+		fw_nat_cfg="${fw_nat_cfg} ip ${firewall_nat_alias_ipv4_addr}"
+	fi
+	if [ "${firewall_nat_deny_in}" = "YES" ]; then
+		fw_nat_cfg="${fw_nat_cfg} deny_in"
+	fi
+	if [ "${firewall_nat_same_ports}" = "YES" ]; then
+		fw_nat_cfg="${fw_nat_cfg} same_ports"
+	fi
+	if [ "${firewall_nat_log}" = "YES" ]; then
+		fw_nat_config="${fw_nat_cfg} log"
+	fi
+
+	# Create nat
+	ipfw nat 123 config ${fw_nat_cfg}
+
+	# Ok, now add a rule for the interface in question
+	if [ "${firewall_nat_public_interface}" = "" ]; then
+		echo "*** ERROR: missing firewall_nat_public_interface"
+		return 127
+	fi
+
+	ipfw add 100 nat 123 ip4 from any to any via ${firewall_nat_public_interface}
+}
+
+case $1 in
+	'start')
+		firewall_nat_start
+		exit 0
+	;;
+	'stop')
+		exit 0
+	;;
+	*)
+		echo "Usage: $0 {start|stop}"
+esac
+
+exit 0
