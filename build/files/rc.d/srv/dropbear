@@ -7,11 +7,16 @@
 . /etc/rc.conf.default
 . /etc/cfg/rc.conf
 
+# dropbear_cmd_options
+# dropbear_listen_address="ip:port"
 dropbear_cmd_options="-R"
+
 
 case $1 in
 	'start')
-		/usr/local/sbin/dropbear ${dropbear_cmd_options} || exit 127
+		# For now, just support one listen address; should
+		# support multiple entries later.
+		/usr/local/sbin/dropbear ${dropbear_cmd_options} ${dropbear_listen_address} || exit 127
 		exit 0
 		;;
 	'stop')
