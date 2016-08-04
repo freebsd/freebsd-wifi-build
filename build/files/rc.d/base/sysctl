@@ -11,7 +11,7 @@ shift
 for i in ${sysctl_list}; do
 	echo " -> $i"
 	type=`get_if_var $i sysctl_IF`
-	/sbin/sysctl "${i}"
+	/sbin/sysctl "${type}"
 done
 
 exit 0
