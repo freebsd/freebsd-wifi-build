@@ -198,6 +198,10 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/cmp ${X_STAGING_FSROOT}/usr/bin/cmp
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/resolvconf ${X_STAGING_FSROOT}/sbin/resolvconf
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/libexec/resolvconf/libc ${X_STAGING_FSROOT}/libexec/resolvconf/libc
 
+# time management
+${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/date ${X_STAGING_FSROOT}/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/ntpdate ${X_STAGING_FSROOT}/usr/sbin/
+
 # ath tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/ath_ee_v14_print ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/ath_prom_read ${X_STAGING_FSROOT}/usr/bin/

@@ -14,7 +14,7 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif libalias ipfw ipfw_nat ipfw_nptv6"
+MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif if_tap libalias ipfw ipfw_nat ipfw_nptv6"
 
 # Netboot
 NETBOOT_KERNEL="YES"
@@ -44,4 +44,4 @@ X_UBOOT_KERNROOTIMG="YES"
 X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-carambola2"
 
-X_PACKAGELIST="dropbear dnsmasq lua"
+X_PACKAGELIST="dropbear dnsmasq lua openvpn"
