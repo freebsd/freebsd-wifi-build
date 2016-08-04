@@ -1,0 +1,19 @@
+This is a very simple, hackish package building framework for doing
+the bare minimum I need to get packages into this environment.
+
+It's .. hackish.  And yes, this file is just a set of notes so things
+aren't forgotten.
+
+* generating an mtree:
+
+mtree -c -p /home/adrian/work/freebsd/head-embedded/pkgbuild/mips_ap/mips.mips/lua/staging/usr | mtree -C
+
+.. trouble is, that mtree needs modifying (eg content=X, update uid/gid, etc)
+to be accepted by tar.
+
+So yes, the output of mtree isn't 100% compatible with the input
+required by tar.
+
+The output of tar mtree isn't 100% compatible out of the box with
+the mtree format required by makefs.  Sigh.
+
