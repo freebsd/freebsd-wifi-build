@@ -20,6 +20,7 @@ set -e
 # firewall_nat_deny_in="YES"
 # firewall_nat_same_ports="YES"
 # firewall_nat_log="YES"
+# firewall_nat_block_lan_wan="lan_ifname"
 
 # firewall rules (TODO)
 
@@ -66,7 +67,20 @@ firewall_nat_start()
 		return 127
 	fi
 
-	ipfw add 100 nat 123 ip4 from any to any via ${firewall_nat_public_interface}
+	# Single allowed NAT rule
+	ipfw add 200 nat 123 ip4 from any to any \
+	    via ${firewall_nat_public_interface}
+
+	# For VPNs, we may want to be able to disable traffic going
+	# out via the WAN without going out the VPN.
+	#
+	# Ideally this would be something we can switch on/off
+	# to allow things like a captive portal to function.
+	if [ "${firewall_nat_block_lan_wan}" != "" ]; then
+		ipfw add 201 deny all from any to any \
+		    in via ${firewall_nat_block_lan_wan} \
+		    out via ${firewall_nat_public_interface}
+	fi
 }
 
 firewall_start()
