@@ -2,3 +2,5 @@ etc/cfg/manifest
 etc/master.passwd
 etc/group
 etc/cfg/rc.conf
+etc/dropbear/dropbear_ecdsa_host_key
+etc/openvpn.conf
