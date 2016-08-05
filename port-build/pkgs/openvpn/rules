@@ -4,6 +4,11 @@ PKGREVISION=1
 PKGDISTFILE=http://swupdate.openvpn.net/community/releases/openvpn-2.3.10.tar.gz
 PKGWORKSUBDIR=openvpn-2.3.10
 USE_CONFIGURE=YES
-PKG_MAKE_CONFIGURE_FLAGS="--disable-lzo"
+PKG_MAKE_CONFIGURE_FLAGS="LZO_CFLAGS=-I${X_PACKAGE_BUILDROOT_DIR}/lzo2/staging/usr/local/include LZO_LIBS=${X_PACKAGE_BUILDROOT_DIR}/lzo2/staging/usr/local/lib/liblzo2.a"
 PKG_MAKE_BUILD_FLAGS=""
 PKG_INSTALL_BUILD_FLAGS=""
+
+# It's only a build dep; it's static linked instead of shared-linked.
+# Not sure why, sigh.
+PKG_BUILD_DEPS="lzo2"
+PKG_RUN_DEPS=""
