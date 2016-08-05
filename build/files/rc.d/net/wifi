@@ -58,7 +58,7 @@ netif_wifi_createargs1="`get_if_var $ifname netif_IF_wifi_createargs1 ''`"
 netif_wifi_createargs2="`get_if_var $ifname netif_IF_wifi_createargs2 ''`"
 netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
-netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel 6:ht/20`"
+netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel ''`"
 netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
 
 # The hostap options are handled in the hostapd config file routine.
