@@ -1,2 +1,3 @@
 # until we can run a lightweight ntp client in the backgronud..
 0,30 * * * * root /etc/rc.d/srv/ntpdate onestart
+@reboot root sleep 30 && /etc/rc.d/srv/ntpdate onestart
