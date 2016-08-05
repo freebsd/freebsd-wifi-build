@@ -59,6 +59,7 @@ ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/base
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/net
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/srv
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/pam.d
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/state
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/etc
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/lib
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/bin
@@ -204,6 +205,12 @@ ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/dhclient.conf ${X_STAGING_FSROOT}/c/etc
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/cmp ${X_STAGING_FSROOT}/usr/bin/cmp
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/resolvconf ${X_STAGING_FSROOT}/sbin/resolvconf
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/libexec/resolvconf/libc ${X_STAGING_FSROOT}/libexec/resolvconf/libc
+
+# state tracking
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/state/openvpn-up ${X_STAGING_FSROOT}/c/etc/state/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/state/openvpn-down ${X_STAGING_FSROOT}/c/etc/state/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/dhclient-enter-hooks ${X_STAGING_FSROOT}/c/etc/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/dhclient-exit-hooks ${X_STAGING_FSROOT}/c/etc/
 
 # time management
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/date ${X_STAGING_FSROOT}/bin/

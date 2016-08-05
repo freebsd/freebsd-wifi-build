@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "*** openvpn up: $*" >> /var/log/state.log
