@@ -16,6 +16,9 @@ case $1 in
 	'start')
 		# For now, just support one listen address; should
 		# support multiple entries later.
+		if [ "${dropbear_listen_address}" != "" ]; then
+			dropbear_listen_address="-p ${dropbear_listen_address}"
+		fi
 		/usr/local/sbin/dropbear ${dropbear_cmd_options} ${dropbear_listen_address} || exit 127
 		exit 0
 		;;

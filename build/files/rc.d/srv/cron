@@ -6,14 +6,14 @@
 
 case $1 in
 	'start')
-		if [ "${inetd_enable}" = "NO" ]; then
+		if [ "${cron_enable}" = "NO" ]; then
 			exit 0
 		fi
-		/usr/sbin/inetd ${inetd_cmd_options} || exit 127
+		/usr/sbin/cron
 		exit 0
 		;;
 	'stop')
-		kill `cat /var/run/inetd.pid` || exit 127
+		kill `cat /var/run/cron.pid` || exit 127
 		exit 0
 		;;
 	*)

@@ -51,6 +51,10 @@ echo "*** Customising sysctl .."
 echo "*** Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
 
+# run cron/inetd as default
+/etc/rc.d/srv/cron start
+/etc/rc.d/srv/inetd start
+
 # Start firewall; needs networking up
 /etc/rc.d/base/firewall start
 /etc/rc.d/base/routing start

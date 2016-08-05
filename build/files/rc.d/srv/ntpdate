@@ -1,0 +1,39 @@
+#!/bin/sh
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# for now, yeah, 0.pool.freebsd.org .
+
+ntpdate_hostname="0.freebsd.pool.ntp.org"
+
+case $1 in
+	'onestart')
+		if [ "${ntpdate_enable}" = "NO" ]; then
+			exit 0
+		fi
+
+		# XXX should serialise to ensure we don't run
+		# XXX multiple ntpdate instances..
+		if [ -f "/var/run/ntpdate.pid" ]; then
+			exit 0
+		fi
+
+		# Yes, this is terrible.
+		touch /var/run/ntpdate.pid
+		ntpdate ${ntpdate_hostname}
+		rm /var/run/ntpdate.pid
+		exit 0
+		;;
+	'stop')
+		rm /var/run/ntpdate.pid
+		exit 0
+		;;
+	*)
+		echo "$0: onestart|stop"
+		exit 127
+		;;
+esac
+
+exit 0

@@ -53,6 +53,7 @@ ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/dropbear
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/cfg
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/cron.d
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/base
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/net
@@ -135,6 +136,7 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/hostname ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/mkdir ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/chmod ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/touch ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_LINK} /usr/bin/more ${X_STAGING_FSROOT}/usr/bin/less
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
@@ -147,7 +149,10 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/reset ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_SUID_BIN} ${X_DESTDIR}/usr/bin/passwd ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/chown ${X_STAGING_FSROOT}/usr/sbin/
+
+# cron
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/cron ${X_STAGING_FSROOT}/usr/sbin/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/crontab ${X_STAGING_FSROOT}/c/etc/
 
 # syslog / logging
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/syslogd ${X_STAGING_FSROOT}/usr/sbin/
@@ -374,6 +379,8 @@ ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/etherswitch ${X_STAGING_FSROOT}/c
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/dropbear ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/inetd ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/dnsmasq ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/cron ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/ntpdate ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
 
 # config save/load scripts
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin
