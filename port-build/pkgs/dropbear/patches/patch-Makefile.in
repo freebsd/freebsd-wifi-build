@@ -1,0 +1,11 @@
+--- Makefile.in.orig	2016-08-05 19:39:43.224504000 -0700
++++ Makefile.in	2016-08-05 19:39:49.878851000 -0700
+@@ -10,7 +10,7 @@
+ # Hopefully that seems intuitive.
+ 
+ ifndef PROGRAMS
+-	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert
++	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp
+ endif
+ 
+ STATIC_LTC=libtomcrypt/libtomcrypt.a

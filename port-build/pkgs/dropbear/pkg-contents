@@ -18,4 +18,5 @@ usr/local/bin uid=0 gid=0 mode=0755 type=dir
 usr/local/bin/dbclient uid=0 gid=0 mode=0755 type=link link=dropbearmulti
 usr/local/bin/dropbearkey uid=0 gid=0 mode=0755 type=link link=dropbearmulti
 usr/local/bin/dropbearconvert uid=0 gid=0 mode=0755 type=link link=dropbearmulti
+usr/local/bin/scp uid=0 gid=0 mode=0755 type=link link=dropbearmulti
 usr/local/bin/dropbearmulti uid=0 gid=0 mode=0755 type=file content=usr/local/bin/dropbearmulti
