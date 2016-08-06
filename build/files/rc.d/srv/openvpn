@@ -31,7 +31,7 @@ openvpn_start()
 		return 1
 	fi
 
-	openvpn \
+	/usr/local/sbin/openvpn \
 	    --config ${openvpn_config} \
 	    --tun-mtu 1400 \
 	    --script-security 2 \
