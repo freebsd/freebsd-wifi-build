@@ -68,7 +68,7 @@ firewall_nat_start()
 	fi
 
 	# Single allowed NAT rule
-	ipfw add 200 nat 123 ip4 from any to any \
+	ipfw add 201 nat 123 ip4 from any to any \
 	    via ${firewall_nat_public_interface}
 
 	# For VPNs, we may want to be able to disable traffic going
@@ -77,7 +77,7 @@ firewall_nat_start()
 	# Ideally this would be something we can switch on/off
 	# to allow things like a captive portal to function.
 	if [ "${firewall_nat_block_lan_wan}" != "" ]; then
-		ipfw add 201 deny all from any to any \
+		ipfw add 200 deny all from any to any \
 		    in via ${firewall_nat_block_lan_wan} \
 		    out via ${firewall_nat_public_interface}
 	fi
@@ -87,7 +87,7 @@ firewall_start()
 {
 	# For now, assume an open firewall.
 	# Yes, this should be configurable.
-	ipfw add 65500 allow ip from any to any
+	ipfw add 65500 allow ip4 from any to any
 }
 
 case $1 in
