@@ -1,3 +1,30 @@
 #!/bin/sh
 
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+
+# XXX notice: this likely runs as 'nobody' and thus can't do anything;
+# but it mostly should be harmless.  I'll investigate the how/why later.
+
 echo "*** openvpn down: $*" >> /var/log/state.log
+
+if_name=$1
+if_dgram_mtu=$2
+if_if_mtu=$3
+if_ipv4_addr=$4
+if_ipv4_netmask=$5
+if_ipv4_state=$6
+
+# Check to see if we need to fiddle with the ipfw rules.
+if [ "${openvpn_enable}" != "YES" ]; then
+	exit 0
+fi
+if [ "${openvpn_nat_enable}" != "YES" ]; then
+	exit 0
+fi
+
+ipfw delete ${openvpn_nat_rule_id}
+
+exit 0

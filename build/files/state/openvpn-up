@@ -1,3 +1,33 @@
 #!/bin/sh
 
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
 echo "*** openvpn up: $*" >> /var/log/state.log
+
+if_name=$1
+if_dgram_mtu=$2
+if_if_mtu=$3
+if_ipv4_addr=$4
+if_ipv4_netmask=$5
+if_ipv4_state=$6
+
+# Check to see if we need to fiddle with the ipfw rules.
+if [ "${openvpn_enable}" != "YES" ]; then
+	exit 0
+fi
+if [ "${openvpn_nat_enable}" != "YES" ]; then
+	exit 0
+fi
+
+# XXX yes, for now it's a hard-coded nat config number..
+# XXX yes, same as deny_in
+ipfw nat 124 config if ${if_name} deny_in
+
+# Don't error on this!
+ipfw delete ${openvpn_nat_rule_id} || true
+
+ipfw add ${openvpn_nat_rule_id} nat 124 ip4 from any to any via ${if_name}
+
+exit 0
