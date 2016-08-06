@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# XXX ideally these will be installed as part of the package;
+# I'll do that later.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# openvpn is a little more complicated than I'd like.
+#
+# Yes, there'll be a configuration file that needs to be
+# saved.  It may also be a client and/or server, and that
+# behaviour may be a little more complicated.
+#
+# We also have the "fun" problem of defining actions
+# when tun/tap interfaces are connected.  Eg, for clients,
+# we may want to setup a NAT session to NAT traffic through
+# it, and we may also want to remove an existing global NAT
+# session out the WAN interface.
+
+# openvpn_enable="YES"
+# openvpn_config="/etc/cfg/openvpn-client.conf"
+# openvpn_nat_enable="YES"
+# openvpn_nat_rule_id="100"
+
+openvpn_start()
+{
+	if [ "${openvpn_enable}" != "YES" ]; then
+		echo "openvpn not enabled."
+		return 1
+	fi
+
+	openvpn \
+	    --config ${openvpn_config} \
+	    --tun-mtu 1400 \
+	    --script-security 2 \
+	    --up /etc/state/openvpn-up \
+	    --down /etc/state/openvpn-down \
+	    --daemon \
+	    --writepid /var/run/openvpn.pid
+
+	if [ $? -ne 0 ]; then
+		echo "*** openvpn: didn't start; err=$?"
+		return 1
+	fi
+	echo "*** openvpn: started"
+	return 0
+}
+
+openvpn_stop()
+{
+	kill `cat /var/run/openvpn.pid`
+}
+
+case $1 in
+	'start')
+		openvpn_start || exit 1
+		exit 0
+		;;
+	'stop')
+		openvpn_stop || exit 1
+		;;
+	*)
+		echo "$0: start|stop"
+		exit 127
+		;;
+esac
+
+exit 0
