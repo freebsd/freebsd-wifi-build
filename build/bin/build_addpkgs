@@ -40,7 +40,7 @@ for i in ${X_PACKAGELIST}; do
 
 	# Yes, we need to figure out the actual staging root for this
 	# stuff.
-	tar -cf ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-${i}.mtree --format=mtree --options='!all,type,uname,gname,uid,gid,mode,size,link' @${X_PACKAGE_PKGDIR}/${i}.tar.gz
+	tar -cf ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-${i}.mtree --format=mtree --options='!all,type,uname,gname,uid,gid,mode,size,link' @${X_PACKAGE_PKGDIR}/${i}.tar.gz || exit 1
 
 	echo "*** Done"
 done

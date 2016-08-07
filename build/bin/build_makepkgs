@@ -38,6 +38,6 @@ for i in ${X_PACKAGELIST}; do
 	    X_PACKAGE_ARCHSTR="${X_PACKAGE_ARCHSTR}" \
 	    X_PORTBUILD_DIR="${X_PORTBUILD_DIR}" \
 	    X_PORTBUILD_PLATFORM="${X_PORTBUILD_PLATFORM}" \
-	${X_PORTBUILD_DIR}/scripts/cross_build $i
+	${X_PORTBUILD_DIR}/scripts/cross_build $i || exit 1
 done
 
