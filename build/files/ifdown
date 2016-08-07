@@ -7,13 +7,8 @@
 . /etc/cfg/rc.conf
 
 netif=$1
-cmd=$2
 
 if [ "${netif}" = "" ]; then
-	echo "Usage: $0 [ifname]"
-	exit 127
-fi
-if [ "${cmd}" = "" ]; then
 	echo "Usage: $0 [ifname]"
 	exit 127
 fi
