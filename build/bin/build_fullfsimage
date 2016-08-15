@@ -9,7 +9,7 @@ CFGNAME=$1
 shift
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 # If X_BUILD_BASE_CFG is set, also load that in.
-if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+if [ -n "${X_BUILD_BASE_CFG}" ]; then
 	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
 fi
 

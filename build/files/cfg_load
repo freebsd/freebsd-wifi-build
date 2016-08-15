@@ -6,6 +6,6 @@
 
 echo "*** Restoring from ${CFG_PATH} .. "
 cd /
-dd if=${CFG_PATH} bs=${CFG_SIZE} | gunzip | cpio -iudv || exit 1
+dd if=${CFG_PATH} bs=${CFG_SIZE} count=1 | gunzip | cpio -iudv || exit 1
 
 echo "*** Completed."

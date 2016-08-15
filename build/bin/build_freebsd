@@ -31,7 +31,7 @@ shift
 
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 # If X_BUILD_BASE_CFG is set, also load that in.
-if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+if [ -n "${X_BUILD_BASE_CFG}" ]; then
 	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
 fi
 
@@ -40,7 +40,7 @@ fi
 
 test -e ${USER_SETTINGS} && . ${USER_SETTINGS}
 
-if [ "x${X_SETX_DEBUG}" = "xYES" ]; then
+if [ "${X_SETX_DEBUG}" = "YES" ]; then
   set -x
 fi
 
@@ -52,7 +52,7 @@ mkdir -p ${X_DESTDIR} || exit 1
 # XXX double-check this works, especially with the escaping and parameter list
 # stuff.
 X_LOCAL_TOOL_DIRS=""
-if [ "x${LOCAL_TOOL_DIRS}" != "x" ]; then
+if [ -n "${LOCAL_TOOL_DIRS}" ]; then
 	X_LOCAL_TOOL_DIRS="LOCAL_TOOL_DIRS=\"${LOCAL_TOOL_DIRS}\""
 fi
 
@@ -64,7 +64,7 @@ echo "" > ${X_DESTDIR}/../../src.conf.${BUILDNAME}
 echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 # Stuff for AP builds
-if [ "x${X_SKIP_AP_STUFF}" = "xYES" ]; then
+if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_KERBEROS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
@@ -81,10 +81,10 @@ fi
 # For now, AP builds get MALLOC_PRODUCTION, but full-root builds
 # don't.
 
-if [ "x${X_SKIP_AP_STUFF}" = "xYES" ]; then
+if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo "MALLOC_PRODUCTION=" >> ${X_DESTDIR}/../make.conf.${BUILDNAME}
 fi
-if [ "x$X_SKIP_MORE_STUFF" = "xYES" ]; then
+if [ "$X_SKIP_MORE_STUFF" = "YES" ]; then
 	echo 'WITHOUT_GAMES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_DOCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_MAN="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
@@ -110,7 +110,7 @@ if [ "x${X_DTS_FILE}" != "x" ]; then
 	X_FDT_DTS_FILE="FDT_DTS_FILE=${X_DTS_FILE}"
 fi
 
-while [ "x$1" != "x" ]; do
+while [ -n "$1" ]; do
 	echo "*** Stage		: $1"
 	if [ "$1" = "installworld" ]; then
 		mkdir -p ${X_DESTDIR}/usr/local/bin/
@@ -133,7 +133,7 @@ while [ "x$1" != "x" ]; do
 	# Always set it for world builds; don't set it for kernel builds
 	X_TARGET_CPUTYPE="TARGET_CPUTYPE=${TARGET_CPUTYPE}"
 	if [ "$1" = "buildkernel" -o "$1" = "installkernel" ]; then
-		if [ "x${KERN_NO_TARGET_CPUTYPE}" = "xyes" ]; then
+		if [ "${KERN_NO_TARGET_CPUTYPE}" = "yes" ]; then
 			X_TARGET_CPUTYPE=""
 		fi
 	fi
@@ -144,8 +144,13 @@ while [ "x$1" != "x" ]; do
 		BUILD_FLAGS=""
 	fi
 
+	if [ "${TARGET_CROSS_TOOLCHAIN}" != "" ]; then
+		X_CROSS_TOOLCHAIN="CROSS_TOOLCHAIN=${TARGET_CROSS_TOOLCHAIN}"
+	fi
+
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
+	    ${X_CROSS_TOOLCHAIN}				\
 	    TARGET=${TARGET}					\
 	    TARGET_ARCH=${TARGET_ARCH}				\
 	    ${X_TARGET_CPUTYPE}					\

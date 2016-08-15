@@ -10,7 +10,7 @@ shift
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 
 # If X_BUILD_BASE_CFG is set, also load that in.
-if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+if [ -n "${X_BUILD_BASE_CFG}" ]; then
 	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
 fi
 
@@ -36,7 +36,7 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
 
 # If this is a carambola we can also create a single image with both the kernel and
 # filesystem, to make flashing more efficient.
-if [ "x${X_UBOOT_KERNROOTIMG}" = "xYES" ] ; then
+if [ "${X_UBOOT_KERNROOTIMG}" = "YES" ] ; then
   X_FLASH=${X_TFTPBOOT}/${CFGNAME}.flashinst.img
   (
     dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync || exit 1
