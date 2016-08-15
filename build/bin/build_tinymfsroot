@@ -10,7 +10,7 @@ shift
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 
 # If X_BUILD_BASE_CFG is set, also load that in.
-if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+if [ -n "${X_BUILD_BASE_CFG}" ]; then
 	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
 fi
 
@@ -326,7 +326,7 @@ cat ${X_BASEDIR}/files/rc.conf | sed "s|@DEF_ETH@|${X_CFG_DEFAULT_ETHER}|" \
 ${INSTALL_DEF_FILE} ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_FSROOT}/c/etc/cfg/
 
 # kernel modules - if required
-if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
+if [ "${MFSROOT_INC_MODULES}" = "YES" ]; then
 	echo "*** Including modules.."
 
 	for i in ${MFSROOT_INC_MODULE_LIST}; do

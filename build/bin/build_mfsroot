@@ -11,7 +11,7 @@ CFGNAME=$1
 shift
 . ${SCRIPT_DIR}/../cfg/${CFGNAME} || exit 1
 # If X_BUILD_BASE_CFG is set, also load that in.
-if [ "x${X_BUILD_BASE_CFG}" != "x" ]; then
+if [ -n "${X_BUILD_BASE_CFG}" ]; then
 	. ${SCRIPT_DIR}/../cfg/base/${X_BUILD_BASE_CFG} || exit 1
 fi
 
@@ -257,6 +257,12 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/telnet ${X_STAGING_FSROOT}/usr/bin/
 #install ${X_DESTDIR}/usr/lib/libcom_err.so.5 ${X_STAGING_FSROOT}/usr/lib
 #install ${X_DESTDIR}/usr/lib/libroken.so.11 ${X_STAGING_FSROOT}/usr/lib
 
+#usb
+if [ "${X_MFS_USB}" == "yes" ]; then
+	${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/usbconfig ${X_STAGING_FSROOT}/usr/sbin/
+	${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libusb.so.3 ${X_STAGING_FSROOT}/usr/lib/
+fi
+
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/inetd ${X_STAGING_FSROOT}/usr/sbin/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libwrap.so.6 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/inetd.conf ${X_STAGING_FSROOT}/c/etc/
@@ -372,7 +378,7 @@ cat ${X_BASEDIR}/files/ttys | sed "s|@DEF_TTY@|${X_CFG_DEFAULT_TTY}|" \
 ${INSTALL_DEF_FILE} ${X_STAGING_TMPDIR}/ttys ${X_STAGING_FSROOT}/c/etc/
 
 # kernel modules - if required
-if [ "x${MFSROOT_INC_MODULES}" = "xYES" ]; then
+if [ "${MFSROOT_INC_MODULES}" = "YES" ]; then
 	echo "*** Including modules.."
 
 	for i in ${MFSROOT_INC_MODULE_LIST}; do
