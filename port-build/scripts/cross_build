@@ -1,0 +1,98 @@
+#!/bin/sh
+
+set -e
+
+SCRIPT_NAME="`basename $0`"
+SCRIPT_DIR="`dirname $0`"
+CUR_DIR="`pwd`"
+
+# need a root directory!
+if [ "x${X_PACKAGE_ROOTDIR}" = "x" ]; then
+	echo "ERROR: need X_PACKAGE_ROOTDIR defined (for rootfs)."
+	exit 1
+fi
+
+. ${SCRIPT_DIR}/cross_build.subr
+
+# For now, let's just do this in one big hit, but
+# later on we should automate it somewhat.
+
+# Need a port basedir
+if [ "x${X_PORTBUILD_DIR}" = "x" ]; then
+	echo "ERROR: need X_PORTBUILD_DIR defined."
+	exit 1
+fi
+
+# And, need a target platform
+if [ "x${X_PORTBUILD_PLATFORM}" = "x" ]; then
+	echo "ERROR: need X_PORTBUILD_PLATFORM defined."
+	exit 1
+fi
+
+# Verify this is a platform we know about
+if [ "${X_PORTBUILD_PLATFORM}" != "mips" ]; then
+	echo "ERROR: for now, we only support mips."
+	exit 1
+fi
+
+# .. and distfiles
+if [ "x${X_PACKAGE_DISTFILE_DIR}" = "x" ]; then
+	echo "ERROR: need X_PACKAGE_DISTFILE_DIR defined."
+	exit 1
+fi
+
+# .. and a build artefacts directory for the given platform
+if [ "x${X_PACKAGE_BUILDROOT_DIR}" = "x" ]; then
+	echo "ERROR: need X_PACKAGE_BUILDROOT_DIR defined."
+	exit 1
+fi
+
+X_PORTBUILD_PORT=$1
+shift
+
+port_incplatform
+port_incrules
+
+runcmd()
+{
+	case $1 in
+		'clean')
+			port_clean
+		;;
+		'fetch')
+			port_fetch
+		;;
+		'unpack')
+			port_unpack
+		;;
+		'patch')
+			port_patch
+		;;
+		'configure')
+			port_configure
+		;;
+		'build')
+			port_build
+		;;
+		'staging')
+			port_staging
+		;;
+		'package')
+			port_package
+		;;
+		*)
+			echo "Unknown command ($1)"
+			exit 1
+		;;
+	esac
+}
+
+if [ "x$1" = "x" ]; then
+	CMDLIST="clean unpack patch configure build staging package"
+else
+	CMDLIST="$*"
+fi
+
+for i in ${CMDLIST}; do
+	runcmd ${i}
+done

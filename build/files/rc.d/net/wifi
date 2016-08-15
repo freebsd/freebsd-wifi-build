@@ -58,7 +58,7 @@ netif_wifi_createargs1="`get_if_var $ifname netif_IF_wifi_createargs1 ''`"
 netif_wifi_createargs2="`get_if_var $ifname netif_IF_wifi_createargs2 ''`"
 netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
-netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel 6:ht/20`"
+netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel ''`"
 netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
 
 # The hostap options are handled in the hostapd config file routine.
@@ -80,6 +80,10 @@ case $cmd in
 			'ibss')
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
 				    wlanmode ibss bssid
+			;;
+			'sta')
+				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
+				    wlanmode sta -bgscan -powersave
 			;;
 			*)
 				echo "*** ${ifname}: unknown wifi mode '${netif_wifi_mode}'"
@@ -118,6 +122,11 @@ case $cmd in
 				wpa_supplicant -B -P /var/run/wpa_supplicant.${netif_name}.pid -i ${netif_name} -c /var/run/wpa_supplicant.${netif_name}.conf || exit 1
 				sleep 1
 				;;
+			'sta')
+				generate_wpa_cfg_sta ${netif_name} || exit 1
+				wpa_supplicant -B -P /var/run/wpa_supplicant.${netif_name}.pid -i ${netif_name} -c /var/run/wpa_supplicant.${netif_name}.conf || exit 1
+				sleep 1
+				;;
 			'ibss-open')
 				# Cheat for now; just bring it up and let net80211
 				# take care of it.
@@ -131,8 +140,8 @@ case $cmd in
 		if [ "x${netif_addrtype}" = "xstatic" ]; then
 			ifconfig ${netif_name} inet ${netif_ipv4_address} \
 			    netmask ${netif_ipv4_netmask}
-		elif [ "x${netif_addrtype}" = "xdhcp" ]; then
-			dhclient -b ${netif_name}
+		elif [ "${netif_addrtype}" = "dhcp" ]; then
+			dhclient -b ${netif_name} &
 		fi
 		echo "*** Interface: ${ifname}: done"
 		exit 0
@@ -151,7 +160,11 @@ case $cmd in
 				kill `cat /var/run/wpa_supplicant.${netif_name}.pid`
 				sleep 1
 			;;
-
+			'sta')
+				echo "*** Terminating wpa_supplicant.."
+				kill `cat /var/run/wpa_supplicant.${netif_name}.pid`
+				sleep 1
+			;;
 		esac
 
 		ifconfig ${netif_name} down

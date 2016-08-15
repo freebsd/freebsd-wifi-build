@@ -38,9 +38,6 @@ mkdir -p ${X_STAGING_TMPDIR}
 # ok, let's just populate the whole staging root with the installed root
 rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 
-# and put the metalog somewhere.
-# cp ${X_DESTDIR}/METALOG ${X_STAGING_METALOG}
-
 # .. now, kernel; that's living elsewhere?
 
 # TODO:
@@ -68,6 +65,6 @@ ${INSTALL_PROG} -m 644 -o root -g wheel ${X_STAGING_TMPDIR}/rc.conf ${X_STAGING_
 ${INSTALL_PROG} -m 755 -o root -g wheel ${X_BASEDIR}/files.full/autosize ${X_STAGING_FSROOT}/etc/rc.d/
 
 # Finally, assemble the new metalog from these two
-${SCRIPT_DIR}/filter.pl ${X_DESTDIR}/METALOG ${X_STAGING_METALOG_TMP} ${X_STAGING_METALOG}
+${SCRIPT_DIR}/filter.pl ${X_DESTDIR}/METALOG ${X_STAGING_METALOG_TMP} ${X_STAGING_METALOG_MFSROOT}
 
 echo "**** Done."

@@ -3,13 +3,16 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin ; export PATH
 
 # mount a small /etc, /var and /tmp
+echo "*** Mounting /tmp, /var, /etc ..."
 mount_mfs -s 1m md /tmp
 mount_mfs -s 1m md /var
 mount_mfs -s 1m md /etc
 
+echo "*** Copying /c/etc -> /etc ..."
 # copy the contents of /c/etc into /etc; including /etc/rc2
 cp -a /c/etc/ /etc
 
 ln -s /usr/share/misc/termcap /etc/
 
+echo "*** Starting rc2 ..."
 exec /etc/rc2

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+case $1 in
+	'start')
+		if [ "${inetd_enable}" = "NO" ]; then
+			exit 0
+		fi
+		/usr/sbin/inetd ${inetd_cmd_options} || exit 127
+		exit 0
+		;;
+	'stop')
+		kill `cat /var/run/inetd.pid` || exit 127
+		exit 0
+		;;
+	*)
+		echo "$0: start|stop"
+		exit 127
+		;;
+esac
+
+exit 0

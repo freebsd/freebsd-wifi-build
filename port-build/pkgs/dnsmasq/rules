@@ -1,0 +1,6 @@
+PKGNAME=dnsmasq
+PKGVERSION=2.76
+PKGREVISION=1
+PKGDISTFILE=www.thekelleys.org.uk/dnsmasq/dnsmasq-2.76.tar.xz
+PKGWORKSUBDIR=dnsmasq-2.76
+PKG_PRE_BUILD_PATCHLIST="patch-Makefile"

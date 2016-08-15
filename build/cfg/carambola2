@@ -14,7 +14,7 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif ipfw"
+MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif if_tap libalias ipfw ipfw_nat ipfw_nptv6"
 
 # Netboot
 NETBOOT_KERNEL="YES"
@@ -35,7 +35,7 @@ X_FSIMAGE_SUFFIX=".ulzma"
 # should be run when building
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
 
 # Build a contiguous flash image
 X_UBOOT_KERNROOTIMG="YES"
@@ -43,3 +43,5 @@ X_UBOOT_KERNROOTIMG="YES"
 # Configuration file overrides
 X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-carambola2"
+
+X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"

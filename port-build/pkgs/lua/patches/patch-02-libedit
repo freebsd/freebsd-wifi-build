@@ -1,0 +1,13 @@
+--- src/lua.c.orig	2016-07-26 16:11:19.546029000 -0700
++++ src/lua.c	2016-07-26 16:11:57.973583000 -0700
+@@ -77,8 +77,8 @@
+ 
+ #if defined(LUA_USE_READLINE)	/* { */
+ 
+-#include <readline/readline.h>
+-#include <readline/history.h>
++#include <edit/readline/readline.h>
++#include <edit/readline/history.h>
+ #define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
+ #define lua_saveline(L,line)	((void)L, add_history(line))
+ #define lua_freeline(L,b)	((void)L, free(b))

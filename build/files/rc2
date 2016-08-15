@@ -43,12 +43,24 @@ echo "*** Default password/login databases .."
 /usr/sbin/pwd_mkdb /etc/master.passwd
 /usr/bin/cap_mkdb /etc/login.conf
 
+# sysctl
+echo "*** Customising sysctl .."
+/etc/rc.d/base/sysctl start
+
 # Start network
 echo "*** Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
 
-echo "*** inetd"
-/usr/sbin/inetd
+# run cron/inetd as default
+/etc/rc.d/srv/cron start
+/etc/rc.d/srv/inetd start
+
+# Start firewall; needs networking up
+/etc/rc.d/base/firewall start
+/etc/rc.d/base/routing start
+
+# Start services
+/etc/rc.d/base/srv start
 
 echo "*** Done!"
 

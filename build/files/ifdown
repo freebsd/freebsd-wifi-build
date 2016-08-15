@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Start/stop an interface as appropriate.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+netif=$1
+
+if [ "${netif}" = "" ]; then
+	echo "Usage: $0 [ifname]"
+	exit 127
+fi
+
+type=`get_if_var ${netif} netif_IF_type`
+/etc/rc.d/net/${type} stop ${netif} || exit 1
+exit 0

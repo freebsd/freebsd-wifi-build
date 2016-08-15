@@ -1,0 +1,14 @@
+PKGNAME=dropbear
+PKGVERSION=2016.73
+PKGREVISION=1
+PKGDISTFILE=https://matt.ucc.asn.au/dropbear/releases/dropbear-2016.73.tar.bz2
+PKGWORKSUBDIR=dropbear-2016.73
+USE_CONFIGURE=YES
+PKG_MAKE_BUILD_FLAGS='MULTI=1'
+PKG_INSTALL_BUILD_FLAGS='MULTI=1'
+
+# I can't seem to put PACKAGES="" into the build_flags variables above; it
+# doesn't get expanded right when it gets handed to gmake and terrible things
+# happen.
+
+PKG_PRE_BUILD_PATCHLIST="patch-Makefile.in"

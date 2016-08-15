@@ -25,7 +25,7 @@ X_BASEDIR=${SCRIPT_DIR}/../
 # Configure INSTALL; to use the FreeBSD install program from -10
 # and -head that knows about mtree updates and non-root installs.
 
-INSTALL_PROG="install -U -M ${X_STAGING_METALOG} -D ${X_STAGING_FSROOT}"
+INSTALL_PROG="install -U -M ${X_STAGING_METALOG_MFSROOT} -D ${X_STAGING_FSROOT}"
 
 INSTALL_DEF_BIN="${INSTALL_PROG} -o root -g wheel -m 0755"
 INSTALL_SUID_BIN="${INSTALL_PROG} -o root -g wheel -m 4711"
@@ -40,6 +40,8 @@ chflags -R noschg ${X_STAGING_FSROOT}
 rm -rf ${X_STAGING_FSROOT}
 rm -rf ${X_STAGING_TMPDIR}
 rm  -f ${X_STAGING_METALOG}
+rm  -f ${X_STAGING_METALOG_MFSROOT}
+rm  -f ${X_STAGING_METALOG_TMP}
 
 echo "*** Creating new filesystem..."
 mkdir -p ${X_STAGING_FSROOT}
@@ -49,11 +51,15 @@ mkdir -p ${X_STAGING_TMPDIR}
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/dropbear
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/cfg
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/cron.d
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/base
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/net
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/rc.d/srv
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/pam.d
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/c/etc/state
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/etc
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/lib
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/bin
@@ -68,9 +74,11 @@ ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/dev
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/tmp
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/mnt
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/proc
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/root
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/var
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/sbin
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/libexec
+${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/libexec/resolvconf
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/usr
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/usr/libexec
 ${INSTALL_DEF_DIR} ${X_STAGING_FSROOT}/usr/lib
@@ -129,6 +137,7 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/hostname ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/mkdir ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/chmod ${X_STAGING_FSROOT}/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/hexdump ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/touch ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/more ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_LINK} /usr/bin/more ${X_STAGING_FSROOT}/usr/bin/less
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/nc ${X_STAGING_FSROOT}/usr/bin/
@@ -142,19 +151,24 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/tput ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_SUID_BIN} ${X_DESTDIR}/usr/bin/passwd ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/chown ${X_STAGING_FSROOT}/usr/sbin/
 
+# cron
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/cron ${X_STAGING_FSROOT}/usr/sbin/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/crontab ${X_STAGING_FSROOT}/c/etc/
+
+# syslog / logging
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/syslogd ${X_STAGING_FSROOT}/usr/sbin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/logger ${X_STAGING_FSROOT}/usr/bin/
+
 # PCI tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/pciconf ${X_STAGING_FSROOT}/usr/sbin/
 # this file is huge, over 200kb compressed
 #${INSTALL_DEF_FILE} ${X_DESTDIR}/usr/share/misc/pci_vendors ${X_STAGING_FSROOT}/usr/share/misc/
 
+# GPIO tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/gpioctl ${X_STAGING_FSROOT}/usr/sbin/
 
 # editors are useful, honest!
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/ee ${X_STAGING_FSROOT}/usr/bin/
-
-# dhclient is critical
-${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient ${X_STAGING_FSROOT}/sbin
-${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient-script ${X_STAGING_FSROOT}/sbin
 
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/gzip ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_LINK} /usr/bin/gzip ${X_STAGING_FSROOT}/usr/bin/gunzip
@@ -183,6 +197,26 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libxo.so.0 ${X_STAGING_FSROOT}/lib/
 
 # libraries for wlanstats, athstats
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libprivatebsdstat.so.1 ${X_STAGING_FSROOT}/usr/lib/
+
+# dhclient is critical
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient ${X_STAGING_FSROOT}/sbin/dhclient
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/dhclient-script ${X_STAGING_FSROOT}/sbin/dhclient-script
+${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/dhclient.conf ${X_STAGING_FSROOT}/c/etc
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/cmp ${X_STAGING_FSROOT}/usr/bin/cmp
+${INSTALL_DEF_BIN} ${X_DESTDIR}/sbin/resolvconf ${X_STAGING_FSROOT}/sbin/resolvconf
+${INSTALL_DEF_BIN} ${X_DESTDIR}/libexec/resolvconf/libc ${X_STAGING_FSROOT}/libexec/resolvconf/libc
+
+# network state tracking / management
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/state/openvpn-up ${X_STAGING_FSROOT}/c/etc/state/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/state/openvpn-down ${X_STAGING_FSROOT}/c/etc/state/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/dhclient-enter-hooks ${X_STAGING_FSROOT}/c/etc/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/dhclient-exit-hooks ${X_STAGING_FSROOT}/c/etc/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/ifup ${X_STAGING_FSROOT}/sbin/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/ifdown ${X_STAGING_FSROOT}/sbin/
+
+# time management
+${INSTALL_DEF_BIN} ${X_DESTDIR}/bin/date ${X_STAGING_FSROOT}/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/ntpdate ${X_STAGING_FSROOT}/usr/sbin/
 
 # ath tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/ath_ee_v14_print ${X_STAGING_FSROOT}/usr/bin/
@@ -330,7 +364,6 @@ ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/passwd ${X_STAGING_FSROOT}/c/etc/
 # XXX perms?
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/master.passwd ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/group ${X_STAGING_FSROOT}/c/etc/
-${INSTALL_DEF_FILE} ${X_BASEDIR}/files/wpa_supplicant.conf ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/manifest ${X_STAGING_FSROOT}/c/etc/cfg/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/rc.conf.default ${X_STAGING_FSROOT}/c/etc/
 
@@ -345,12 +378,24 @@ ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.subr ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.hostapd ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.wpa_ibss ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/net ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/srv ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/sysctl ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/firewall ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/routing ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/ether ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/bridge ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/ath ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/wifi ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/vlan ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/etherswitch ${X_STAGING_FSROOT}/c/etc/rc.d/net/
+
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/dropbear ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/inetd ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/dnsmasq ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/cron ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/ntpdate ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/srv/openvpn ${X_STAGING_FSROOT}/c/etc/rc.d/srv/
 
 # config save/load scripts
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/cfg_save ${X_STAGING_FSROOT}/bin

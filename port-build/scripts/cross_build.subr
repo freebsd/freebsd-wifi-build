@@ -1,0 +1,142 @@
+#!/bin/sh
+
+# private functions
+
+# public functions
+
+port_incplatform()
+{
+	# XXX verify it exists first
+	. ${X_PORTBUILD_DIR}/scripts/cross_build.${X_PORTBUILD_PLATFORM}
+}
+
+port_incrules()
+{
+	# Verify the port config exists
+	if [ ! -e "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules" ]; then
+		echo "ERROR: couldn't find ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules"
+		exit 1
+	fi
+
+	. ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules
+}
+
+port_fetch()
+{
+
+	if [ "x${PKGDISTFILE}" = "x" ]; then
+		echo "ERROR: need PKGDISTFILE to fetch"
+		exit 1
+	fi
+
+	# XXX TODO: eliminate the cd
+	mkdir -p "${X_PACKAGE_DISTFILE_DIR}"
+	( cd "${X_PACKAGE_DISTFILE_DIR}" && fetch ${PKGDISTFILE} )
+}
+
+port_clean()
+{
+	echo "Cleaning.."
+	rm -rf "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+}
+
+port_unpack()
+{
+	local X_PKGFILE="`basename ${PKGDISTFILE}`"
+	echo "Unpacking..."
+	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+	( cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
+}
+
+port_patch()
+{
+	echo "Patching.."
+	for i in ${PKG_PRE_BUILD_PATCHLIST}; do
+		echo "*** ${i}"
+		cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}"
+	done
+}
+
+port_configure()
+{
+	if [ "x${USE_CONFIGURE}" != "xYES" ]; then
+		echo "Skipping configure; not needed"
+		return
+	fi
+	echo "Running configure ${CONFIGURE_HOSTFLAGS}"
+
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+
+	# Setup the build environment
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
+	    ./configure ${X_PKG_CONFIGURE_HOSTFLAGS} ${PKG_MAKE_CONFIGURE_FLAGS}
+}
+
+port_build()
+{
+	echo "Building ${CONFIGURE_HOSTFLAGS}"
+
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+
+	# For now, hard-code gmake. Later on we'll allow this to be
+	# something other than gmake as appropriate.
+
+	# Setup the build environment
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
+	gmake ${PKG_MAKE_BUILD_FLAGS}
+}
+
+port_staging()
+{
+	echo "Staging install.."
+
+	# For now, this assumes DESTDIR is obeyed.
+	# Obviously this isn't always going to be the case, but for
+	# ./configure based bits it should work.
+	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
+	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+}
+
+port_package()
+{
+	echo "Creating package!"
+	mkdir -p "${X_PACKAGE_PKGDIR}"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+	tar zcpvf "${X_PACKAGE_PKGDIR}/${X_PORTBUILD_PORT}.tar.gz" "@${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/pkg-contents"
+}
