@@ -672,7 +672,10 @@ static int check_options(void)
 
 			if (kernel_len + rootfs_info.file_size >
 			    fw_max_len - sizeof(struct fw_header)) {
-				ERR("images are too big");
+				ERR("images are too big (%d, %d, %d)",
+				    kernel_len,
+				    rootfs_info.file_size,
+				    fw_max_len - sizeof(struct fw_header));
 				return -1;
 			}
 		} else {

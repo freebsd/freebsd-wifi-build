@@ -144,8 +144,13 @@ while [ -n "$1" ]; do
 		BUILD_FLAGS=""
 	fi
 
+	if [ "${TARGET_CROSS_TOOLCHAIN}" != "" ]; then
+		X_CROSS_TOOLCHAIN="CROSS_TOOLCHAIN=${TARGET_CROSS_TOOLCHAIN}"
+	fi
+
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
+	    ${X_CROSS_TOOLCHAIN}				\
 	    TARGET=${TARGET}					\
 	    TARGET_ARCH=${TARGET_ARCH}				\
 	    ${X_TARGET_CPUTYPE}					\
