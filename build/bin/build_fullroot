@@ -67,4 +67,6 @@ ${INSTALL_PROG} -m 755 -o root -g wheel ${X_BASEDIR}/files.full/autosize ${X_STA
 # Finally, assemble the new metalog from these two
 ${SCRIPT_DIR}/filter.pl ${X_DESTDIR}/METALOG ${X_STAGING_METALOG_TMP} ${X_STAGING_METALOG_MFSROOT}
 
+# XXX TODO: package installation
+
 echo "**** Done."

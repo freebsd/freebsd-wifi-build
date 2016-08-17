@@ -16,6 +16,13 @@ fi
 # include the config variable generation code
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
+# XXX TODO: the metalog locations for the package builds are indexed
+# not by base-name, but by architecture.  So, mips_ap == mips as far
+# as this is concerned.
+#
+# So, don't do package installing for now.
+cp -f ${X_STAGING_METALOG_MFSROOT} ${X_STAGING_METALOG}
+
 echo "*** Running makefs to build image .. "
 echo "*** from ${X_STAGING_FSROOT} .."
 mkdir -p ${X_IMGBASE} || exit 1
