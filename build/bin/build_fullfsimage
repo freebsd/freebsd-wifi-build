@@ -26,4 +26,5 @@ cp -f ${X_STAGING_METALOG_MFSROOT} ${X_STAGING_METALOG}
 echo "*** Running makefs to build image .. "
 echo "*** from ${X_STAGING_FSROOT} .."
 mkdir -p ${X_IMGBASE} || exit 1
-(cd ${X_STAGING_FSROOT} && makefs -D -t ffs -M ${X_FULL_FSSIZE} -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FULL_FLAGS} -f ${X_FULL_FSINODES} ${X_FULL_FSIMAGE} ${X_STAGING_METALOG}) || exit 1
+(cd ${X_STAGING_FSROOT} && makefs -D -t ffs -M ${X_FULL_FSSIZE} -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FULL_FLAGS} -f ${X_FULL_FSINODES} -F ${X_STAGING_METALOG} ${X_FULL_FSIMAGE} .) || exit 1
+

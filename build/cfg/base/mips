@@ -4,7 +4,7 @@ BUILDNAME=mips
 TARGET=mips
 TARGET_ARCH=mips
 TARGET_CPUTYPE=mips32
-LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/wlanwatch tools/bsdbox"
-LOCAL_TOOL_DIRS="tools/bsdbox/"
+
+LOCAL_DIRS="tools/bsdbox"
 
 X_PORTBUILD_PLATFORM="mips"
