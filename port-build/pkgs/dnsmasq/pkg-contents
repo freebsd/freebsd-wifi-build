@@ -1,4 +1,9 @@
 #mtree
+c uid=0 gid=0 mode=755 type=dir
+c/etc uid=0 gid=0 mode=755 type=dir
+c/etc/rc.d uid=0 gid=0 mode=755 type=dir
+c/etc/rc.d/srv uid=0 gid=0 mode=755 type=dir
+c/etc/rc.d/srv/dnsmasq uid=0 gid=0 mode=0755 type=file content=c/etc/rc.d/srv/dnsmasq
 usr uid=0 gid=0 mode=755 type=dir
 usr/local uid=0 gid=0 mode=0755 type=dir
 usr/local/sbin uid=0 gid=0 mode=0755 type=dir
