@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# XXX ideally these will be installed as part of the package;
+# I'll do that later.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# dropbear_cmd_options
+# dropbear_listen_address="ip:port"
+dropbear_cmd_options="-R"
+
+
+case $1 in
+	'start')
+		# For now, just support one listen address; should
+		# support multiple entries later.
+		if [ "${dropbear_listen_address}" != "" ]; then
+			dropbear_listen_address="-p ${dropbear_listen_address}"
+		fi
+		/usr/local/sbin/dropbear ${dropbear_cmd_options} ${dropbear_listen_address} || exit 127
+		exit 0
+		;;
+	'stop')
+		kill `cat /var/run/dropbear.pid` || exit 127
+		exit 0
+		;;
+	*)
+		echo "$0: start|stop"
+		exit 127
+		;;
+esac
+
+exit 0
