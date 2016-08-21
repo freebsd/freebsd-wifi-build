@@ -21,12 +21,34 @@ port_incrules()
 	. ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/rules
 }
 
+port_checksum()
+{
+	local X_PKGFILE="`basename ${PKGDISTFILE}`"
+	local X_CKSUM
+
+	X_CKSUM="`sha512 -q ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} || true`"
+
+	if [ "${X_CKSUM}" != "${PKGDISTFILE_SUM_SHA512}" ]; then
+		echo "ERROR: checksum on ${X_PKGFILE} is incorrect."
+		return 1
+	fi
+	echo "NOTICE: checksum on ${X_PKGFILE} is correct."
+	return 0
+}
+
 port_fetch()
 {
 
 	if [ "x${PKGDISTFILE}" = "x" ]; then
 		echo "ERROR: need PKGDISTFILE to fetch"
 		exit 1
+	fi
+
+	# Check if the checksum matches
+	port_checksum
+	if [ $? = 0 ]; then
+		echo "*** Skipping fetch; file exists and matches checksum"
+		return 0
 	fi
 
 	# XXX TODO: eliminate the cd
@@ -39,11 +61,16 @@ port_clean()
 	echo "Cleaning.."
 	rm -rf "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
 }
-
 port_unpack()
 {
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
 	echo "Unpacking..."
+	port_checksum
+	if [ $? != 0 ]; then
+		echo "ERROR: failed checksum!"
+		return 1
+	fi
+
 	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
 	( cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
 }
@@ -131,6 +158,20 @@ port_staging()
 	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
 	    LDFLAGS="${X_PKG_LDFLAGS}" \
 	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+}
+
+port_files()
+{
+	echo "Adding local files.."
+	# If anything is in files/, then we copy it verbatim over into
+	# the staging directory; so then the package step can bring them
+	# in via the pkg-contents file.
+	if [ ! -d "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/files/" ]; then
+		echo ".. no local files, skipping"
+		return 0
+	fi
+	cp -vpr "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/files/" "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+	echo ".. done."
 }
 
 port_package()

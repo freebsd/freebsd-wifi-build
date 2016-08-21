@@ -1,3 +1,9 @@
+# mtree
+c uid=0 gid=0 mode=755 type=dir
+c/etc uid=0 gid=0 mode=755 type=dir
+c/etc/rc.d uid=0 gid=0 mode=755 type=dir
+c/etc/rc.d/srv uid=0 gid=0 mode=755 type=dir
+c/etc/rc.d/srv/openvpn uid=0 gid=0 mode=0755 type=file content=c/etc/rc.d/srv/openvpn
 ./usr type=dir uid=0 gid=0 mode=0755 time=1470258841.624663000 flags=none
 ./usr/local type=dir uid=0 gid=0 mode=0755 time=1470258841.951077000 flags=none
 ./usr/local/lib type=dir uid=0 gid=0 mode=0755 time=1470258841.951134000 flags=none

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+# set -e
 
 SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="`dirname $0`"
@@ -77,6 +77,9 @@ runcmd()
 		'staging')
 			port_staging
 		;;
+		'files')
+			port_files
+		;;
 		'package')
 			port_package
 		;;
@@ -88,7 +91,7 @@ runcmd()
 }
 
 if [ "x$1" = "x" ]; then
-	CMDLIST="clean unpack patch configure build staging package"
+	CMDLIST="clean unpack patch configure build staging files package"
 else
 	CMDLIST="$*"
 fi
