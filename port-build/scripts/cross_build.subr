@@ -160,6 +160,20 @@ port_staging()
 	gmake install ${PKG_INSTALL_BUILD_FLAGS} DESTDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
 }
 
+port_files()
+{
+	echo "Adding local files.."
+	# If anything is in files/, then we copy it verbatim over into
+	# the staging directory; so then the package step can bring them
+	# in via the pkg-contents file.
+	if [ ! -d "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/files/" ]; then
+		echo ".. no local files, skipping"
+		return 0
+	fi
+	cp -vpr "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/files/" "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
+	echo ".. done."
+}
+
 port_package()
 {
 	echo "Creating package!"
