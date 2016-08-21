@@ -2,6 +2,7 @@ PKGNAME=openvpn
 PKGVERSION=2.3.10
 PKGREVISION=1
 PKGDISTFILE=https://swupdate.openvpn.net/community/releases/openvpn-2.3.10.tar.gz
+PKGDISTFILE_SUM_SHA512=13f7cfb8e5a7485f930d13830691a937da40b4cc881c403ab613132cb94aba0a30b1727debdfa1b8d7d761b447ccbcf0d1c2d56ca82f6a6ce7e2eec9642fd13f
 PKGWORKSUBDIR=openvpn-2.3.10
 USE_CONFIGURE=YES
 PKG_MAKE_CONFIGURE_FLAGS="LZO_CFLAGS=-I${X_PACKAGE_BUILDROOT_DIR}/lzo2/staging/usr/local/include LZO_LIBS=${X_PACKAGE_BUILDROOT_DIR}/lzo2/staging/usr/local/lib/liblzo2.a"
