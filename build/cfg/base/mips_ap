@@ -15,4 +15,4 @@ X_SKIP_AP_STUFF="YES"
 X_PORTBUILD_PLATFORM="mips"
 
 # Example using cross toolchain for base system
-# TARGET_CROSS_TOOLCHAIN="mips-gcc"
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
