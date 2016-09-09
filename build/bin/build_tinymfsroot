@@ -194,7 +194,7 @@ ${INSTALL_SUID_BIN} ${X_DESTDIR}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin
 
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libelf.so.2 ${X_STAGING_FSROOT}/usr/lib/
 
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libpam.so.5 ${X_STAGING_FSROOT}/usr/lib
+${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libpam.so.6 ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libbsm.so.3 ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_deny.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_group.so ${X_STAGING_FSROOT}/usr/lib
@@ -266,7 +266,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/libexec/ld-elf.so.1 ${X_STAGING_FSROOT}/libexec
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libc.so.7 ${X_STAGING_FSROOT}/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib
-${INSTALL_DEF_LIB} ${X_DESTDIR}/lib//lib/lib80211.so.1 ${X_STAGING_FSROOT}/lib/
+${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/lib80211.so.1 ${X_STAGING_FSROOT}/lib/
 
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libgpio.so.0 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libxo.so.0 ${X_STAGING_FSROOT}/lib/
