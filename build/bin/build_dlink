@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SCRIPT_NAME="`basename $0`"
-SCRIPT_DIR="`dirname $0`"
+SCRIPT_DIR="$(dirname `realpath $0`)"
 CUR_DIR="`pwd`"
 
 # suck in the per-device options
