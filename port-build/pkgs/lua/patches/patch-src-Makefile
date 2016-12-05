@@ -11,9 +11,10 @@
  LIBS= -lm $(SYSLIBS) $(MYLIBS)
  
 -AR= ar rcu
+-RANLIB= ranlib
 +AR?=ar
 +ARFLAGS=rsu
- RANLIB= ranlib
++RANLIB?= ranlib
  RM= rm -f
  
 @@ -56,7 +57,7 @@
