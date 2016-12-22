@@ -16,10 +16,10 @@ mkdir -p /var/cron/tabs
 
 # XXX TODO: These should be configurable per-board
 wps_pin="16"
-wps_pin_setval="0"
+wps_pin_active="0"
 recovery=0
 
-if [ "$(gpioctl ${wps_pin})" -eq "${wps_pin_setval}" ]; then
+if [ "$(gpioctl ${wps_pin})" -eq "${wps_pin_active}" ]; then
 	recovery=1
 	echo "*** Not loading configuration files, in recovery mode .."
 else
