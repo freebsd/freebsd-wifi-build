@@ -14,12 +14,11 @@ mkdir -p /var/empty
 mkdir -p /var/cron
 mkdir -p /var/cron/tabs
 
-# XXX TODO: These should be configurable per-board
-wps_pin="16"
-wps_pin_active="0"
+. /etc/board.cfg || exit 1
+
 recovery=0
 
-if [ "$(gpioctl ${wps_pin})" -eq "${wps_pin_active}" ]; then
+if [ "${RECOVERY_PIN}" != "" ] && [ "$(gpioctl "${RECOVERY_PIN}")" -eq "${RECOVERY_PIN_ACTIVE}" ]; then
 	recovery=1
 	echo "*** Not loading configuration files, in recovery mode .."
 else
@@ -28,7 +27,7 @@ else
 fi
 
 # At this point a base configuration file exists in /etc/cfg/rc.conf.
-
+# Unless we're in recovery
 . /etc/rc.conf.default
 [ "${recovery}" -eq "0" ] && . /etc/cfg/rc.conf
 
