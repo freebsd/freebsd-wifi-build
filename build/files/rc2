@@ -14,13 +14,23 @@ mkdir -p /var/empty
 mkdir -p /var/cron
 mkdir -p /var/cron/tabs
 
-echo "*** Loading configuration files .."
-cfg_load
+# XXX TODO: These should be configurable per-board
+wps_pin="16"
+wps_pin_setval="0"
+recovery=0
+
+if [ "$(gpioctl ${wps_pin})" -eq "${wps_pin_setval}" ]; then
+	recovery=1
+	echo "*** Not loading configuration files, in recovery mode .."
+else
+	echo "*** Loading configuration files .."
+	cfg_load
+fi
 
 # At this point a base configuration file exists in /etc/cfg/rc.conf.
 
 . /etc/rc.conf.default
-. /etc/cfg/rc.conf
+[ "${recovery}" -eq "0" ] && . /etc/cfg/rc.conf
 
 echo "*** setting up hostname"
 /bin/hostname ${system_hostname}
