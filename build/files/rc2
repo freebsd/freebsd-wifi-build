@@ -14,11 +14,19 @@ mkdir -p /var/empty
 mkdir -p /var/cron
 mkdir -p /var/cron/tabs
 
-echo "*** Loading configuration files .."
-cfg_load
+. /etc/board.cfg || exit 1
+
+recovery=0
+
+if [ "${RECOVERY_PIN}" != "" ] && [ "$(gpioctl "${RECOVERY_PIN}")" -eq "${RECOVERY_PIN_ACTIVE}" ]; then
+	recovery=1
+	echo "*** Not loading configuration files, in recovery mode .."
+else
+	echo "*** Loading configuration files .."
+	cfg_load
+fi
 
 # At this point a base configuration file exists in /etc/cfg/rc.conf.
-
 . /etc/rc.conf.default
 . /etc/cfg/rc.conf
 
