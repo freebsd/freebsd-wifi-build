@@ -27,9 +27,8 @@ else
 fi
 
 # At this point a base configuration file exists in /etc/cfg/rc.conf.
-# Unless we're in recovery
 . /etc/rc.conf.default
-[ "${recovery}" -eq "0" ] && . /etc/cfg/rc.conf
+. /etc/cfg/rc.conf
 
 echo "*** setting up hostname"
 /bin/hostname ${system_hostname}
