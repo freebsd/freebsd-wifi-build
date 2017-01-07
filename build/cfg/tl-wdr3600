@@ -8,6 +8,9 @@ KERNCONF=TL-WDR4300
 BIN_CFG_PARTITION="/dev/map/cfg"
 BIN_CFG_SIZE="65536"
 
+RECOVERY_PIN="16"
+RECOVERY_PIN_ACTIVE="0"
+
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
 MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tap if_tun"
