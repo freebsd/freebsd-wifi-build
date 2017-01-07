@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SCRIPT_DIR="`dirname $0`"
+SCRIPT_DIR="$(dirname `realpath $0`)"
 
 MODULES_LIST=${MODULES_LIST:="ath ath_pci wlan wlan_acl wlan_amrr wlan_ccmp wlan_rssadapt wlan_tkip wlan_wep wlan_xauth bwi bwn mwl wi wpi iwn iwi iwnfw"}
 
