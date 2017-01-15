@@ -6,7 +6,7 @@ For example:
 
 1. Install various prerequisites
 
-    ${SUDO} pkg install fakeroot gmake bison dialog4ports git wget subversion fakeroot lzma uboot-mkimage libtool
+    ${SUDO} pkg install fakeroot gmake bison dialog4ports git wget subversion lzma uboot-mkimage libtool
 
 2. Create a working directory
 
