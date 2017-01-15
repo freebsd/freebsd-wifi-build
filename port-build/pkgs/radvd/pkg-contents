@@ -1,0 +1,6 @@
+# mtree
+./usr type=dir uid=0 gid=0 mode=0755 nlink=3 time=1484424574.390715000 flags=none
+./usr/local type=dir uid=0 gid=0 mode=0755 nlink=4 time=1484425109.069275000 flags=none
+./usr/local/sbin type=dir uid=0 gid=0 mode=0755 nlink=2 time=1484425109.055274000 flags=none
+./usr/local/sbin/radvd type=file uid=0 gid=0 mode=0755 nlink=1 size=109004 time=1484425109.055178000 flags=none
+./usr/local/sbin/radvdump type=file uid=0 gid=0 mode=0755 nlink=1 size=26704 time=1484425109.055302000 flags=none
