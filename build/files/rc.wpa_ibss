@@ -57,6 +57,7 @@ generate_wpa_cfg_sta()
 	local _wpa_cfg_tmp
 	local _prefix="/var/run"
 	local _wpa_key_mgmt _psk
+	local _wpa_hidden _wpa_ap_scan _wpa_scan_ssid
 
 	_ifname=$1
 
@@ -64,12 +65,24 @@ generate_wpa_cfg_sta()
 	_wpa_ssid=`get_if_var ${_ifname} netif_IF_wifi_sta_ssid FREEBSD_IBSS_ENCRYPT`
 	_wpa_passphrase=`get_if_var ${_ifname} netif_IF_wifi_sta_passphrase FREEBSD_PASSWORD`
 	_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_sta_key_mgmt UNSET`
+	_wpa_hidden=`get_if_var ${_ifname} netif_IF_wifi_sta_hidden NO`
+
+	if [ "${_wpa_hidden}" = "NO" ]; then
+		_wpa_ap_scan=""
+		_wpa_scan_ssid=""
+	else
+		_wpa_ap_scan="ap_scan=2"
+		_wpa_scan_ssid="scan_ssid=1"
+	fi
 
 	if [ "${_wpa_key_mgmt}" = "NONE" ]; then
 		_wpa_key_mgmt="key_mgmt=NONE"
 		_psk=""
-	else
+	elif [ "${_wpa_key_mgmt}" = "UNSET" ]; then
 		_wpa_key_mgmt=""
+		_psk="psk=\"${_wpa_passphrase}\""
+	else
+		_wpa_key_mgmt="key_mgmt=${_wpa_key_mgmt}"
 		_psk="psk=\"${_wpa_passphrase}\""
 	fi
 
@@ -89,11 +102,12 @@ generate_wpa_cfg_sta()
 	cat > ${_wpa_cfg_tmp} <<EOF
 # This is automatically generated!
 ctrl_interface=/var/run/wpa_supplicant.${_ifname}
-
+${_wpa_ap_scan}
 network={
 	ssid="${_wpa_ssid}"
 	${_wpa_key_mgmt}
 	${_psk}
+	${_wpa_scan_ssid}
 }
 EOF
 	mv ${_wpa_cfg_tmp} ${_wpa_cfg}
