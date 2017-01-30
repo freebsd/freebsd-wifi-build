@@ -91,7 +91,7 @@ runcmd()
 }
 
 if [ "x$1" = "x" ]; then
-	CMDLIST="clean unpack patch configure build staging files package"
+	CMDLIST="clean fetch unpack patch configure build staging files package"
 else
 	CMDLIST="$*"
 fi
