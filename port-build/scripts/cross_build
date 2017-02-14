@@ -30,10 +30,14 @@ if [ "x${X_PORTBUILD_PLATFORM}" = "x" ]; then
 fi
 
 # Verify this is a platform we know about
-if [ "${X_PORTBUILD_PLATFORM}" != "mips" ]; then
-	echo "ERROR: for now, we only support mips."
-	exit 1
-fi
+case "${X_PORTBUILD_PLATFORM}" in
+	mips|mipsel)
+		;;
+	*)
+		echo "ERROR: for now, we only support mips."
+		exit 1
+		;;
+esac
 
 # .. and distfiles
 if [ "x${X_PACKAGE_DISTFILE_DIR}" = "x" ]; then
