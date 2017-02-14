@@ -3,7 +3,7 @@
 # XXX This is the main thing provided by the caller
 X_ROOTDIR="${X_PACKAGE_ROOTDIR}"
 
-X_PKG_CPU_ARGS="-march=mipsel -msoft-float -Wa,-msoft-float"
+X_PKG_CPU_ARGS="-march=mips32 -EL -msoft-float -Wa,-msoft-float"
 X_PKG_INCS="-I${X_ROOTDIR}/usr/include"
 
 X_PKG_CROSS_COMPILE=mips-portbld-freebsd12.0
@@ -22,7 +22,7 @@ X_PKG_RANLIB=mips-freebsd-ranlib
 X_PKG_STRIP=mips-freebsd-strip
 
 
-X_PKG_CONFIGURE_HOSTFLAGS="--host=mips-portbld-freebsd12.0"
+X_PKG_CONFIGURE_HOSTFLAGS="--host=mipsel-portbld-freebsd12.0"
 
 # now run:
 # /configure --host=mips-portbld-freebsd12.0
