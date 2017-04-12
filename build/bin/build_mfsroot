@@ -241,6 +241,7 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/athratestats ${X_STAGING_FSROOT}/u
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/wlanstats ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/wlanwatch ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/wlanwds ${X_STAGING_FSROOT}/usr/bin/
 
 # login and pam
 ${INSTALL_SUID_BIN} ${X_DESTDIR}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin/
