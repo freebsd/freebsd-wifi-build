@@ -24,6 +24,7 @@ fi
 X_BASEDIR=${SCRIPT_DIR}/../
 
 INSTALL_PROG="install -U -M ${X_STAGING_METALOG_TMP} -D ${X_STAGING_FSROOT}"
+INSTALL_DIR="install -d -U -M ${X_STAGING_METALOG_TMP} -D ${X_STAGING_FSROOT}"
 
 echo "*** Deleting old file system.."
 ${INSTALL_PROG} -d ${X_STAGING_FSROOT}
@@ -52,6 +53,9 @@ rsync -arH ${X_DESTDIR}/ ${X_STAGING_FSROOT}
 # XXX TODO: label!
 echo "${X_ROOTFS_DEV} / ufs rw 1 1" > ${X_STAGING_TMPDIR}/fstab
 ${INSTALL_PROG} -m 644 -o root -g wheel  ${X_STAGING_TMPDIR}/fstab ${X_STAGING_FSROOT}/etc/
+${INSTALL_DIR} -m 755 -o root -g wheel ${X_STAGING_FSROOT}/usr/local/
+${INSTALL_DIR} -m 755 -o root -g wheel ${X_STAGING_FSROOT}/usr/local/bin/
+${INSTALL_DIR} -m 755 -o root -g wheel ${X_STAGING_FSROOT}/usr/local/share/
 
 # .. and default to autosize_enable=yes
 echo "autosize_enable=\"YES\"" > ${X_STAGING_TMPDIR}/rc.conf
