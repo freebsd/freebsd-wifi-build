@@ -10,3 +10,6 @@ LOCAL_TOOL_DIRS="tools/bsdbox/"
 
 # .. build with a bunch of things disabled.
 X_SKIP_AP_STUFF="YES"
+
+# Port build platform
+X_PORTBUILD_PLATFORM="mipsel"
