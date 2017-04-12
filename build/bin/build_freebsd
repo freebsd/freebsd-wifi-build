@@ -23,7 +23,7 @@
 # after Warner's "tbemd" build framework changes.
 
 SCRIPT_NAME="`basename $0`"
-SCRIPT_DIR="`dirname $0`"
+SCRIPT_DIR="$(dirname `realpath $0`)"
 CUR_DIR="`pwd`"
 
 CFGNAME=$1
@@ -66,6 +66,7 @@ echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 # Stuff for AP builds
 if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_KERBEROS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_AMD="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}

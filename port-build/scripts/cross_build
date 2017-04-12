@@ -3,7 +3,7 @@
 # set -e
 
 SCRIPT_NAME="`basename $0`"
-SCRIPT_DIR="`dirname $0`"
+SCRIPT_DIR="$(dirname `realpath $0`)"
 CUR_DIR="`pwd`"
 
 # need a root directory!
@@ -91,7 +91,7 @@ runcmd()
 }
 
 if [ "x$1" = "x" ]; then
-	CMDLIST="clean unpack patch configure build staging files package"
+	CMDLIST="clean fetch unpack patch configure build staging files package"
 else
 	CMDLIST="$*"
 fi

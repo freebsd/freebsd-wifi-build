@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SCRIPT_NAME="`basename $0`"
-SCRIPT_DIR="`dirname $0`"
+SCRIPT_DIR="$(dirname `realpath $0`)"
 CUR_DIR="`pwd`"
 
 # suck in the per-device options
@@ -316,6 +316,8 @@ ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc
 echo "# Configuration for: ${KERNCONF}" > ${X_STAGING_TMPDIR}/board.cfg
 echo "CFG_PATH=\"${BIN_CFG_PARTITION}\"" >> ${X_STAGING_TMPDIR}/board.cfg
 echo "CFG_SIZE=\"${BIN_CFG_SIZE}\"" >> ${X_STAGING_TMPDIR}/board.cfg
+echo "RECOVERY_PIN=\"${RECOVERY_PIN}\"" >> ${X_STAGING_TMPDIR}/board.cfg
+echo "RECOVERY_PIN_ACTIVE=\"${RECOVERY_PIN_ACTIVE}\"" >> ${X_STAGING_TMPDIR}/board.cfg
 
 ${INSTALL_DEF_BIN} ${X_STAGING_TMPDIR}/board.cfg ${X_STAGING_FSROOT}/c/etc
 
