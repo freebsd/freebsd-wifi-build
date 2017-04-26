@@ -1,0 +1,102 @@
+# mtree
+./usr type=dir uid=1001 gid=1001 mode=0755 nlink=3 time=1493171103.513906000 flags=none
+./usr/local type=dir uid=1001 gid=1001 mode=0755 nlink=9 time=1493171105.302570000 flags=none
+./usr/local/bin type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.304238000 flags=none
+./usr/local/bin/rc-status type=file uid=1001 gid=1001 mode=0755 nlink=1 size=67504 time=1493171105.304434000 flags=none
+./usr/local/etc type=dir uid=1001 gid=1001 mode=0755 nlink=7 time=1493171105.553595000 flags=none
+./usr/local/etc/rc type=file uid=1001 gid=1001 mode=0644 nlink=1 size=944 time=1493171103.580598000 flags=none
+./usr/local/etc/rc.conf type=file uid=1001 gid=1001 mode=0644 nlink=1 size=10073 time=1493171103.578809000 flags=none
+./usr/local/etc/rc.devd type=file uid=1001 gid=1001 mode=0644 nlink=1 size=1207 time=1493171103.584246000 flags=none
+./usr/local/etc/rc.shutdown type=file uid=1001 gid=1001 mode=0644 nlink=1 size=960 time=1493171103.582432000 flags=none
+./usr/local/etc/local.d type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171103.670641000 flags=none
+./usr/local/etc/runlevels type=dir uid=1001 gid=1001 mode=0755 nlink=7 time=1493171105.590636000 flags=none
+./usr/local/etc/runlevels/boot type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.579313000 flags=none
+./usr/local/etc/runlevels/default type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.584138000 flags=none
+./usr/local/etc/runlevels/nonetwork type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.587837000 flags=none
+./usr/local/etc/runlevels/shutdown type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.591514000 flags=none
+./usr/local/etc/runlevels/sysinit type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.553750000 flags=none
+./usr/local/lib type=dir uid=1001 gid=1001 mode=0755 nlink=3 time=1493171105.531581000 flags=none
+./usr/local/lib/libeinfo.so type=link uid=1001 gid=1001 mode=0755 nlink=1 link=libeinfo.so.1 time=1493171104.361251000 flags=none
+./usr/local/lib/libeinfo.so.1 type=file uid=1001 gid=1001 mode=0444 nlink=1 size=50916 time=1493171104.360252000 flags=none
+./usr/local/lib/librc.so type=link uid=1001 gid=1001 mode=0755 nlink=1 link=librc.so.1 time=1493171104.801912000 flags=none
+./usr/local/lib/librc.so.1 type=file uid=1001 gid=1001 mode=0444 nlink=1 size=192932 time=1493171104.800438000 flags=none
+./usr/local/libexec type=dir uid=1001 gid=1001 mode=0755 nlink=3 time=1493171103.853504000 flags=none
+./usr/local/libexec/rc type=dir uid=1001 gid=1001 mode=0755 nlink=7 time=1493171105.600091000 flags=none
+./usr/local/libexec/rc/version type=file uid=1001 gid=1001 mode=0644 nlink=1 size=14 time=1493171105.600160000 flags=none
+./usr/local/libexec/rc/bin type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.317135000 flags=none
+./usr/local/libexec/rc/bin/checkpath type=file uid=1001 gid=1001 mode=0755 nlink=1 size=63924 time=1493171105.312674000 flags=none
+./usr/local/libexec/rc/bin/ebegin type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309672000 flags=none
+./usr/local/libexec/rc/bin/eend type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309823000 flags=none
+./usr/local/libexec/rc/bin/eerror type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309519000 flags=none
+./usr/local/libexec/rc/bin/eerrorn type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309368000 flags=none
+./usr/local/libexec/rc/bin/eindent type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.310126000 flags=none
+./usr/local/libexec/rc/bin/einfo type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.308887000 flags=none
+./usr/local/libexec/rc/bin/einfon type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.308630000 flags=none
+./usr/local/libexec/rc/bin/eoutdent type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.310281000 flags=none
+./usr/local/libexec/rc/bin/esyslog type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.310434000 flags=none
+./usr/local/libexec/rc/bin/eval_ecolors type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.310588000 flags=none
+./usr/local/libexec/rc/bin/ewaitfile type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.310744000 flags=none
+./usr/local/libexec/rc/bin/ewarn type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309213000 flags=none
+./usr/local/libexec/rc/bin/ewarnn type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309054000 flags=none
+./usr/local/libexec/rc/bin/ewend type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.309977000 flags=none
+./usr/local/libexec/rc/bin/fstabinfo type=file uid=1001 gid=1001 mode=0755 nlink=1 size=58552 time=1493171105.312927000 flags=none
+./usr/local/libexec/rc/bin/get_options type=file uid=1001 gid=1001 mode=0755 nlink=1 size=43976 time=1493171105.314606000 flags=none
+./usr/local/libexec/rc/bin/is_newer_than type=file uid=1001 gid=1001 mode=0755 nlink=1 size=42000 time=1493171105.313644000 flags=none
+./usr/local/libexec/rc/bin/is_older_than type=file uid=1001 gid=1001 mode=0755 nlink=1 size=42000 time=1493171105.313870000 flags=none
+./usr/local/libexec/rc/bin/mountinfo type=file uid=1001 gid=1001 mode=0755 nlink=1 size=63432 time=1493171105.313178000 flags=none
+./usr/local/libexec/rc/bin/on_ac_power type=file uid=1001 gid=1001 mode=0755 nlink=1 size=1451 time=1493171103.856553000 flags=none
+./usr/local/libexec/rc/bin/rc-depend type=file uid=1001 gid=1001 mode=0755 nlink=1 size=55936 time=1493171105.313416000 flags=none
+./usr/local/libexec/rc/bin/save_options type=file uid=1001 gid=1001 mode=0755 nlink=1 size=43976 time=1493171105.314851000 flags=none
+./usr/local/libexec/rc/bin/service_crashed type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.316987000 flags=none
+./usr/local/libexec/rc/bin/service_get_value type=file uid=1001 gid=1001 mode=0755 nlink=1 size=43976 time=1493171105.314107000 flags=none
+./usr/local/libexec/rc/bin/service_hotplugged type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.316511000 flags=none
+./usr/local/libexec/rc/bin/service_inactive type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.316050000 flags=none
+./usr/local/libexec/rc/bin/service_set_value type=file uid=1001 gid=1001 mode=0755 nlink=1 size=43976 time=1493171105.314357000 flags=none
+./usr/local/libexec/rc/bin/service_started type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.315347000 flags=none
+./usr/local/libexec/rc/bin/service_started_daemon type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.316752000 flags=none
+./usr/local/libexec/rc/bin/service_starting type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.315096000 flags=none
+./usr/local/libexec/rc/bin/service_stopped type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.315821000 flags=none
+./usr/local/libexec/rc/bin/service_stopping type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.315589000 flags=none
+./usr/local/libexec/rc/bin/service_wasinactive type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44588 time=1493171105.316283000 flags=none
+./usr/local/libexec/rc/bin/shell_var type=file uid=1001 gid=1001 mode=0755 nlink=1 size=13328 time=1493171105.317185000 flags=none
+./usr/local/libexec/rc/bin/vebegin type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.311487000 flags=none
+./usr/local/libexec/rc/bin/veend type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.311723000 flags=none
+./usr/local/libexec/rc/bin/veindent type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.312097000 flags=none
+./usr/local/libexec/rc/bin/veinfo type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.311008000 flags=none
+./usr/local/libexec/rc/bin/veoutdent type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.312407000 flags=none
+./usr/local/libexec/rc/bin/vewarn type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.311250000 flags=none
+./usr/local/libexec/rc/bin/vewend type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54672 time=1493171105.311949000 flags=none
+./usr/local/libexec/rc/init.d type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.594757000 flags=none
+./usr/local/libexec/rc/sbin type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.323916000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_failed type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.323553000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_hotplugged type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.323310000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_inactive type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.322815000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_started type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.322117000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_starting type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.321875000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_stopped type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.322580000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_stopping type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.322350000 flags=none
+./usr/local/libexec/rc/sbin/mark_service_wasinactive type=file uid=1001 gid=1001 mode=0755 nlink=1 size=44044 time=1493171105.323062000 flags=none
+./usr/local/libexec/rc/sbin/rc-abort type=file uid=1001 gid=1001 mode=0755 nlink=1 size=11628 time=1493171105.323763000 flags=none
+./usr/local/libexec/rc/sbin/swclock type=file uid=1001 gid=1001 mode=0755 nlink=1 size=53848 time=1493171105.324022000 flags=none
+./usr/local/libexec/rc/sh type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171103.894490000 flags=none
+./usr/local/libexec/rc/sh/functions.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=3157 time=1493171103.893940000 flags=none
+./usr/local/libexec/rc/sh/gendepends.sh type=file uid=1001 gid=1001 mode=0755 nlink=1 size=2710 time=1493171103.890758000 flags=none
+./usr/local/libexec/rc/sh/init.sh type=file uid=1001 gid=1001 mode=0755 nlink=1 size=2055 time=1493171103.890889000 flags=none
+./usr/local/libexec/rc/sh/openrc-run.sh type=file uid=1001 gid=1001 mode=0755 nlink=1 size=8765 time=1493171103.891013000 flags=none
+./usr/local/libexec/rc/sh/rc-functions.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=3168 time=1493171103.894059000 flags=none
+./usr/local/libexec/rc/sh/rc-mount.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=2309 time=1493171103.893810000 flags=none
+./usr/local/libexec/rc/sh/runit.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=1706 time=1493171103.894175000 flags=none
+./usr/local/libexec/rc/sh/s6.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=1787 time=1493171103.894290000 flags=none
+./usr/local/libexec/rc/sh/start-stop-daemon.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=3024 time=1493171103.894403000 flags=none
+./usr/local/libexec/rc/sh/supervise-daemon.sh type=file uid=1001 gid=1001 mode=0444 nlink=1 size=1771 time=1493171103.894518000 flags=none
+./usr/local/libexec/rc/tmp type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.596965000 flags=none
+./usr/local/sbin type=dir uid=1001 gid=1001 mode=0755 nlink=2 time=1493171105.300876000 flags=none
+./usr/local/sbin/openrc type=file uid=1001 gid=1001 mode=0755 nlink=1 size=125428 time=1493171105.299250000 flags=none
+./usr/local/sbin/openrc-run type=file uid=1001 gid=1001 mode=0755 nlink=1 size=120888 time=1493171105.299535000 flags=none
+./usr/local/sbin/rc type=file uid=1001 gid=1001 mode=0755 nlink=1 size=125428 time=1493171105.299809000 flags=none
+./usr/local/sbin/rc-service type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54044 time=1493171105.299952000 flags=none
+./usr/local/sbin/rc-update type=file uid=1001 gid=1001 mode=0755 nlink=1 size=65644 time=1493171105.300129000 flags=none
+./usr/local/sbin/runscript type=file uid=1001 gid=1001 mode=0755 nlink=1 size=120888 time=1493171105.300395000 flags=none
+./usr/local/sbin/service type=file uid=1001 gid=1001 mode=0755 nlink=1 size=54044 time=1493171105.300536000 flags=none
+./usr/local/sbin/start-stop-daemon type=file uid=1001 gid=1001 mode=0755 nlink=1 size=105968 time=1493171105.300792000 flags=none
+./usr/local/sbin/supervise-daemon type=file uid=1001 gid=1001 mode=0755 nlink=1 size=78500 time=1493171105.300982000 flags=none
