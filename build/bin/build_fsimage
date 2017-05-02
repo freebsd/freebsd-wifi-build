@@ -30,6 +30,8 @@ else
 	cp -f ${X_STAGING_METALOG_MFSROOT} ${X_STAGING_METALOG}
 fi
 
+# echo "*** ${X_STAGING_METALOG}"
+
 # Ok, make the filesystem
 makefs -t ffs -B ${X_MAKEFS_ENDIAN} -o ${X_MAKEFS_FLAGS} -x -F ${X_STAGING_METALOG} -f 1000 ${X_FSIMAGE} ${X_STAGING_FSROOT} || exit 1
 
