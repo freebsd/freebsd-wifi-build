@@ -65,6 +65,7 @@ netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
 netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel ''`"
 netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
+netif_wifi_apbridge="`get_if_var $ifname netif_IF_wifi_apbridge 'YES'`"
 
 netif_wifi_dwds_enable="`get_if_var $ifname netif_IF_wifi_dwds_enable 'NO'`"
 netif_wifi_dwds_bridgeif="`get_if_var $ifname netif_IF_wifi_dwds_bridgeif ''`"
@@ -186,6 +187,12 @@ EOF
 				sleep 1
 				;;
 		esac
+
+		# Allow apbridge to be enabled/disabled per interface;
+		# for wdsrelay the AP side needs to be -apbridge.
+		if [ "${netif_wifi_apbridge}" = "NO" ]; then
+			ifconfig ${netif_name} -apbridge
+		fi
 
 		# ipv4 address
 		if [ "x${netif_addrtype}" = "xstatic" ]; then
