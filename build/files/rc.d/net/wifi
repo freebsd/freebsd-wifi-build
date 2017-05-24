@@ -38,6 +38,11 @@
 # netif_IF_wifi_hostap_wpa_key_mgmt="WPA-PSK"
 # netif_IF_wifi_hostap_wpa_pairwise="CCMP TKIP"
 
+# DWDS (for STA or hostap):
+#
+# netif_IF_wifi_dwds_enable="YES"
+# netif_IF_wlan_dwds_bridgeif="bridgeX"
+
 cmd=$1
 shift
 
@@ -60,6 +65,10 @@ netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
 netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel ''`"
 netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
+netif_wifi_apbridge="`get_if_var $ifname netif_IF_wifi_apbridge 'YES'`"
+
+netif_wifi_dwds_enable="`get_if_var $ifname netif_IF_wifi_dwds_enable 'NO'`"
+netif_wifi_dwds_bridgeif="`get_if_var $ifname netif_IF_wifi_dwds_bridgeif ''`"
 
 # The hostap options are handled in the hostapd config file routine.
 
@@ -110,6 +119,49 @@ case $cmd in
 			ifconfig ${netif_name} channel ${netif_wifi_channel} || exit 1
 		fi
 
+		# If DWDS is enabled, then:
+		# + STA mode - just enable it, it should be in a bridge
+		# + AP mode - enable it, it'll be in a bridge, create
+		#   script to run, and start wlanwds.
+		if [ "${netif_wifi_dwds_enable}" = "YES" ]; then
+			case ${netif_wifi_mode} in
+				'hostap')
+					echo "*** ${ifname} Enabling DWDS AP"
+					ifconfig ${netif_name} dwds -apbridge
+
+					# Setup a wdsmain script file to run whenever
+					# we get a new peer.
+					rm -f /var/run/wdsrun.${netif_name}
+					NETIF_PRIVATE=""
+					_hostap_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_hostap_wpa_key_mgmt "WPA-PSK"`
+
+					# XXX Yes, this doesn't work for WEP.
+					# XXX Yes, wlanwds should be doing this for us.
+					#
+					# If this breaks for someone, please contact me
+					# and we'll figure out how to fix it.
+					if [ "${_hostap_wpa_key_mgmt}" != "NONE" ]; then
+						NETIF_PRIVATE="ifconfig \$DEV wepmode mixed"
+					fi
+
+					cat >/var/run/wdsrun.${netif_name} <<EOF
+#! /bin/sh
+DEV=\$1
+ifconfig ${netif_wifi_dwds_bridgeif} addm \$DEV
+${NETIF_PRIVATE}
+ifconfig \$DEV up
+EOF
+					chmod +x /var/run/wdsrun.${netif_name}
+					echo "*** Running: wlanwds -P /var/run/wlanwds.${netif_name}.pid -v -s /var/run/wdsrun.${netif_name} ${netif_wifi_parent} &"
+					wlanwds -P /var/run/wlanwds.${netif_name}.pid -v -s /var/run/wdsrun.${netif_name} ${netif_wifi_parent} &
+					;;
+				'sta')
+					echo "*** ${ifname} Enabling DWDS STA"
+					ifconfig ${netif_name} dwds -bgscan
+					;;
+			esac
+		fi
+
 		# If hostap, then create hostap conf file and start it
 		case ${netif_wifi_mode} in
 			'hostap')
@@ -136,6 +188,12 @@ case $cmd in
 				;;
 		esac
 
+		# Allow apbridge to be enabled/disabled per interface;
+		# for wdsrelay the AP side needs to be -apbridge.
+		if [ "${netif_wifi_apbridge}" = "NO" ]; then
+			ifconfig ${netif_name} -apbridge
+		fi
+
 		# ipv4 address
 		if [ "x${netif_addrtype}" = "xstatic" ]; then
 			ifconfig ${netif_name} inet ${netif_ipv4_address} \
@@ -148,6 +206,13 @@ case $cmd in
 	;;
 	'stop')
 		echo "*** Interface: ${ifname}: stop"
+
+		# If DWDS is enabled, kill wlanwds
+		if [ "${netif_wifi_dwds_enable}" = "YES" ]; then
+			echo "*** Termining wlanwds.."
+			kill `cat /var/run/wlanwds.${netif_name}.pid`
+			sleep 1
+		fi
 
 		case ${netif_wifi_mode} in
 			'hostap')

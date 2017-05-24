@@ -241,6 +241,7 @@ ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/athratestats ${X_STAGING_FSROOT}/u
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/wlandebug ${X_STAGING_FSROOT}/usr/sbin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/wlanstats ${X_STAGING_FSROOT}/usr/bin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/wlanwatch ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/local/bin/wlanwds ${X_STAGING_FSROOT}/usr/bin/
 
 # login and pam
 ${INSTALL_SUID_BIN} ${X_DESTDIR}/usr/bin/login ${X_STAGING_FSROOT}/usr/bin/
@@ -261,7 +262,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_securetty.so ${X_STAGING_FSROOT}/usr
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_self.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_unix.so ${X_STAGING_FSROOT}/usr/lib
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
+#${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/usr/share/misc/termcap ${X_STAGING_FSROOT}/usr/share/misc/
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/usr/share/tabset/vt100 ${X_STAGING_FSROOT}/usr/share/tabset/
@@ -431,6 +432,6 @@ if [ "${MFSROOT_INC_MODULES}" = "YES" ]; then
 	echo "*** Including modules.."
 
 	for i in ${MFSROOT_INC_MODULE_LIST}; do
-		${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/${i}.ko ${X_STAGING_FSROOT}/boot/kernel/
+		${INSTALL_DEF_KLD} ${X_DESTDIR}/boot/kernel.${KERNCONF}/${i}.ko ${X_STAGING_FSROOT}/boot/kernel/ || exit 1
 	done
 fi

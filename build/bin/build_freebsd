@@ -66,6 +66,7 @@ echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 # Stuff for AP builds
 if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_KERBEROS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_AMD="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
@@ -76,6 +77,8 @@ if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_CASPER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_CAPSICUM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CLANG="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'NO_SHARED=NO' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
 # For now, AP builds get MALLOC_PRODUCTION, but full-root builds

@@ -14,7 +14,11 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif if_tap libalias ipfw ipfw_nat ipfw_nptv6"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tap if_tun"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
 
 # Netboot
 NETBOOT_KERNEL="YES"
@@ -45,3 +49,5 @@ X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-carambola2"
 
 X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
