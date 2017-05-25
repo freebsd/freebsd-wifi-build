@@ -27,7 +27,7 @@ if [ "x${DOEXIT}" = "xYES" ]; then
 fi
 
 # BUILD_FLAGS is set by the environment
-PARALLEL_FLAGS?="-j2"
+PARALLEL_FLAGS=${PARALLEL_FLAGS:="-j2"}
 BUILD_FLAGS=${BUILD_FLAGS:="NO_CLEAN=1 ${PARALLEL_FLAGS}"}
 
 # CFGNAME
