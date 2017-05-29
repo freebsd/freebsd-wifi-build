@@ -14,6 +14,17 @@ BIN_CFG_SIZE="65536"
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
 
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tap if_tun"
+#MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
+#MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_acl wlan_wep wlan_tkip wlan_ccmp wlan_rssadapt wlan_amrr wlan_xauth"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main if_ath_pci ath_hal ath_rate ath_dfs ath_hal_ar5212 ath_hal_ar5416 ath_hal_ar9300"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} usb usb_quirk usb_template umass ehci ar71xx_ehci"
+
 # Uboot stuff
 UBOOT_ARCH="mips"
 UBOOT_KERN_LOADADDR="0x80050000"
@@ -21,11 +32,19 @@ UBOOT_KERN_STARTADDR="0x80050100"
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkuzip"
-# XXX this is so high right now in order to get this
-# squeezed onto 4MB of flash. Sigh.
-X_FSIMAGE_ARGS="-L -d -s 131072 -v"
+X_FSIMAGE_ARGS="-L -d -s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
 
+# Build a contiguous flash image
+X_UBOOT_KERNROOTIMG="YES"
+
+# Configuration file overrides
+X_CFG_DEFAULT_ETHER="arge1"
+X_CFG_DEFAULT_HOSTNAME="freebsd-ap93"
+
+X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
