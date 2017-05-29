@@ -18,6 +18,7 @@ fi
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
 # XXX TODO Enforce the maximum size of the kernel image.
+# XXX TODO Enforce the maximum size of the rootfs image.
 
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
@@ -42,6 +43,8 @@ if [ "${X_UBOOT_KERNROOTIMG}" = "YES" ] ; then
     dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync || exit 1
     dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} || exit 1
   ) > ${X_FLASH}
+
+  # XXX TODO Enforce the maximum size of the combined image.
 fi
 
 exit 0
