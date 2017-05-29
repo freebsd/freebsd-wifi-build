@@ -45,6 +45,15 @@ if [ "${TPLINK_SKIP_ROOTFS}" = "NO" ]; then
 	X_ROOTFS_SKIPOPT="-a 0x10000"
 fi
 
+# Check the kernel file for a start address.
+# I think this /used/ to be a fixed 256 bytes, but no longer..
+
+X_KERN_ELF_STARTADDR="`elfdump -e ${X_KERNEL} | grep e_entry | cut -f2 -d: | sed 's@ *@@'`"
+echo "*** TPLINK_KERN_STARTADDR=${TPLINK_KERN_STARTADDR}"
+echo "*** X_KERN_ELF_STARTADDR=${X_KERN_ELF_STARTADDR}"
+
+TPLINK_KERN_STARTADDR=${X_KERN_ELF_STARTADDR}
+
 if [ "${TPLINK_CONFIG_STYLE}" = "NEW" ]; then
 	# Factory flash image
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw \
