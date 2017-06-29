@@ -4,6 +4,16 @@ SCRIPT_NAME="`basename $0`"
 SCRIPT_DIR="$(dirname `realpath $0`)"
 CUR_DIR="`pwd`"
 
+# For D-Link boards, you need to set:
+#
+# * X_DLINK_MAX_KERN_SIZE - maybe not anymore
+# * X_DLINK_MAX_ROOTFS_SIZE - maybe not anymore
+# * X_DLINK_MAX_IMG_SIZE - maximum kernel+rootfs size
+# * X_DLINK_TOTAL_FACTORY_SIZE - the fixed size of the factory recovery image to flash
+# * X_DLINK_SIGNATURE - the D-Link signature for this board
+
+X_LOCAL_CFGVARS="X_DLINK_MAX_KERN_SIZE X_DLINK_MAX_ROOTFS_SIZE X_DLINK_MAX_IMG_SIZE X_DLINK_TOTAL_FACTORY_SIZE X_DLINK_SIGNATURE"
+
 # suck in the per-device options
 CFGNAME=$1
 shift
@@ -38,28 +48,45 @@ mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
 
 KERN_SIZE="`stat -f '%z' ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage`"
 ROOTFS_SIZE="`stat -f '%z' ${X_FSIMAGE}${X_FSIMAGE_SUFFIX}`"
-IMG_SIZE="`stat -f '%z' ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage`"
-#printf "*** Kernel size: %d bytes; Rootfs size: %d bytes\n" ${KERN_SIZE} ${ROOTFS_SIZE}
-#if [ ${KERN_SIZE} -gt ${X_DLINK_MAX_KERN_SIZE} ]; then
-#	echo "*** Kernel is too big ${KERN_SIZE} > ${X_DLINK_MAX_KERN_SIZE}!"
-#	exit 1
-#fi
-#if [ ${ROOTFS_SIZE} -gt ${X_DLINK_MAX_ROOTFS_SIZE} ]; then
-#	echo "*** Rootfs is too big ${ROOTFS_SIZE} > ${X_DLINK_MAX_ROOTFS_SIZE}!"
-#	exit 1
-#fi
+IMG_SIZE="`expr ${KERN_SIZE} + ${ROOTFS_SIZE}`"
+
+echo "*** kernel size: ${KERN_SIZE}"
+echo "*** rootfs size: ${ROOTFS_SIZE}"
+echo "*** image size: ${IMG_SIZE}"
 
 if [ ${IMG_SIZE} -gt ${X_DLINK_MAX_IMG_SIZE} ]; then
 	echo "*** Image is too big: ${IMG_SIZE} > ${X_DLINK_MAX_IMG_SIZE}"
 	exit 1
 fi
 
-# concatenate the kernel image in a 64k chunk to the filesystem image
-# and then add the dlink factor signature at the end.
+# The total image size can't exceed X_DLINK_TOTAL_FACTORY_SIZE. That is the
+# size of the image written to the flash and we need to make an image that
+# large in order to have the metadata be in the right spot.
+
+# So, subtract the length of the metadata block from the total size, pad
+# to that and add the total size.
+
+X_DLINK_DD_IMG_SIZE="`expr ${X_DLINK_TOTAL_FACTORY_SIZE} - ${#X_DLINK_SIGNATURE}`"
+echo "*** dd image size: ${X_DLINK_DD_IMG_SIZE}"
+
+# Concatenate the kernel image in a 64k chunk to the filesystem image
+# and then add the dlink factor signature at the end with 64k padding.
+# Note that the last part needs to be inside the last 64k..
 (
-	dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync;
-	dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} ;
+		dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=noerror,sync;
+		dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} bs=65536;
+) > ${X_TFTPBOOT}/${CFGNAME}.kern-root.img
+
+(
+	dd if=${X_TFTPBOOT}/${CFGNAME}.kern-root.img bs=${X_DLINK_DD_IMG_SIZE} count=1 conv=noerror,sync;
 	echo -n "${X_DLINK_SIGNATURE}"
 ) > ${X_TFTPBOOT}/${CFGNAME}.factory.img
+
+# Sanity check - check that the total generated factory image is exactly the right size!
+X_DLINK_CREATED_IMAGE_SIZE="`stat -f '%z' ${X_TFTPBOOT}/${CFGNAME}.factory.img`"
+if [ ${X_DLINK_CREATED_IMAGE_SIZE} -ne ${X_DLINK_TOTAL_FACTORY_SIZE} ]; then
+	echo "*** Created image isn't the right size! Debug!"
+	exit 1
+fi
 
 exit 0
