@@ -39,6 +39,12 @@ fi
 # X_DLINK_MAX_KERN_SIZE=1048576
 # X_DLINK_MAX_ROOTFS_SIZE=5308416
 
+X_KERN_ELF_STARTADDR="`elfdump -e ${X_KERNEL} | grep e_entry | cut -f2 -d: | sed 's@ *@@'`"
+echo "*** UBOOT_KERN_STARTADDR=${UBOOT_KERN_STARTADDR}"
+echo "*** X_KERN_ELF_STARTADDR=${X_KERN_ELF_STARTADDR}"
+
+UBOOT_KERN_STARTADDR=${X_KERN_ELF_STARTADDR}
+
 # Create the firmware
 mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
   -a ${UBOOT_KERN_LOADADDR} -e ${UBOOT_KERN_STARTADDR} \
