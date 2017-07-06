@@ -34,7 +34,11 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_acl wlan_wep wlan_
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
 
 # Atheros support
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main if_ath_pci ath_hal ath_rate ath_dfs ath_hal_ar5212 ath_hal_ar5416 ath_hal_ar9300"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main ath_hal ath_rate ath_dfs"
+# HAL support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_hal_ar5212 ath_hal_ar5416 ath_hal_ar9300"
+# Bus glue
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_ath_ahb if_ath_pci"
 
 # USB support
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} usb usb_quirk usb_template umass ehci ar71xx_ehci"
