@@ -21,13 +21,23 @@ for i in ${CFGVARS}; do
 	fi
 done
 
+for i in ${X_LOCAL_CFGVARS}; do
+	eval _value=\$${i}
+	if [ "x${_value}" = "x" ]; then
+		echo "ERROR: ${i} needs to be set in the configuration file."
+		DOEXIT="YES"
+	fi
+done
+
+
 if [ "x${DOEXIT}" = "xYES" ]; then
 	echo "ERROR: fatal errors found; exiting."
 	exit 127
 fi
 
 # BUILD_FLAGS is set by the environment
-BUILD_FLAGS=${BUILD_FLAGS:="NO_CLEAN=1 -j2"}
+PARALLEL_FLAGS=${PARALLEL_FLAGS:="-j2"}
+BUILD_FLAGS=${BUILD_FLAGS:="NO_CLEAN=1 ${PARALLEL_FLAGS}"}
 
 # CFGNAME
 # BUILDNAME
