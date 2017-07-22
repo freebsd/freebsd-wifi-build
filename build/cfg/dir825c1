@@ -22,7 +22,7 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_bridge bridgestp"
 
 # USB wifi
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
 
 # IPFW
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
