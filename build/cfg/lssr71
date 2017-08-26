@@ -11,13 +11,30 @@ BIN_CFG_SIZE="65536"
 UBNT_ARCH="LS-SR71"
 UBNT_VERSION="LS-SR71.ar7100"
 
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+# MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} gpio"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tap if_tun"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
+
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_amrr wlan_tkip wlan_ccmp wlan_wep wlan_xauth wlan_rssadapt"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main if_ath_pci ath_hal ath_rate ath_dfs ath_hal_ar5212 ath_hal_ar5416"
+
 # Make a ulzma image
 X_FSIMAGE_CMD="mkuzip"
 # XXX this is so high right now in order to get this
 # squeezed onto 8MB of flash, given a 5.9MB compressed
 # filesystem..
-X_FSIMAGE_ARGS="-L -d -s 131072 -v"
+X_FSIMAGE_ARGS="-L -d -s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
+X_CFG_DEFAULT_ETHER="arge0"
+X_CFG_DEFAULT_HOSTNAME="freebsd-lssr71"
+
+X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
+
 # Building the firmware image
+#X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs tinymfsroot makepkgs addpkgs fsimage ubnt"
 X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage ubnt"

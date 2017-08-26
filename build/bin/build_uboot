@@ -18,6 +18,7 @@ fi
 . ${SCRIPT_DIR}/../lib/cfg.sh || exit 1
 
 # XXX TODO Enforce the maximum size of the kernel image.
+# XXX TODO Enforce the maximum size of the rootfs image.
 
 # lzma the kernel image
 # Use the lzma from ports (/usr/local/bin/lzma) rather than the lzma
@@ -26,6 +27,15 @@ fi
 # "Uncompressing Kernel Image ... Stream with EOS marker is not supportedLZMA ERROR 1"
 
 /usr/local/bin/lzma e ${X_KERNEL} ${X_TFTPBOOT}/kernel.${KERNCONF}.lzma || exit 1
+
+# Check the kernel file for a start address.
+# I think this /used/ to be a fixed 256 bytes, but no longer..
+
+X_KERN_ELF_STARTADDR="`elfdump -e ${X_KERNEL} | grep e_entry | cut -f2 -d: | sed 's@ *@@'`"
+echo "*** UBOOT_KERN_STARTADDR=${UBOOT_KERN_STARTADDR}"
+echo "*** X_KERN_ELF_STARTADDR=${X_KERN_ELF_STARTADDR}"
+
+UBOOT_KERN_STARTADDR=${X_KERN_ELF_STARTADDR}
 
 # Create the firmware
 mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C lzma \
@@ -42,6 +52,8 @@ if [ "${X_UBOOT_KERNROOTIMG}" = "YES" ] ; then
     dd if=${X_TFTPBOOT}/kernel.${KERNCONF}.lzma.uImage bs=65536 conv=sync || exit 1
     dd if=${X_FSIMAGE}${X_FSIMAGE_SUFFIX} || exit 1
   ) > ${X_FLASH}
+
+  # XXX TODO Enforce the maximum size of the combined image.
 fi
 
 exit 0
