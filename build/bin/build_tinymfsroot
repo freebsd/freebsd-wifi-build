@@ -22,7 +22,7 @@ fi
 X_BASEDIR=${SCRIPT_DIR}/../
 
 # Install targets, using the metalog as appropriate
-INSTALL_PROG="install -U -M ${X_STAGING_METALOG} -D ${X_STAGING_FSROOT}"
+INSTALL_PROG="install -U -M ${X_STAGING_METALOG_MFSROOT} -D ${X_STAGING_FSROOT}"
 
 INSTALL_DEF_BIN="${INSTALL_PROG} -o root -g wheel -m 0755"
 INSTALL_SUID_BIN="${INSTALL_PROG} -o root -g wheel -m 4711"
