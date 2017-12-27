@@ -1,7 +1,7 @@
 RM?=	rm
 LDFLAGS+=	-lz -lcrypto
 PREFIX?=	/usr/local
-MIPSCC=mips-portbld-freebsd10.2-gcc
+MIPSCC!=(pkg info -l mips-gcc | grep '\-gcc$$')
 MIPSOBJECTS=trxloader.o tinfl.o mem.o
 MIPSCFLAGS=-EL -O1 -g -fno-pic -mno-abicalls -nostdlib -I/usr/include
 GZIP=gzip -nc9
