@@ -22,7 +22,7 @@ X_PKG_RANLIB=mips-unknown-freebsd12.0-gcc-ranlib
 X_PKG_STRIP=mips-unknown-freebsd12.0-strip
 
 
-X_PKG_CONFIGURE_HOSTFLAGS="--host=mips-unknown-freebsd12.0"
+X_PKG_CONFIGURE_HOSTFLAGS="--host=${X_PKG_CROSS_COMPILE}"
 
 # now run:
 # /configure --host=mips-unknown-freebsd12.0
