@@ -24,8 +24,8 @@ mfs_size=`stat -f '%z' ${X_FSIMAGE}${X_FSIMAGE_SUFFIX} 2> /dev/null`
 # If we can't determine MFS image size - bail.
 [ -z ${mfs_size} ] && echo "Can't determine MFS image size" && exit 1
 
-T_OBJDUMP_DIR="${CUR_DIR}/../obj/${X_BUILD_BASE_CFG}/${TARGET}.${TARGET_ARCH}"
-T_OBJDUMP="${T_OBJDUMP_DIR}/${CUR_DIR}/tmp/usr/bin/objdump"
+T_OBJDUMP_DIR="${CUR_DIR}/../obj/${TARGET_ARCH}"
+T_OBJDUMP="${T_OBJDUMP_DIR}/${CUR_DIR}/${TARGET}.${TARGET_ARCH}/tmp/usr/bin/objdump"
 sec_info=`${T_OBJDUMP} -h ${X_KERNEL}.netboot 2> /dev/null | grep " oldmfs "`
 # If we can't find the mfs section within the given kernel - bail.
 [ -z "${sec_info}" ] && echo "Can't locate mfs section within kernel" && exit 1
