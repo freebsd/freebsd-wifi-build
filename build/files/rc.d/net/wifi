@@ -92,7 +92,7 @@ case $cmd in
 			;;
 			'sta')
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
-				    wlanmode sta -bgscan -powersave
+				    wlanmode sta bssid -bgscan -powersave
 			;;
 			*)
 				echo "*** ${ifname}: unknown wifi mode '${netif_wifi_mode}'"
