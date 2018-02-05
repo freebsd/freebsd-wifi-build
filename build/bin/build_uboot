@@ -54,6 +54,14 @@ if [ "${X_UBOOT_KERNROOTIMG}" = "YES" ] ; then
   ) > ${X_FLASH}
 
   # XXX TODO Enforce the maximum size of the combined image.
+  IMG_SIZE="`stat -f '%z' ${X_FLASH}`"
+
+  echo "*** image size: ${IMG_SIZE}"
+
+  if [ ${IMG_SIZE} -gt ${X_UBOOT_KERNROOTIMG_MAX_SIZE} ]; then
+    echo "*** Image is too big: ${IMG_SIZE} > ${X_UBOOT_KERNROOTIMG_MAX_SIZE}"
+    exit 1
+  fi
 fi
 
 exit 0
