@@ -24,8 +24,8 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} alq"
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_bridge bridgestp"
 
 # USB wifi
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
+# MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
+# MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
 
 # IPFW
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
@@ -34,7 +34,7 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_acl wlan_wep wlan_tkip wlan_ccmp wlan_rssadapt wlan_amrr wlan_xauth"
 
 # PMC MIPS24K
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips74k"
 
 # Atheros support
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main if_ath_ahb if_ath_pci ath_hal ath_rate ath_dfs ath_hal_ar9300"
@@ -66,6 +66,6 @@ TPLINK_FIRMWARE_RESERV=0x40000
 X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage tplink"
 
 # Configuration file overrides
-#X_CFG_DEFAULT_ETHER="arge1"
+X_CFG_DEFAULT_ETHER="arge0"
 X_CFG_DEFAULT_HOSTNAME="freebsd-tl-wdr3600"
 X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"

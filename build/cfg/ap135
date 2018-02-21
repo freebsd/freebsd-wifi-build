@@ -3,7 +3,8 @@ X_BUILD_BASE_CFG="mips_ap"
 
 KERNCONF=AP135
 
-X_CFG_DEFAULT_HOSTNAME="freebsd-ap135"
+# XXX needs to be a multiple of the blocksize (512 bytes) ?
+X_FSSIZE="11886592"
 
 # The configuration load/save script needs to know the
 # configuration partition name and location.
@@ -12,7 +13,37 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre ipfw"
+
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST=""
+# VLAN support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_vlan if_gif if_gre if_tap if_tun alq"
+
+# ALQ support - needed for the rest of the modules (wlan, ath)
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} alq"
+
+# Bridge support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_bridge bridgestp"
+
+# USB wifi
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
+
+# IPFW
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
+
+# WLAN core
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_acl wlan_wep wlan_tkip wlan_ccmp wlan_rssadapt wlan_amrr wlan_xauth"
+
+# PMC MIPS24K
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips74k"
+
+# Atheros support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main if_ath_pci ath_hal ath_rate ath_dfs ath_hal_ar5212 ath_hal_ar5416 ath_hal_ar9300"
+
+# USB support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} usb usb_quirk usb_template umass ehci ar71xx_ehci"
 
 # Uboot stuff
 UBOOT_ARCH="mips"
@@ -25,4 +56,15 @@ X_FSIMAGE_ARGS="-L -d -s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage uboot"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
+
+# Build a contiguous flash image
+X_UBOOT_KERNROOTIMG="YES"
+
+# Configuration file overrides
+X_CFG_DEFAULT_ETHER="arge1"
+X_CFG_DEFAULT_HOSTNAME="freebsd-ap135"
+
+X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
