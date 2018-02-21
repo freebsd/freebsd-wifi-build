@@ -39,4 +39,4 @@ X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
 TARGET_CROSS_TOOLCHAIN="mips-gcc"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot addpkgs fsimage tplink"
+X_BUILD_BUILD_IMG_DEFAULTS="mfsroot makepkgs addpkgs fsimage tplink"
