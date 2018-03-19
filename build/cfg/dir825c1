@@ -30,8 +30,8 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_
 # WLAN core
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_acl wlan_wep wlan_tkip wlan_ccmp wlan_rssadapt wlan_amrr wlan_xauth"
 
-# PMC MIPS24K
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
+# PMC MIPS74K
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips74k"
 
 # Atheros support
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main ath_hal ath_rate ath_dfs"
