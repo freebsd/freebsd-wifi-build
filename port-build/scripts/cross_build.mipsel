@@ -16,10 +16,10 @@ X_PKG_LDFLAGS="--sysroot=${X_PKG_SYSROOT}"
 X_PKG_CC_ARGS="--sysroot=${X_PKG_SYSROOT} ${X_PKG_CPU_ARGS} ${X_PKG_INCS} -O"
 X_PKG_CC="${X_PKG_CROSS_COMPILE}-gcc ${X_PKG_CC_ARGS}"
 X_PKG_CXX="${X_PKG_CROSS_COMPILE}-g++ ${X_PKG_CC_ARGS}"
-X_PKG_LD=mips-freebsd-ld
-X_PKG_AR=mips-freebsd-ar
-X_PKG_RANLIB=mips-freebsd-ranlib
-X_PKG_STRIP=mips-freebsd-strip
+X_PKG_LD=mips-unknown-freebsd12.0-ld
+X_PKG_AR=mips-unknown-freebsd12.0-gcc-ar
+X_PKG_RANLIB=mips-unknown-freebsd12.0-gcc-ranlib
+X_PKG_STRIP=mips-unknown-freebsd12.0-strip
 
 
 X_PKG_CONFIGURE_HOSTFLAGS="--host=${X_PKG_CROSS_COMPILE}"
