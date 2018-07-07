@@ -65,19 +65,24 @@ echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 # Stuff for AP builds
 if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
-	echo 'WITHOUT_KERBEROS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_AMD="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_ATM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_AUDIT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CDDL="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CLANG="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CLANG_IS_CC="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CAPSICUM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CASPER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_ICONV="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_IPX="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_JAIL="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_LOCALES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_KERBEROS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_IPX="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_ATM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_ICONV="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_CLANG_IS_CC="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_CASPER="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_CAPSICUM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_SVNLITE="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_CLANG="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'NO_SHARED=NO' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
@@ -90,13 +95,14 @@ fi
 if [ "$X_SKIP_MORE_STUFF" = "YES" ]; then
 	echo 'WITHOUT_GAMES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_DOCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_MAN="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_EXAMPLES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_INFO="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_LOCALES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_MAN="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NLS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_EXAMPLES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_ZFS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_NLS_CATALOGS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_RCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_ZFS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
 if test -e "${X_EXTRA_SRC_CONF}" ; then
