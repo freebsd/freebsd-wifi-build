@@ -81,6 +81,7 @@ if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_KERBEROS_SUPPORT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_NDIS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_OFED="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_SVNLITE="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'NO_SHARED=NO' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
