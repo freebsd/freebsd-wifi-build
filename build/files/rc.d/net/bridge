@@ -13,6 +13,7 @@
 # netif_IF_addrtype="static|dhcp"
 # netif_IF_descr="description"
 # netif_IF_name="bridge0"
+# netif_IF_ether="macaddr"
 # netif_IF_members_stp="arge0"
 # netif_IF_members="wlan0"
 #
@@ -32,6 +33,7 @@ interface_enable=`get_if_var $ifname netif_IF_enable no`
 interface_addrtype=`get_if_var $ifname netif_IF_addrtype`
 interface_descr=`get_if_var $ifname netif_IF_descr`
 interface_name=`get_if_var $ifname netif_IF_name`
+interface_ether=`get_if_var $ifname netif_IF_ether`
 interface_members_stp=`get_if_var $ifname netif_IF_members_stp`
 interface_members=`get_if_var $ifname netif_IF_members`
 
@@ -41,10 +43,14 @@ interface_ipv4_netmask=`get_if_var $ifname netif_IF_ipv4_netmask`
 case $cmd in
 	'start')
 		echo "*** Interface: ${ifname}: start"
-		ifconfig ${interface_name} create
-		ifconfig ${interface_name} up
 
-		# XXX force MAC address?
+		if [ "x${interface_ether}" != "x" ]; then
+			ifconfig ${interface_name} create ether ${interface_ether}
+		else
+			ifconfig ${interface_name} create
+		fi
+
+		ifconfig ${interface_name} up
 
 		for i in ${interface_members}; do
 			ifconfig ${interface_name} addm ${i} -stp ${i}
