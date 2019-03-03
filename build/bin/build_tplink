@@ -69,7 +69,7 @@ if [ "${TPLINK_CONFIG_STYLE}" = "NEW" ]; then
 		-k ${TPLINK_KERNEL} \
 		${X_ROOTFS_CMDOPT} \
 		${X_ROOTFS_SKIPOPT} \
-		-o ${X_TFTPBOOT}/${CFGNAME}.factory.bin
+		-o ${X_TFTPBOOT}/${CFGNAME}.factory.bin || exit 1
 
 	# bootm-able image
 	${SCRIPT_DIR}/../../programs/mktplinkfw/mktplinkfw \
@@ -84,7 +84,7 @@ if [ "${TPLINK_CONFIG_STYLE}" = "NEW" ]; then
 		-c \
 		-X ${TPLINK_FIRMWARE_RESERV} \
 		-k ${TPLINK_KERNEL} \
-		-o ${X_TFTPBOOT}/${CFGNAME}.kernel.bin
+		-o ${X_TFTPBOOT}/${CFGNAME}.kernel.bin || exit 1
 
 elif [ "${X_MFSROOT}" = "YES" ]; then
 # Create firmware suitable for TFTP
