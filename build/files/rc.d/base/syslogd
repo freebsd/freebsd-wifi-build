@@ -1,0 +1,52 @@
+#!/bin/sh
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+syslog_start()
+{
+	local i
+
+	if [ "${syslogd_enable}" != "YES" ]; then
+		return 0
+	fi
+
+	# For now the only syslog operation is to log remotely.
+	# Syslogd can't log to a ramdisk efficiently because it
+	# isn't yet doing its own log rotation.
+	echo "# Automatically generated! Do not edit" > /var/run/syslogd.conf
+
+	if [ "${syslogd_remote_host}" != "" ]; then
+		for i in ${syslogd_remote_host}; do
+			echo "*.*		@${i}" >> /var/run/syslogd.conf
+		done
+	fi
+
+	# for now, don't log remote messages..
+	echo "*** Starting syslogd..."
+	/usr/sbin/syslogd -s -f /var/run/syslogd.conf -P /var/run/syslogd.pid
+}
+
+syslog_stop()
+{
+	echo "*** Killing syslogd.."
+	kill `cat /var/run/syslogd.pid`
+}
+
+case $1 in
+	'start')
+		syslog_start
+		exit 0
+	;;
+	'stop')
+		syslog_stop
+		exit 0
+	;;
+	*)
+		echo "$0 {start|stop}"
+		exit 1
+	;;
+esac
+
+exit 0
