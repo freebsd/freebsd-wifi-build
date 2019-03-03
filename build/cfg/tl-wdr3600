@@ -44,7 +44,7 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} usb usb_quirk usb_template u
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkuzip"
-X_FSIMAGE_ARGS="-L -d -s 65536 -v"
+X_FSIMAGE_ARGS="-L -d -s 131072 -S"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Use LZMA to compress the kernel
@@ -68,4 +68,5 @@ X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage tplink"
 # Configuration file overrides
 X_CFG_DEFAULT_ETHER="arge0"
 X_CFG_DEFAULT_HOSTNAME="freebsd-tl-wdr3600"
-X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+X_PACKAGELIST="dropbear dnsmasq lua"
+# X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
