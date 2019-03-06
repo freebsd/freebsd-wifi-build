@@ -78,6 +78,7 @@ if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_CAPSICUM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_CLANG="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_OFED="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'NO_SHARED=NO' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
