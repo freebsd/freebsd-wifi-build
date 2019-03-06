@@ -55,6 +55,9 @@ echo "*** Default password/login databases .."
 echo "*** Customising sysctl .."
 /etc/rc.d/base/sysctl start
 
+# syslog
+/etc/rc.d/base/syslogd start
+
 # Start network
 echo "*** Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
@@ -69,6 +72,11 @@ echo "*** Starting networking via /etc/rc.d/base/net"
 
 # Start services
 /etc/rc.d/base/srv start
+
+# Disable console output from the kernel - so we don't tie up CPU
+# echo'ing driver debugging
+echo "*** Quietening kernel logging to the console.."
+sysctl kern.consmute=1
 
 echo "*** Done!"
 
