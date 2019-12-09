@@ -58,7 +58,7 @@ fi
 
 # Create blank make.conf/src.conf
 echo "" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
-echo "" > ${X_DESTDIR}/../../src.conf.${BUILDNAME}
+echo "" > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 # Make a src.conf
 echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
