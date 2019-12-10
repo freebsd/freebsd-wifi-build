@@ -7,7 +7,7 @@ and the router with a LAN cable. The router has a fixed address of
 subnet.
 Use _telnet(1)_ to login as user _user_:
 
-    $ telnet 192.168.1.20
+    $ telnet -K 192.168.1.20
     Trying 192.168.1.20...
     Connected to 192.168.1.20.
     Escape character is '^]'.
