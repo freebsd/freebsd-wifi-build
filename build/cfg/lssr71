@@ -14,7 +14,7 @@ UBNT_VERSION="LS-SR71.ar7100"
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
 # MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} gpio"
-MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tap if_tun"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tuntap"
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
 
