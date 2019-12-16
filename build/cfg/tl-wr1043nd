@@ -36,4 +36,9 @@ TPLINK_HARDWARE_FLASHID=8M
 TPLINK_FIRMWARE_RESERV=0x40000
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage tplink"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage tplink"
+
+# packages
+X_PACKAGELIST="xcpio dropbear dnsmasq lua"
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
+

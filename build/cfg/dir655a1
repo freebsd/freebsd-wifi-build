@@ -30,4 +30,8 @@ X_FSIMAGE_ARGS="-L -d -s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage dlink"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage dlink"
+
+# packages
+X_PACKAGELIST="xcpio dropbear dnsmasq lua"
+TARGET_CROSS_TOOLCHAIN="mips-gcc"

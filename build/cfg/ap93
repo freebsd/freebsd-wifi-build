@@ -65,6 +65,6 @@ X_UBOOT_KERNROOTIMG="YES"
 X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-ap93"
 
-X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+X_PACKAGELIST="xcpio dropbear dnsmasq lua lzo2 openvpn"
 
 TARGET_CROSS_TOOLCHAIN="mips-gcc"
