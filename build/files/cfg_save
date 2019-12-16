@@ -11,5 +11,5 @@
 
 echo "*** Storing configuration files from /etc/cfg/manifest -> ${CFG_PATH}.."
 cd /
-cat /etc/cfg/manifest | cpio -ov | gzip -9 | dd of=${CFG_PATH} bs=${CFG_SIZE} count=1 conv=sync || exit 1
+/usr/local/bin/xcpio -d / -c -m /etc/cfg/manifest -f /dev/stdout | gzip -9 | dd of=${CFG_PATH} bs=${CFG_SIZE} count=1 conv=sync || exit 1
 echo "*** Completed."
