@@ -1,0 +1,5 @@
+# mtree
+./usr type=dir uid=0 gid=0 mode=0755 time=1470258841.624663000 flags=none
+./usr/local type=dir uid=0 gid=0 mode=0755 time=1470258841.951077000 flags=none
+./usr/local/bin type=dir uid=0 gid=0 mode=0755 time=1470258841.866285000 flags=none
+./usr/local/bin/xcpio type=file uid=0 gid=0 mode=0755 size=31876 time=1470258841.868293000 flags=none content=usr/local/bin/xcpio
