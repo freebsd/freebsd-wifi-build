@@ -75,6 +75,9 @@ runcmd()
 		'configure')
 			port_configure
 		;;
+		'cmake')
+			port_cmake
+		;;
 		'build')
 			port_build
 		;;
@@ -95,7 +98,7 @@ runcmd()
 }
 
 if [ "x$1" = "x" ]; then
-	CMDLIST="clean fetch unpack patch configure build staging files package"
+	CMDLIST="clean fetch unpack patch configure cmake build staging files package"
 else
 	CMDLIST="$*"
 fi

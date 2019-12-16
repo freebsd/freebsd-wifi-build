@@ -26,6 +26,10 @@ port_checksum()
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
 	local X_CKSUM
 
+	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
+		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
+	fi
+
 	X_CKSUM="`sha512 -q ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} || true`"
 
 	if [ "${X_CKSUM}" != "${PKGDISTFILE_SUM_SHA512}" ]; then
@@ -38,10 +42,16 @@ port_checksum()
 
 port_fetch()
 {
+	local X_PKGFILE
 
 	if [ "x${PKGDISTFILE}" = "x" ]; then
 		echo "ERROR: need PKGDISTFILE to fetch"
 		exit 1
+	fi
+
+	X_PKGFILE="`basename ${PKGDISTFILE}`"
+	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
+		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
 	fi
 
 	# Check if the checksum matches
@@ -53,7 +63,7 @@ port_fetch()
 
 	# XXX TODO: eliminate the cd
 	mkdir -p "${X_PACKAGE_DISTFILE_DIR}"
-	( cd "${X_PACKAGE_DISTFILE_DIR}" && fetch ${PKGDISTFILE} )
+	( cd "${X_PACKAGE_DISTFILE_DIR}" && fetch -o "${X_PKGFILE}" ${PKGDISTFILE} )
 }
 
 port_clean()
@@ -69,6 +79,10 @@ port_unpack()
 	if [ $? != 0 ]; then
 		echo "ERROR: failed checksum!"
 		return 1
+	fi
+
+	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
+		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
 	fi
 
 	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
@@ -111,11 +125,39 @@ port_configure()
 	    ./configure ${X_PKG_CONFIGURE_HOSTFLAGS} ${PKG_MAKE_CONFIGURE_FLAGS}
 }
 
+port_cmake()
+{
+	if [ "x${USE_CMAKE}" != "xYES" ]; then
+		echo "Skipping configure; not needed"
+		return
+	fi
+	echo "Running cmake ${CMAKE_HOSTFLAGS}"
+
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${PKG_MAKE_CMAKE_SUBDIR}"
+	mkdir build
+	cd build
+
+	# Setup the build environment
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
+	    cmake ${X_PKG_CMAKE_HOSTFLAGS} ${PKG_MAKE_CMAKE_FLAGS} ..
+}
+
 port_build()
 {
 	echo "Building ${CONFIGURE_HOSTFLAGS}"
 
-	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${PKG_MAKE_BUILD_SUBDIR}"
 
 	# For now, hard-code gmake. Later on we'll allow this to be
 	# something other than gmake as appropriate.
@@ -144,7 +186,7 @@ port_staging()
 	# Obviously this isn't always going to be the case, but for
 	# ./configure based bits it should work.
 	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
-	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${PKG_MAKE_BUILD_SUBDIR}"
 	env \
 	    CC="${X_PKG_CC}" \
 	    CXX="${X_PKG_CXX}" \
