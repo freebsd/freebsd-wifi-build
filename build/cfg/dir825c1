@@ -66,5 +66,5 @@ X_FSIMAGE_SUFFIX=".ulzma"
 X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
 
 # packages
-X_PACKAGELIST="xcpio dropbear dnsmasq lua"
+X_PACKAGELIST="bsdtools dropbear dnsmasq lua"
 TARGET_CROSS_TOOLCHAIN="mips-gcc"
