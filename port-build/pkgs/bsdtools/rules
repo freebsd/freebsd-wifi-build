@@ -1,10 +1,10 @@
 PKGNAME=bsdtools
 PKGVERSION=1.0.0
 PKGREVISION=1
-PKGDISTFILE=https://github.com/erikarn/bsdtools/archive/master.tar.gz
-PKGDISTFILE_DESTNAME=bsdtools-master.tar.gz
-PKGDISTFILE_SUM_SHA512=dd6c829fa75f6878d667310e051d3e8e5dbf4b4b3d6d989c62521cd0f09d39d66e9093b61e62b2261d175a9b0b53ff27e58bb42f9a416c9ed1bc5a9bfd8cfced
-PKGWORKSUBDIR=bsdtools-master
+PKGDISTFILE=https://github.com/erikarn/bsdtools/archive/release/1.0.0.tar.gz
+PKGDISTFILE_DESTNAME=bsdtools-1.0.0.tar.gz
+PKGDISTFILE_SUM_SHA512=a175654b05e5101ad3342e8f0fc4002ffb415f9a0ca7942c430eae2e3985e16f784c0af3f2474bb3d12c8cc180d0666e649bca11eef9b393026875e192944a9a
+PKGWORKSUBDIR=bsdtools-release-1.0.0
 USE_CMAKE=YES
 PKG_MAKE_BUILD_SUBDIR="new/src/build"
 PKG_MAKE_CMAKE_SUBDIR="new/src"
