@@ -10,7 +10,7 @@ BIN_CFG_SIZE="65536"
 
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="ar71xx_ehci gpioiic if_gif ar71xx_ohci gpioled if_gre if_ath wlan bridgestp if_ath_pci umass wlan_acl ehci usb wlan_amrr wlan_ccmp uhci wlan_rssadapt if_bridge ohci wlan_tkip random wlan_wep gpiobus wlan_xauth"
+MFSROOT_INC_MODULE_LIST="ar71xx_ehci gpioiic if_gif ar71xx_ohci gpioled if_gre wlan bridgestp if_ath_pci umass wlan_acl ehci usb wlan_amrr wlan_ccmp uhci wlan_rssadapt if_bridge ohci wlan_tkip wlan_wep gpiobus wlan_xauth"
 
 # Uboot stuff
 UBOOT_ARCH="mips"
@@ -21,6 +21,7 @@ UBOOT_KERN_STARTADDR="0x80050100"
 X_DLINK_MAX_KERN_SIZE=1048576
 X_DLINK_MAX_ROOTFS_SIZE=5308416
 X_DLINK_MAX_IMG_SIZE=6356992
+X_DLINK_TOTAL_FACTORY_SIZE=6356992
 
 # This is a required end of image signature for this hardware
 X_DLINK_SIGNATURE=00AP94-AR7161-RT-080619-00

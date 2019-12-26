@@ -63,6 +63,7 @@ netif_wifi_createargs1="`get_if_var $ifname netif_IF_wifi_createargs1 ''`"
 netif_wifi_createargs2="`get_if_var $ifname netif_IF_wifi_createargs2 ''`"
 netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
+netif_wifi_meshid="`get_if_var $ifname netif_IF_wifi_meshid 'freebsd-mesh'`"
 netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel ''`"
 netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
 netif_wifi_apbridge="`get_if_var $ifname netif_IF_wifi_apbridge 'YES'`"
@@ -89,6 +90,10 @@ case $cmd in
 			'ibss')
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
 				    wlanmode ibss bssid
+			;;
+			'mesh')
+				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
+				    wlanmode mesh
 			;;
 			'sta')
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
@@ -117,6 +122,9 @@ case $cmd in
 		fi
 		if [ "x${netif_wifi_channel}" != "x" ]; then
 			ifconfig ${netif_name} channel ${netif_wifi_channel} || exit 1
+		fi
+		if [ "x${netif_wifi_meshid}" != "x" ]; then
+			ifconfig ${netif_name} meshid ${netif_wifi_meshid} || exit 1
 		fi
 
 		# If DWDS is enabled, then:
@@ -184,6 +192,12 @@ EOF
 				# take care of it.
 				_wpa_ssid=`get_if_var ${netif_name} netif_IF_wifi_ibss_ssid FREEBSD_IBSS`
 				ifconfig ${netif_name} ssid ${_wpa_ssid} up
+				sleep 1
+				;;
+			'mesh')
+				# Cheat for now; just bring it up and let net80211
+				# take care of it.
+				ifconfig ${netif_name} up
 				sleep 1
 				;;
 		esac
