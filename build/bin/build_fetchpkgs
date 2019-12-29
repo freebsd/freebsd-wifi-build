@@ -27,7 +27,7 @@ X_BASEDIR=${SCRIPT_DIR}/../
 
 X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/
 
-for i in ${X_PACKAGELIST}; do
+for i in ${X_DEFAULT_PACKAGELIST} ${X_PACKAGELIST}; do
 	echo "*** Fetching upstream for $i"
 	env \
 	    X_PACKAGE_ROOTDIR="${X_PACKAGE_ROOTDIR}" \

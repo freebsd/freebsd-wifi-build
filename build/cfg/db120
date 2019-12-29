@@ -72,7 +72,4 @@ X_UBOOT_KERNROOTIMG_MAX_SIZE="7929856"
 X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-db120"
 
-# X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
-X_PACKAGELIST="bsdtools dropbear dnsmasq lua"
-
-TARGET_CROSS_TOOLCHAIN="mips-gcc"
+X_PACKAGELIST=""

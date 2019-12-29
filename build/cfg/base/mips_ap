@@ -15,5 +15,8 @@ X_SKIP_AP_STUFF="YES"
 # Port build platform
 X_PORTBUILD_PLATFORM="mips"
 
+# Default packages required
+X_DEFAULT_PACKAGELIST="dropbear dnsmasq lua bsdtools"
+
 # Example using cross toolchain for base system
 TARGET_CROSS_TOOLCHAIN="mips-gcc"

@@ -65,6 +65,5 @@ X_FSIMAGE_SUFFIX=".ulzma"
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
 
-# packages
-X_PACKAGELIST="bsdtools dropbear dnsmasq lua"
-TARGET_CROSS_TOOLCHAIN="mips-gcc"
+# Extra packages
+X_PACKAGELIST=""

@@ -68,5 +68,6 @@ X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage tplink"
 # Configuration file overrides
 X_CFG_DEFAULT_ETHER="arge0"
 X_CFG_DEFAULT_HOSTNAME="freebsd-tl-wdr3600"
-X_PACKAGELIST="dropbear dnsmasq lua bsdtools"
-# X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+
+# Extra packages for this platform - disabled until the base system is smaller!
+# X_PACKAGELIST="lzo2 openvpn"

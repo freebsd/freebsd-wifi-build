@@ -35,9 +35,8 @@ TPLINK_HARDWARE_VER=1
 TPLINK_HARDWARE_FLASHID=8M
 TPLINK_FIRMWARE_RESERV=0x40000
 
-#X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
-X_PACKAGELIST="bsdtools dropbear dnsmasq lua"
-TARGET_CROSS_TOOLCHAIN="mips-gcc"
+# Extra packages
+X_PACKAGELIST=""
 
 # Building the firmware image
 X_BUILD_BUILD_IMG_DEFAULTS="mfsroot makepkgs addpkgs fsimage tplink"
