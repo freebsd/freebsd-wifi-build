@@ -151,6 +151,23 @@ port_unpack()
 	( cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
 }
 
+# Copy optional files into the working directory.
+# Note this doesn't (yet) include the subdirectories!
+port_prefiles()
+{
+	local x_file
+	local x_path
+	local x_remainder
+
+	echo "Copying pre-build files into working directory.."
+	for i in ${PKG_PRE_BUILD_FILELIST}; do
+		echo "*** ${i}"
+		x_file="${i%%:*}" ; x_remainder="${i#*:}"
+		x_path="${x_remainder%%:*}"
+		cp ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/prefiles/${x_file} ${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${x_path} || exit 1
+	done
+}
+
 port_patch()
 {
 	echo "Patching.."
