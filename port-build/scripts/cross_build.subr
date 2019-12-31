@@ -4,6 +4,57 @@
 
 # public functions
 
+# This clones the git repository, but doesn't actually check out a working
+# copy.
+#
+# This is done so things can be patched in the build tree and then cleaned
+# without deleting the full git repository clone.
+#
+port_git_clone()
+{
+	local X_GIT_BASEDIR
+	local X_GIT_REPODIR
+
+	if [ "${PKG_GIT_REPOSITORY}" == "" ]; then
+		echo "port_git_checkout: SKIPPING: not a git repository"
+		return 0
+	fi
+
+	X_GIT_BASEDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+	X_GIT_REPODIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}.git"
+
+	mkdir -p ${X_GIT_BASEDIR}
+
+	# XXX TODO: handle the directory existing; potentially just update
+	git clone -n ${PKG_GIT_REPOSITORY} ${X_GIT_REPODIR} ||exit 1
+}
+
+# Check out the git repository into the build directory.
+#
+# This is a shallow clone in order to make it take up much less
+# space.
+#
+port_git_checkout()
+{
+	local X_GIT_BASEDIR
+	local X_GIT_REPODIR
+
+	if [ "${PKG_GIT_REPOSITORY}" == "" ]; then
+		echo "port_git_clone: SKIPPING: not a git repository"
+		return 0
+	fi
+
+	X_GIT_BASEDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+	X_GIT_REPODIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}.git"
+
+	# Delete the previous work directory
+	mkdir -p ${X_GIT_BASEDIR}
+	rm -rf "${X_GIT_BASEDIR}/${PKG_GIT_DESTDIR}"
+
+	# And now check out the destination tag/branch in the working directory
+	git clone ${X_GIT_REPODIR} --depth 1 -b ${PKG_GIT_TAG} ${X_GIT_BASEDIR}/${PKG_GIT_DESTDIR}
+}
+
 port_incplatform()
 {
 	# XXX verify it exists first
@@ -26,6 +77,11 @@ port_checksum()
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
 	local X_CKSUM
 
+	if [ "${PKGDISTFILE}" = "" ]; then
+		echo "checksum: Skipping; no PKGDISTFILE"
+		return 0
+	fi
+
 	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
 		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
 	fi
@@ -44,9 +100,9 @@ port_fetch()
 {
 	local X_PKGFILE
 
-	if [ "x${PKGDISTFILE}" = "x" ]; then
-		echo "ERROR: need PKGDISTFILE to fetch"
-		exit 1
+	if [ "${PKGDISTFILE}" = "" ]; then
+		echo "fetch: Skipping; no PKGDISTFILE"
+		return 0
 	fi
 
 	X_PKGFILE="`basename ${PKGDISTFILE}`"
@@ -74,6 +130,12 @@ port_clean()
 port_unpack()
 {
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
+
+	if [ "${PKGDISTFILE}" = "" ]; then
+		echo "fetch: Skipping; no PKGDISTFILE"
+		return 0
+	fi
+
 	echo "Unpacking..."
 	port_checksum
 	if [ $? != 0 ]; then
@@ -94,8 +156,8 @@ port_patch()
 	echo "Patching.."
 	for i in ${PKG_PRE_BUILD_PATCHLIST}; do
 		echo "*** ${i}"
-		cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
-		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}"
+		cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}" || exit 1
+		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}" || exit 1
 	done
 }
 

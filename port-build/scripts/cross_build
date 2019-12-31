@@ -63,6 +63,12 @@ runcmd()
 		'clean')
 			port_clean
 		;;
+		'git_clone')
+			port_git_clone
+		;;
+		'git_checkout')
+			port_git_checkout
+		;;
 		'fetch')
 			port_fetch
 		;;
@@ -98,7 +104,7 @@ runcmd()
 }
 
 if [ "x$1" = "x" ]; then
-	CMDLIST="clean fetch unpack patch configure cmake build staging files package"
+	CMDLIST="clean fetch git_checkout unpack patch configure cmake build staging files package"
 else
 	CMDLIST="$*"
 fi
