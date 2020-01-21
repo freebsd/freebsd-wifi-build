@@ -1,7 +1,7 @@
 RM?=	rm
 LDFLAGS+=	-lz -lcrypto
 PREFIX?=	/usr/local
-MIPSCC!=(pkg info -l mips-gcc | grep '\-gcc$$')
+MIPSCC!=(pkg info -l mips-gcc6 | grep '\-gcc6$$')
 MIPSOBJECTS=trxloader.o tinfl.o mem.o
 MIPSCFLAGS=-EL -O1 -g -fno-pic -mno-abicalls -nostdlib -I/usr/include
 GZIP=gzip -nc9

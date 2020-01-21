@@ -6,7 +6,7 @@ X_ROOTDIR="${X_PACKAGE_ROOTDIR}"
 X_PKG_CPU_ARGS="-march=mips32 -EL -msoft-float -Wa,-msoft-float"
 X_PKG_INCS="-I${X_ROOTDIR}/usr/include"
 
-X_PKG_CROSS_COMPILE=$(pkg info -l mips-gcc | grep '\-gcc$' | sed  's/.*\(mips-[^-]\{1,\}-freebsd[^-]\{1,\}\).*/\1/')
+X_PKG_CROSS_COMPILE=$(pkg info -l mips-gcc6 | grep '\-gcc6$' | sed  's/.*\(mips-[^-]\{1,\}-freebsd[^-]\{1,\}\).*/\1/')
 
 X_PKG_SYSROOT="${X_ROOTDIR}"
 X_PKG_CFLAGS=""
@@ -14,8 +14,8 @@ X_PKG_CXXFLAGS=""
 X_PKG_CPPFLAGS=""
 X_PKG_LDFLAGS="--sysroot=${X_PKG_SYSROOT}"
 X_PKG_CC_ARGS="--sysroot=${X_PKG_SYSROOT} ${X_PKG_CPU_ARGS} ${X_PKG_INCS} -O"
-X_PKG_CC="${X_PKG_CROSS_COMPILE}-gcc ${X_PKG_CC_ARGS}"
-X_PKG_CXX="${X_PKG_CROSS_COMPILE}-g++ ${X_PKG_CC_ARGS}"
+X_PKG_CC="${X_PKG_CROSS_COMPILE}-gcc6 ${X_PKG_CC_ARGS}"
+X_PKG_CXX="${X_PKG_CROSS_COMPILE}-g++6 ${X_PKG_CC_ARGS}"
 X_PKG_LD="${X_PKG_CROSS_COMPILE}"-ld
 X_PKG_AR="${X_PKG_CROSS_COMPILE}"-ar
 X_PKG_RANLIB="${X_PKG_CROSS_COMPILE}"-ranlib

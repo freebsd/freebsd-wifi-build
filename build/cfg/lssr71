@@ -33,7 +33,7 @@ X_CFG_DEFAULT_ETHER="arge0"
 X_CFG_DEFAULT_HOSTNAME="freebsd-lssr71"
 
 X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
-TARGET_CROSS_TOOLCHAIN="mips-gcc"
+TARGET_CROSS_TOOLCHAIN="mips-gcc6"
 
 # Building the firmware image
 #X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs tinymfsroot makepkgs addpkgs fsimage ubnt"

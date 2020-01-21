@@ -2,7 +2,7 @@
 
 # This script checks that relevant packages have been installed.
 
-PKG_LIST="uboot-mkimage-2010.12 lzma perl5 rsync mips-xtoolchain-gcc"
+PKG_LIST="uboot-mkimage-2010.12 lzma perl5 rsync mips-gcc6"
 
 retval=0
 for i in ${PKG_LIST}; do

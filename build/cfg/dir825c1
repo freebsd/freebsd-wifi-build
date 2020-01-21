@@ -67,5 +67,5 @@ X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage uboot"
 
 # packages
 X_PACKAGELIST="dropbear dnsmasq"
-TARGET_CROSS_TOOLCHAIN="mips-gcc"
+TARGET_CROSS_TOOLCHAIN="mips-gcc6"
 
