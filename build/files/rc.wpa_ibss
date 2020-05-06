@@ -66,6 +66,7 @@ generate_wpa_cfg_sta()
 	_wpa_passphrase=`get_if_var ${_ifname} netif_IF_wifi_sta_passphrase FREEBSD_PASSWORD`
 	_wpa_key_mgmt=`get_if_var ${_ifname} netif_IF_wifi_sta_key_mgmt UNSET`
 	_wpa_hidden=`get_if_var ${_ifname} netif_IF_wifi_sta_hidden NO`
+	_wpa_bssid=`get_if_var ${_ifname} netif_IF_wifi_sta_bssid UNSET`
 
 	if [ "${_wpa_hidden}" = "NO" ]; then
 		_wpa_ap_scan=""
@@ -84,6 +85,12 @@ generate_wpa_cfg_sta()
 	else
 		_wpa_key_mgmt="key_mgmt=${_wpa_key_mgmt}"
 		_psk="psk=\"${_wpa_passphrase}\""
+	fi
+
+	if [ "${_wpa_bssid}" = "UNSET" ]; then
+		_wpa_bssid=""
+	else
+		_wpa_bssid="bssid=${_wpa_bssid}"
 	fi
 
 #	_wpa_proto=`get_if_var ${_ifname} netif_IF_wifi_ibss_proto WPA`
@@ -108,6 +115,7 @@ network={
 	${_wpa_key_mgmt}
 	${_psk}
 	${_wpa_scan_ssid}
+	${_wpa_bssid}
 }
 EOF
 	mv ${_wpa_cfg_tmp} ${_wpa_cfg}
