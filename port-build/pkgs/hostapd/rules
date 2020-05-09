@@ -1,0 +1,29 @@
+PKGNAME=hostapd
+PKGVERSION=2.9
+PKGREVISION=1
+PKG_GIT_REPOSITORY=git://w1.fi/srv/git/hostap.git
+PKG_GIT_TAG=hostap_2_9
+PKG_GIT_DESTDIR=hostap_2_9
+PKGDISTFILE=""
+PKGDISTFILE_DESTNAME=""
+PKGDISTFILE_SUM_SHA512=""
+PKGWORKSUBDIR=hostap_2_9
+USE_CONFIGURE=NO
+USE_CMAKE=NO
+
+# XXX this is just for testing; it can't build >1 subdir!
+PKG_MAKE_BUILD_SUBDIR="hostapd"
+
+PKG_MAKE_CMAKE_SUBDIR=""
+PKG_MAKE_CMAKE_FLAGS=""
+PKG_MAKE_BUILD_FLAGS=""
+PKG_INSTALL_BUILD_FLAGS=""
+
+PKG_PRE_BUILD_PATCHLIST="patch-src-l2_packet-l2_packet_freebsd.c patch-src_common_dhcp.h patch-src_drivers_driver__bsd.c patch-src_utils_os.h patch-src_utils_os__unix.c patch-src_wps_wps__upnp.c patch-hostapd-Makefile"
+
+PKG_PRE_BUILD_FILELIST="config:hostapd/.config"
+
+# It's only a build dep; it's static linked instead of shared-linked.
+# Not sure why, sigh.
+PKG_BUILD_DEPS=""
+PKG_RUN_DEPS=""

@@ -15,7 +15,7 @@ RECOVERY_PIN_ACTIVE="0"
 MFSROOT_INC_MODULES="YES"
 MFSROOT_INC_MODULE_LIST=""
 # VLAN support
-MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_vlan if_gif if_gre if_tap if_tun alq"
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_vlan if_gif if_gre if_tuntap alq"
 
 # ALQ support - needed for the rest of the modules (wlan, ath)
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} alq"
@@ -44,7 +44,7 @@ MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} usb usb_quirk usb_template u
 
 # Make a ulzma image
 X_FSIMAGE_CMD="mkuzip"
-X_FSIMAGE_ARGS="-L -d -s 65536 -v"
+X_FSIMAGE_ARGS="-L -d -s 65536 -S"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Use LZMA to compress the kernel
@@ -68,4 +68,6 @@ X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage tplink"
 # Configuration file overrides
 X_CFG_DEFAULT_ETHER="arge0"
 X_CFG_DEFAULT_HOSTNAME="freebsd-tl-wdr3600"
-X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
+
+# Extra packages for this platform - disabled until the base system is smaller!
+# X_PACKAGELIST="lzo2 openvpn"

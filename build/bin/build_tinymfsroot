@@ -155,8 +155,6 @@ ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/usr/bin/vmstat
 # install ${X_DESTDIR}/lib/libdevstat.so.7 ${X_STAGING_FSROOT}/lib/
 
 # libraries are for grep, tar, cpio
-${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/usr/bin/tar
-${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/usr/bin/cpio
 ${INSTALL_DEF_LINK} /sbin/bsdbox ${X_STAGING_FSROOT}/usr/bin/grep
 #install ${X_DESTDIR}/usr/lib/libgnuregex.so.5 ${X_STAGING_FSROOT}/usr/lib/
 #install ${X_DESTDIR}/usr/lib/libbz2.so.4 ${X_STAGING_FSROOT}/usr/lib/

@@ -33,7 +33,7 @@ X_PORTBUILD_DIR=${SCRIPT_DIR}/../../port-build/
 # We need to figure out how to populate a metadata file with
 # the right contents.
 
-for i in ${X_PACKAGELIST}; do
+for i in ${X_DEFAULT_PACKAGELIST} ${X_PACKAGELIST}; do
 	echo "*** Adding package $i to rootfs"
 	cd ${X_STAGING_FSROOT}
 	tar zxpvf ${X_PACKAGE_PKGDIR}/${i}.tar.gz
@@ -48,7 +48,7 @@ done
 # Now, populate a complete mtree file from all of them, so we can
 # feed it to the big filter for the 'fsimage' target.
 rm -f ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-pkgs.mtree
-for i in ${X_PACKAGELIST}; do
+for i in ${X_DEFAULT_PACKAGELIST} ${X_PACKAGELIST}; do
 	cat ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-${i}.mtree >> ${X_STAGING_FSROOT}/../${X_PACKAGE_SUBDIR}-pkgs.mtree
 done
 

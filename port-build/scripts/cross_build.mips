@@ -25,7 +25,7 @@ X_PKG_STRIP="${X_PKG_CROSS_COMPILE}"-strip
 X_PKG_CONFIGURE_HOSTFLAGS="--host=${X_PKG_CROSS_COMPILE}"
 
 # now run:
-# /configure --host=mips-unknown-freebsd12.0
+# /configure --host=mips-unknown-freebsd13.0
 # gmake
 
 #$*

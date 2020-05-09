@@ -1,0 +1,18 @@
+PKGNAME=bsdtools
+PKGVERSION=1.0.0
+PKGREVISION=1
+PKGDISTFILE=https://github.com/erikarn/bsdtools/archive/release/1.0.1.tar.gz
+PKGDISTFILE_DESTNAME=bsdtools-1.0.1.tar.gz
+PKGDISTFILE_SUM_SHA512=1b4f6f88effd014c61d0b43e8ee3d4c07be51bfdce516f8ee799e301c40306136961a5dfbb5b488e8239d04aa47f37c09fd90e6fd54257a19391173da758463f
+PKGWORKSUBDIR=bsdtools-release-1.0.1
+USE_CMAKE=YES
+PKG_MAKE_BUILD_SUBDIR="new/src/build"
+PKG_MAKE_CMAKE_SUBDIR="new/src"
+PKG_MAKE_CMAKE_FLAGS=""
+PKG_MAKE_BUILD_FLAGS=""
+PKG_INSTALL_BUILD_FLAGS=""
+
+# It's only a build dep; it's static linked instead of shared-linked.
+# Not sure why, sigh.
+PKG_BUILD_DEPS=""
+PKG_RUN_DEPS=""

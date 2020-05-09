@@ -14,7 +14,7 @@ UBNT_VERSION="LS-SR71.ar7100"
 # Modules need to be included
 MFSROOT_INC_MODULES="YES"
 # MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} gpio"
-MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tap if_tun"
+MFSROOT_INC_MODULE_LIST="if_vlan if_gif if_gre if_tuntap"
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
 MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
 
@@ -32,9 +32,7 @@ X_FSIMAGE_SUFFIX=".ulzma"
 X_CFG_DEFAULT_ETHER="arge0"
 X_CFG_DEFAULT_HOSTNAME="freebsd-lssr71"
 
-X_PACKAGELIST="dropbear dnsmasq lua lzo2 openvpn"
-TARGET_CROSS_TOOLCHAIN="mips-gcc"
+X_PACKAGELIST=""
 
 # Building the firmware image
-#X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs tinymfsroot makepkgs addpkgs fsimage ubnt"
-X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage ubnt"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs tinymfsroot makepkgs addpkgs fsimage ubnt"

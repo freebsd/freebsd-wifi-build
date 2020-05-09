@@ -21,11 +21,10 @@ X_PKG_AR="${X_PKG_CROSS_COMPILE}"-ar
 X_PKG_RANLIB="${X_PKG_CROSS_COMPILE}"-ranlib
 X_PKG_STRIP="${X_PKG_CROSS_COMPILE}"-strip
 
-
 X_PKG_CONFIGURE_HOSTFLAGS="--host=${X_PKG_CROSS_COMPILE}"
 
 # now run:
-# /configure --host=mips-portbld-freebsd12.0
+# /configure --host=mips-portbld-freebsd13.0
 # gmake
 
 #$*

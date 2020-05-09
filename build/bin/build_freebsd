@@ -65,6 +65,9 @@ echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 # Stuff for AP builds
 if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
+#	echo 'WITHOUT_CRYPT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_DMAGENT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_PKGBOOTSTRAP="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_AMD="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_ATM="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_AUDIT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
@@ -84,6 +87,8 @@ if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_OFED="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_SVNLITE="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CLANG="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_OFED="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'NO_SHARED=NO' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 

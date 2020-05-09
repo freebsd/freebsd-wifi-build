@@ -9,7 +9,7 @@ BIN_CFG_PARTITION="/dev/map/cfg"
 BIN_CFG_SIZE="65536"
 
 MFSROOT_INC_MODULES="YES"
-MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif if_tap libalias ipfw ipfw_nat ipfw_nptv6"
+MFSROOT_INC_MODULE_LIST="if_gre if_vlan if_gif if_tuntap libalias ipfw ipfw_nat ipfw_nptv6"
 
 # Use lzma for rootfs
 X_FSIMAGE_CMD="mkuzip"
@@ -36,4 +36,8 @@ TPLINK_HARDWARE_FLASHID=8M
 TPLINK_FIRMWARE_RESERV=0x40000
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage tplink"
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage tplink"
+
+# extra packages
+X_PACKAGELIST=""
+

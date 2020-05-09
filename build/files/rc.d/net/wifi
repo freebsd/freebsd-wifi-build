@@ -63,7 +63,7 @@ netif_wifi_createargs1="`get_if_var $ifname netif_IF_wifi_createargs1 ''`"
 netif_wifi_createargs2="`get_if_var $ifname netif_IF_wifi_createargs2 ''`"
 netif_wifi_createargs3="`get_if_var $ifname netif_IF_wifi_createargs3 ''`"
 
-netif_wifi_meshid="`get_if_var $ifname netif_IF_wifi_meshid 'freebsd-mesh'`"
+netif_wifi_meshid="`get_if_var $ifname netif_IF_wifi_meshid ''`"
 netif_wifi_channel="`get_if_var $ifname netif_IF_wifi_channel ''`"
 netif_wifi_country="`get_if_var $ifname netif_IF_wifi_country ''`"
 netif_wifi_apbridge="`get_if_var $ifname netif_IF_wifi_apbridge 'YES'`"

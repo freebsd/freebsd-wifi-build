@@ -1,0 +1,24 @@
+# Base configuration
+X_BUILD_BASE_CFG="mips_ap"
+
+KERNCONF=UBNT_LITE5
+
+# The configuration load/save script needs to know the
+# configuration partition name and location.
+BIN_CFG_PARTITION="/dev/redboot/cfg"
+BIN_CFG_SIZE="65536"
+
+# XXX TODO: need to figure out which strings to use!
+UBNT_ARCH="LS-SR71"
+UBNT_VERSION="LS-SR71.ar7100"
+
+# Make a ulzma image
+X_FSIMAGE_CMD="mkuzip"
+# XXX this is so high right now in order to get this
+# squeezed onto 8MB of flash, given a 5.9MB compressed
+# filesystem..
+X_FSIMAGE_ARGS="-L -d -s 65536 -v"
+X_FSIMAGE_SUFFIX=".ulzma"
+
+# Building the firmware image
+X_BUILD_BUILD_IMG_DEFAULTS="tinymfsroot fsimage ubnt"

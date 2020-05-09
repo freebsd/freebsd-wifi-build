@@ -1,0 +1,12 @@
+index 2a6bd7ac8..4279a9af1 100644
+--- hostapd/Makefile
++++ hostapd/Makefile
+@@ -1304,7 +1304,7 @@ verify_config:
+ 	fi
+ 
+ $(DESTDIR)$(BINDIR)/%: %
+-	install -D $(<) $(@)
++	install -d -D $(<) $(@)
+ 
+ install: $(addprefix $(DESTDIR)$(BINDIR)/,$(ALL))
+ 

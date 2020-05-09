@@ -4,6 +4,57 @@
 
 # public functions
 
+# This clones the git repository, but doesn't actually check out a working
+# copy.
+#
+# This is done so things can be patched in the build tree and then cleaned
+# without deleting the full git repository clone.
+#
+port_git_clone()
+{
+	local X_GIT_BASEDIR
+	local X_GIT_REPODIR
+
+	if [ "${PKG_GIT_REPOSITORY}" == "" ]; then
+		echo "port_git_checkout: SKIPPING: not a git repository"
+		return 0
+	fi
+
+	X_GIT_BASEDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+	X_GIT_REPODIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}.git"
+
+	mkdir -p ${X_GIT_BASEDIR}
+
+	# XXX TODO: handle the directory existing; potentially just update
+	git clone -n ${PKG_GIT_REPOSITORY} ${X_GIT_REPODIR} ||exit 1
+}
+
+# Check out the git repository into the build directory.
+#
+# This is a shallow clone in order to make it take up much less
+# space.
+#
+port_git_checkout()
+{
+	local X_GIT_BASEDIR
+	local X_GIT_REPODIR
+
+	if [ "${PKG_GIT_REPOSITORY}" == "" ]; then
+		echo "port_git_clone: SKIPPING: not a git repository"
+		return 0
+	fi
+
+	X_GIT_BASEDIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
+	X_GIT_REPODIR="${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}.git"
+
+	# Delete the previous work directory
+	mkdir -p ${X_GIT_BASEDIR}
+	rm -rf "${X_GIT_BASEDIR}/${PKG_GIT_DESTDIR}"
+
+	# And now check out the destination tag/branch in the working directory
+	git clone ${X_GIT_REPODIR} --depth 1 -b ${PKG_GIT_TAG} ${X_GIT_BASEDIR}/${PKG_GIT_DESTDIR}
+}
+
 port_incplatform()
 {
 	# XXX verify it exists first
@@ -26,6 +77,15 @@ port_checksum()
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
 	local X_CKSUM
 
+	if [ "${PKGDISTFILE}" = "" ]; then
+		echo "checksum: Skipping; no PKGDISTFILE"
+		return 0
+	fi
+
+	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
+		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
+	fi
+
 	X_CKSUM="`sha512 -q ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} || true`"
 
 	if [ "${X_CKSUM}" != "${PKGDISTFILE_SUM_SHA512}" ]; then
@@ -38,10 +98,16 @@ port_checksum()
 
 port_fetch()
 {
+	local X_PKGFILE
 
-	if [ "x${PKGDISTFILE}" = "x" ]; then
-		echo "ERROR: need PKGDISTFILE to fetch"
-		exit 1
+	if [ "${PKGDISTFILE}" = "" ]; then
+		echo "fetch: Skipping; no PKGDISTFILE"
+		return 0
+	fi
+
+	X_PKGFILE="`basename ${PKGDISTFILE}`"
+	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
+		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
 	fi
 
 	# Check if the checksum matches
@@ -53,7 +119,7 @@ port_fetch()
 
 	# XXX TODO: eliminate the cd
 	mkdir -p "${X_PACKAGE_DISTFILE_DIR}"
-	( cd "${X_PACKAGE_DISTFILE_DIR}" && fetch ${PKGDISTFILE} )
+	( cd "${X_PACKAGE_DISTFILE_DIR}" && fetch -o "${X_PKGFILE}" ${PKGDISTFILE} )
 }
 
 port_clean()
@@ -64,6 +130,12 @@ port_clean()
 port_unpack()
 {
 	local X_PKGFILE="`basename ${PKGDISTFILE}`"
+
+	if [ "${PKGDISTFILE}" = "" ]; then
+		echo "fetch: Skipping; no PKGDISTFILE"
+		return 0
+	fi
+
 	echo "Unpacking..."
 	port_checksum
 	if [ $? != 0 ]; then
@@ -71,8 +143,29 @@ port_unpack()
 		return 1
 	fi
 
+	if [ "${PKGDISTFILE_DESTNAME}" != "" ]; then
+		X_PKGFILE="${PKGDISTFILE_DESTNAME}"
+	fi
+
 	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/"
 	( cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/" && tar zxvf ${X_PACKAGE_DISTFILE_DIR}/${X_PKGFILE} )
+}
+
+# Copy optional files into the working directory.
+# Note this doesn't (yet) include the subdirectories!
+port_prefiles()
+{
+	local x_file
+	local x_path
+	local x_remainder
+
+	echo "Copying pre-build files into working directory.."
+	for i in ${PKG_PRE_BUILD_FILELIST}; do
+		echo "*** ${i}"
+		x_file="${i%%:*}" ; x_remainder="${i#*:}"
+		x_path="${x_remainder%%:*}"
+		cp ${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/prefiles/${x_file} ${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${x_path} || exit 1
+	done
 }
 
 port_patch()
@@ -80,8 +173,8 @@ port_patch()
 	echo "Patching.."
 	for i in ${PKG_PRE_BUILD_PATCHLIST}; do
 		echo "*** ${i}"
-		cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
-		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}"
+		cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}" || exit 1
+		patch -t -p0 < "${X_PORTBUILD_DIR}/pkgs/${X_PORTBUILD_PORT}/patches/${i}" || exit 1
 	done
 }
 
@@ -111,11 +204,39 @@ port_configure()
 	    ./configure ${X_PKG_CONFIGURE_HOSTFLAGS} ${PKG_MAKE_CONFIGURE_FLAGS}
 }
 
+port_cmake()
+{
+	if [ "x${USE_CMAKE}" != "xYES" ]; then
+		echo "Skipping configure; not needed"
+		return
+	fi
+	echo "Running cmake ${CMAKE_HOSTFLAGS}"
+
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${PKG_MAKE_CMAKE_SUBDIR}"
+	mkdir build
+	cd build
+
+	# Setup the build environment
+	env \
+	    CC="${X_PKG_CC}" \
+	    CXX="${X_PKG_CXX}" \
+	    LD="${X_PKG_LD}" \
+	    AR="${X_PKG_AR}" \
+	    RANLIB="${X_PKG_RANLIB}" \
+	    STRIP="${X_PKG_STRIP}" \
+	    SYSROOT="${X_PKG_SYSROOT}" \
+	    CFLAGS="${X_PKG_CFLAGS}" \
+	    CXXFLAGS="${X_PKG_CXXFLAGS}" \
+	    CPPFLAGS="${X_PKG_CPPFLAGS}" \
+	    LDFLAGS="${X_PKG_LDFLAGS}" \
+	    cmake ${X_PKG_CMAKE_HOSTFLAGS} ${PKG_MAKE_CMAKE_FLAGS} ..
+}
+
 port_build()
 {
 	echo "Building ${CONFIGURE_HOSTFLAGS}"
 
-	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${PKG_MAKE_BUILD_SUBDIR}"
 
 	# For now, hard-code gmake. Later on we'll allow this to be
 	# something other than gmake as appropriate.
@@ -144,7 +265,7 @@ port_staging()
 	# Obviously this isn't always going to be the case, but for
 	# ./configure based bits it should work.
 	mkdir -p "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/staging/"
-	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/"
+	cd "${X_PACKAGE_BUILDROOT_DIR}/${X_PORTBUILD_PORT}/work/${PKGWORKSUBDIR}/${PKG_MAKE_BUILD_SUBDIR}"
 	env \
 	    CC="${X_PKG_CC}" \
 	    CXX="${X_PKG_CXX}" \
