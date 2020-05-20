@@ -364,6 +364,7 @@ ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc2 ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/login.conf ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/gettytab ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/passwd ${X_STAGING_FSROOT}/c/etc/
+${INSTALL_DEF_FILE} ${X_BASEDIR}/files/profile ${X_STAGING_FSROOT}/c/etc/
 # XXX perms?
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/master.passwd ${X_STAGING_FSROOT}/c/etc/
 ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/group ${X_STAGING_FSROOT}/c/etc/
