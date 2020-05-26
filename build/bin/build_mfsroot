@@ -158,6 +158,9 @@ ${INSTALL_DEF_FILE} ${X_BASEDIR}/files/crontab ${X_STAGING_FSROOT}/c/etc/
 # syslog / logging
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/syslogd ${X_STAGING_FSROOT}/usr/sbin/
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/logger ${X_STAGING_FSROOT}/usr/bin/
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/fifolog_create ${X_STAGING_FSROOT}/usr/sbin
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/fifolog_reader ${X_STAGING_FSROOT}/usr/sbin
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/fifolog_writer ${X_STAGING_FSROOT}/usr/sbin
 
 # PCI tools
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/pciconf ${X_STAGING_FSROOT}/usr/sbin/
