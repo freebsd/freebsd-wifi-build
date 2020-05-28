@@ -22,9 +22,9 @@ syslog_start()
 		done
 	fi
 
-	# Initialise fifolog; hard coded 500k because
-	# it's a hard-coded 1MB /var/ in /etc/rc .
-	fifolog_create -r 524288 /var/log/syslog_fifolog
+	# Initialise fifolog; hard coded 256k because
+	# it's a hard-coded 1MB FS /var/ in /etc/rc .
+	fifolog_create -r 262144 /var/log/syslog_fifolog
 
 	# for now, don't log remote messages..
 	echo "*** Starting syslogd..."
