@@ -19,7 +19,7 @@ case $1 in
 		if [ "${dropbear_listen_address}" != "" ]; then
 			dropbear_listen_address="-p ${dropbear_listen_address}"
 		fi
-		/usr/local/sbin/dropbear ${dropbear_cmd_options} ${dropbear_listen_address} || exit 127
+		/usr/bin/dropbear ${dropbear_cmd_options} ${dropbear_listen_address} || exit 127
 		exit 0
 		;;
 	'stop')
