@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "*** dhclient-enter reason=$reason interface=$interface medium=$medium old_ip_address=$old_ip_address new_ip_address=$new_ip_address new_subnet_mask=$new_subnet_mask new_routers=$new_routers new_static_routes=$new_static_routes" >> /var/log/state.log
+logger -t dhclient-enter "dhclient-enter reason=$reason interface=$interface medium=$medium old_ip_address=$old_ip_address new_ip_address=$new_ip_address new_subnet_mask=$new_subnet_mask new_routers=$new_routers new_static_routes=$new_static_routes"
