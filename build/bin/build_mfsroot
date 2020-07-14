@@ -330,13 +330,12 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/libexec/ld-elf.so.1 ${X_STAGING_FSROOT}/libexec/
 
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libc.so.7 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libedit.so.7 ${X_STAGING_FSROOT}/lib/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libncurses.so.9 ${X_STAGING_FSROOT}/lib/
+# ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libncurses.so.9 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libncursesw.so.9 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libcrypt.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libgcc_s.so.1 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libbsdxml.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libsbuf.so.6 ${X_STAGING_FSROOT}/lib/
-# install ${X_DESTDIR}/lib/libipx.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libutil.so.9 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libkvm.so.7 ${X_STAGING_FSROOT}/lib/
@@ -356,6 +355,10 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
 
 # libgpio is a stand alone library now, needed for gpioctl
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libgpio.so.0 ${X_STAGING_FSROOT}/usr/lib/
+
+# watchdog / watchdogd
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/watchdogd ${X_STAGING_FSROOT}/usr/sbin/
+${INSTALL_DEF_LINK} /usr/sbin/watchdogd ${X_STAGING_FSROOT}/usr/bin/watchdog
 
 # RC script
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc ${X_STAGING_FSROOT}/etc/
