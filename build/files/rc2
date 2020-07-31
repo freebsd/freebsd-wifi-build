@@ -51,6 +51,9 @@ echo "*** Default password/login databases .."
 /usr/sbin/pwd_mkdb /etc/master.passwd
 /usr/bin/cap_mkdb /etc/login.conf
 
+# flip on watchdogd before any sysctls; in case something hangs things
+/etc/rc.d/base/watchdogd start
+
 # sysctl
 echo "*** Customising sysctl .."
 /etc/rc.d/base/sysctl start
