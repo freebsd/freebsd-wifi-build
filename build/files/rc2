@@ -62,8 +62,11 @@ echo "*** Customising sysctl .."
 /etc/rc.d/base/syslogd start
 
 # Start network
-echo "*** Starting networking via /etc/rc.d/base/net"
+echo "*** [NET] Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
+
+# Setup DNS options if they're provided
+/etc/rc.d/base/dns start
 
 # run cron/inetd as default
 /etc/rc.d/srv/cron start
