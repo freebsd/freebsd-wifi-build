@@ -395,6 +395,7 @@ ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/firewall ${X_STAGING_FSROOT}/c/e
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/routing ${X_STAGING_FSROOT}/c/etc/rc.d/base/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/syslogd ${X_STAGING_FSROOT}/c/etc/rc.d/base/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/watchdogd ${X_STAGING_FSROOT}/c/etc/rc.d/base/
+${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/base/dns ${X_STAGING_FSROOT}/c/etc/rc.d/base/
 
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/ether ${X_STAGING_FSROOT}/c/etc/rc.d/net/
 ${INSTALL_DEF_BIN} ${X_BASEDIR}/files/rc.d/net/bridge ${X_STAGING_FSROOT}/c/etc/rc.d/net/
