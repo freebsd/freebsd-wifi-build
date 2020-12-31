@@ -8,3 +8,9 @@ LOCAL_DIRS="tools/tools/ath tools/tools/net80211/wlanstats tools/tools/net80211/
 LOCAL_TOOL_DIRS="tools/bsdbox/"
 
 X_PORTBUILD_PLATFORM="mips"
+
+# Default packages required
+X_DEFAULT_PACKAGELIST="dropbear dnsmasq lua bsdtools"
+
+# Example using cross toolchain for base system
+TARGET_CROSS_TOOLCHAIN="mips-gcc"
