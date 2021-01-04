@@ -1,5 +1,5 @@
 # Base configuration
-X_BUILD_BASE_CFG="mips_ap"
+X_BUILD_BASE_CFG="mips"
 
 KERNCONF=RSPRO_STANDALONE
 
