@@ -188,7 +188,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libdevinfo.so.6 ${X_STAGING_FSROOT}/usr/
 
 # libraries are for grep, df
 ${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/bin/grep ${X_STAGING_FSROOT}/usr/bin/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libgnuregex.so.5 ${X_STAGING_FSROOT}/usr/lib/
+${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libregex.so.1 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libbz2.so.4 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libz.so.6 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libmd.so.6 ${X_STAGING_FSROOT}/lib/
@@ -262,7 +262,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_rhosts.so ${X_STAGING_FSROOT}/usr/li
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_rootok.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_securetty.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_self.so ${X_STAGING_FSROOT}/usr/lib
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
+# ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_ssh.so ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/pam_unix.so ${X_STAGING_FSROOT}/usr/lib
 #${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libypclnt.so.4 ${X_STAGING_FSROOT}/usr/lib
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/nsswitch.conf ${X_STAGING_FSROOT}/c/etc/nsswitch.conf
@@ -342,7 +342,7 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libkiconv.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libkvm.so.7 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libnv.so.0 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libpcap.so.8 ${X_STAGING_FSROOT}/lib/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libcrypto.so.111 ${X_STAGING_FSROOT}/lib/
+# ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libcrypto.so.111 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libm.so.5 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libipsec.so.4 ${X_STAGING_FSROOT}/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/libthr.so.3 ${X_STAGING_FSROOT}/lib/
@@ -351,8 +351,8 @@ ${INSTALL_DEF_LIB} ${X_DESTDIR}/lib/lib80211.so.1 ${X_STAGING_FSROOT}/lib/
 
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libmemstat.so.3 ${X_STAGING_FSROOT}/usr/lib/
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libnetgraph.so.4 ${X_STAGING_FSROOT}/usr/lib/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libssl.so.111 ${X_STAGING_FSROOT}/usr/lib/
-${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
+# ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libssl.so.111 ${X_STAGING_FSROOT}/usr/lib/
+# ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libmp.so.7 ${X_STAGING_FSROOT}/usr/lib/
 
 # libgpio is a stand alone library now, needed for gpioctl
 ${INSTALL_DEF_LIB} ${X_DESTDIR}/usr/lib/libgpio.so.0 ${X_STAGING_FSROOT}/usr/lib/
