@@ -12,16 +12,19 @@ syslog_start()
 		return 0
 	fi
 
-	# For now the only syslog operation is to log remotely.
-	# Syslogd can't log to a ramdisk efficiently because it
-	# isn't yet doing its own log rotation.
 	echo "# Automatically generated! Do not edit" > /var/run/syslogd.conf
+	echo "*.* |fifolog_writer /var/log/syslog_fifolog" >> /var/run/syslogd.conf
+
 
 	if [ "${syslogd_remote_host}" != "" ]; then
 		for i in ${syslogd_remote_host}; do
 			echo "*.*		@${i}" >> /var/run/syslogd.conf
 		done
 	fi
+
+	# Initialise fifolog; hard coded 256k because
+	# it's a hard-coded 1MB FS /var/ in /etc/rc .
+	fifolog_create -s 262144 /var/log/syslog_fifolog
 
 	# for now, don't log remote messages..
 	echo "*** Starting syslogd..."

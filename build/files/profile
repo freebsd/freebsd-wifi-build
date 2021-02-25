@@ -1,0 +1,3 @@
+PS1='\H:\w\$ ' ; export PS1
+PATH='/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin' ; export PATH
+

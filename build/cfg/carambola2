@@ -71,4 +71,4 @@ X_CFG_DEFAULT_ETHER="arge1"
 X_CFG_DEFAULT_HOSTNAME="freebsd-carambola2"
 
 # Extra packages
-X_PACKAGELIST="lzo2 openvpn"
+X_PACKAGELIST=""

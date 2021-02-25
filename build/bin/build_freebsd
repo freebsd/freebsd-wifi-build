@@ -58,10 +58,15 @@ fi
 
 # Create blank make.conf/src.conf
 echo "" > ${X_DESTDIR}/../make.conf.${BUILDNAME}
+echo "" > ${X_DESTDIR}/../src-env.conf.${BUILDNAME}
 echo "" > ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 # Make a src.conf
 echo 'KERN_DEBUGDIR=""' > ${X_DESTDIR}/../src.conf.${BUILDNAME}
+
+# For now, disable OFED until I figure out why it doesn't work
+# in cross compiles (for bsdbox w/ tcpdump, hostapd)
+echo 'WITHOUT_OFED="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 
 # Stuff for AP builds
 if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
@@ -88,7 +93,7 @@ if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo 'WITHOUT_SVNLITE="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_TESTS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_CLANG="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
-	echo 'WITHOUT_OFED="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
+	echo 'WITHOUT_CRYPT="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'NO_SHARED=NO' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 fi
 
@@ -98,6 +103,12 @@ fi
 if [ "${X_SKIP_AP_STUFF}" = "YES" ]; then
 	echo "MALLOC_PRODUCTION=" >> ${X_DESTDIR}/../make.conf.${BUILDNAME}
 fi
+# For now, just use -O so mips32 isn't broken with gcc.
+# Make this per-platform and configurable later.
+#echo "CFLAGS=-O -pipe" >> ${X_DESTDIR}/../make.conf.${BUILDNAME}
+echo "CFLAGS=-O -pipe" >> ${X_DESTDIR}/../src-env.conf.${BUILDNAME}
+echo "COPTFLAGS=-O -pipe" >> ${X_DESTDIR}/../src-env.conf.${BUILDNAME}
+
 if [ "$X_SKIP_MORE_STUFF" = "YES" ]; then
 	echo 'WITHOUT_GAMES="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
 	echo 'WITHOUT_DOCS="YES"' >> ${X_DESTDIR}/../src.conf.${BUILDNAME}
@@ -163,6 +174,7 @@ while [ -n "$1" ]; do
 		X_CROSS_TOOLCHAIN="CROSS_TOOLCHAIN=${TARGET_CROSS_TOOLCHAIN}"
 	fi
 
+
 	env MAKEOBJDIRPREFIX=${X_MAKEOBJDIRPREFIX}		\
 	    make -s ${BUILD_FLAGS} DB_FROM_SRC=1		\
 	    ${X_CROSS_TOOLCHAIN}				\
@@ -175,6 +187,7 @@ while [ -n "$1" ]; do
 	    KMODDIR=/boot/kernel.${KERNCONF}/			\
 	    __MAKE_CONF=${X_DESTDIR}/../make.conf.${BUILDNAME}	\
 	    SRCCONF=${X_DESTDIR}/../src.conf.${BUILDNAME}	\
+	    SRC_ENV_CONF=${X_DESTDIR}/../src-env.conf.${BUILDNAME}	\
 	    LOCAL_DIRS="${LOCAL_DIRS}"				\
 	    ${X_FDT_DTS_FILE}					\
 	    ${X_LOCAL_TOOL_DIRS}				\

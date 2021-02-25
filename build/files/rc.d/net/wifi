@@ -43,6 +43,10 @@
 # netif_IF_wifi_dwds_enable="YES"
 # netif_IF_wlan_dwds_bridgeif="bridgeX"
 
+# STA mode:
+
+# netif_IF_wifi_sta_beacons="NO" (use software beacon miss)
+
 cmd=$1
 shift
 
@@ -71,7 +75,15 @@ netif_wifi_apbridge="`get_if_var $ifname netif_IF_wifi_apbridge 'YES'`"
 netif_wifi_dwds_enable="`get_if_var $ifname netif_IF_wifi_dwds_enable 'NO'`"
 netif_wifi_dwds_bridgeif="`get_if_var $ifname netif_IF_wifi_dwds_bridgeif ''`"
 
+netif_wifi_sta_beacons="`get_if_var $ifname netif_IF_wifi_sta_beacons 'YES'`"
+
 # The hostap options are handled in the hostapd config file routine.
+
+beacons_flags=""
+
+if [ "$netif_wifi_sta_beacons" = "NO" ]; then
+	beacons_flags="-beacons"
+fi
 
 case $cmd in
 	'start')
@@ -97,7 +109,7 @@ case $cmd in
 			;;
 			'sta')
 				ifconfig ${netif_name} create wlandev ${netif_wifi_parent} \
-				    wlanmode sta bssid -bgscan -powersave
+				    wlanmode sta ${beacons_flags} bssid -bgscan -powersave
 			;;
 			*)
 				echo "*** ${ifname}: unknown wifi mode '${netif_wifi_mode}'"
@@ -161,6 +173,11 @@ ifconfig \$DEV up
 EOF
 					chmod +x /var/run/wdsrun.${netif_name}
 					echo "*** Running: wlanwds -P /var/run/wlanwds.${netif_name}.pid -v -s /var/run/wdsrun.${netif_name} ${netif_wifi_parent} &"
+					# note: -j here means "plumb up 4-addr VAP after assoc"
+					# which allows 4-addr traffic (eg mcast) to flow to the
+					# remote STA AP before anything sends a 4-addr frame
+					# FROM it.  However, ALL stations get these VAP at this
+					# point, so we can't easily just do it here.
 					wlanwds -P /var/run/wlanwds.${netif_name}.pid -v -s /var/run/wdsrun.${netif_name} ${netif_wifi_parent} &
 					;;
 				'sta')

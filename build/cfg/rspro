@@ -11,11 +11,42 @@ BIN_CFG_SIZE="65536"
 UBNT_ARCH="RSPRO"
 UBNT_VERSION="RSPRO.ar7100pro.V1"
 
+# Modules need to be included
+MFSROOT_INC_MODULES="YES"
+MFSROOT_INC_MODULE_LIST=""
+
+# VLAN support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_vlan if_gif if_gre if_tuntap alq"
+
+# ALQ support - needed for the rest of the modules (wlan, ath)
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} alq"
+
+# Bridge support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_bridge bridgestp"
+
+# USB wifi
+# MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} if_otus otusfw_init otusfw_main"
+# MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} rtwn if_rtwn_usb rtwn-rtl8188eufw rtwn-rtl8192cfwT rtwn-rtl8192cfwU"
+
+# IPFW
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} libalias ipfw ipfw_nat ipfw_nptv6"
+
+# WLAN core
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} wlan wlan_acl wlan_wep wlan_tkip wlan_ccmp wlan_rssadapt wlan_amrr wlan_xauth"
+
+# PMC MIPS24K
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} hwpmc_mips24k"
+
+# Atheros support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} ath_main if_ath_ahb if_ath_pci ath_hal ath_rate ath_dfs ath_hal_ar5212 ath_hal_ar5416"
+
+# USB support
+MFSROOT_INC_MODULE_LIST="${MFSROOT_INC_MODULE_LIST} usb usb_quirk usb_template umass ehci ar71xx_ehci"
+
 # use ulzma
 X_FSIMAGE_CMD="mkuzip"
 X_FSIMAGE_ARGS="-L -d -s 65536 -v"
 X_FSIMAGE_SUFFIX=".ulzma"
 
 # Building the firmware image
-X_BUILD_BUILD_IMG_DEFAULTS="mfsroot fsimage ubnt"
-
+X_BUILD_BUILD_IMG_DEFAULTS="fetchpkgs mfsroot makepkgs addpkgs fsimage ubnt"

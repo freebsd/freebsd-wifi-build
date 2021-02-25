@@ -2,7 +2,7 @@
 
 # This script checks that relevant packages have been installed.
 
-PKG_LIST="u-boot-tools lzma perl5 rsync mips-xtoolchain-gcc"
+PKG_LIST="u-boot-tools lzma perl5 rsync"
 
 retval=0
 for i in ${PKG_LIST}; do

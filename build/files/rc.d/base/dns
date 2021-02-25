@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# This configures optional DNS settings in /etc/resolv.conf
+
+# For now it's optionally enabled, optionally configured domain
+# and an optional single nameserver.
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+# variables:
+#
+# dns_server_ip="<ipaddr>"
+# dns_domain="<domain>"
+# dns_search="<search list>"
+
+cmd=$1
+shift
+
+ifname=$1
+shift
+
+case $cmd in
+	'start')
+		echo "*** [DNS] Configuring DNS settings"
+
+		rm /etc/resolv.conf.$$
+		touch /etc/resolv.conf.$$
+
+		if [ "${dns_server_ip}" != "" ]; then
+			echo "nameserver ${dns_server_ip}" >> /etc/resolv.conf.$$
+		fi
+
+		if [ "${dns_domain}" != "" ]; then
+			echo "domain ${dns_domain}" >> /etc/resolv.conf.$$
+		fi
+
+		if [ "${dns_search}" != "" ]; then
+			echo "search ${dns_search}" >> /etc/resolv.conf.$$
+		fi
+
+		# Only move it to /etc/resolv.conf if the file isn't empty
+		if [ -s /etc/resolv.conf.$$ ]; then
+			echo "*** Moving /etc/resolv.conf.$$ -> /etc/resolv.conf"
+			mv /etc/resolv.conf.$$ /etc/resolv.conf
+		fi
+
+		echo "*** [DNS] Done."
+	;;
+	'stop')
+	;;
+	*)
+		echo "Usage: $0 {start}"
+esac
+
+exit 0

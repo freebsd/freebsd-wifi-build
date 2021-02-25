@@ -2,11 +2,42 @@
 
 set -e
 
-# This configures an optional routing.
+# This configures optional routing and gateway functionality.
+
+# routes are stored as:
+
+# route_<name>="<route>"
+# route_list="<name> <name2>.."
+
+# eg:
+
+# route_list="default"
+# route_default="default 192.168.0.1"
+
+# It's run as a script at startup rather than triggering on
+# network status events so it's not HUGELY useful, but it's
+# OK for basic static routing entries.
 
 . /etc/rc.subr
 . /etc/rc.conf.default
 . /etc/cfg/rc.conf
+
+routing_table_start()
+{
+	local i
+	local route_entry
+	for i in ${route_list}; do
+		route_entry=`get_if_var ${i} route_IF no`
+		if [ "${route_entry}" = "no" ]; then
+			echo "*** [ROUTE]  Invalid/missing route entry for ${i}"
+			continue
+		fi
+
+		# XXX Yes, this is super, super dirty!
+		echo "*** [ROUTE] adding ${i} -> ${route_entry}"
+		route add ${route_entry}
+	done
+}
 
 routing_start()
 {
@@ -18,6 +49,7 @@ routing_start()
 case $1 in
 	'start')
 		routing_start
+		routing_table_start
 		exit 0
 	;;
 	'stop')

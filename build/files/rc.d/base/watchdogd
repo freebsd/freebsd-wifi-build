@@ -1,0 +1,40 @@
+#!/bin/sh
+
+. /etc/rc.subr
+. /etc/rc.conf.default
+. /etc/cfg/rc.conf
+
+watchdogd_start()
+{
+	local i
+
+	if [ "${watchdogd_enable}" != "YES" ]; then
+		return 0
+	fi
+
+	echo "*** Starting watchdogd..."
+	/usr/sbin/watchdogd -I /var/run/watchdogd.pid
+}
+
+syslog_stop()
+{
+	echo "*** Killing watchdogd.."
+	kill `cat /var/run/watchdogd.pid`
+}
+
+case $1 in
+	'start')
+		syslog_start
+		exit 0
+	;;
+	'stop')
+		syslog_stop
+		exit 0
+	;;
+	*)
+		echo "$0 {start|stop}"
+		exit 1
+	;;
+esac
+
+exit 0

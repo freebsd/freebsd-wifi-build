@@ -51,6 +51,9 @@ echo "*** Default password/login databases .."
 /usr/sbin/pwd_mkdb /etc/master.passwd
 /usr/bin/cap_mkdb /etc/login.conf
 
+# flip on watchdogd before any sysctls; in case something hangs things
+/etc/rc.d/base/watchdogd start
+
 # sysctl
 echo "*** Customising sysctl .."
 /etc/rc.d/base/sysctl start
@@ -59,8 +62,11 @@ echo "*** Customising sysctl .."
 /etc/rc.d/base/syslogd start
 
 # Start network
-echo "*** Starting networking via /etc/rc.d/base/net"
+echo "*** [NET] Starting networking via /etc/rc.d/base/net"
 /etc/rc.d/base/net start
+
+# Setup DNS options if they're provided
+/etc/rc.d/base/dns start
 
 # run cron/inetd as default
 /etc/rc.d/srv/cron start
