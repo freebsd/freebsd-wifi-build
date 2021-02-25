@@ -25,7 +25,7 @@ X_BASEDIR=${SCRIPT_DIR}/../
 # Configure INSTALL; to use the FreeBSD install program from -10
 # and -head that knows about mtree updates and non-root installs.
 
-INSTALL_PROG="install -U -M ${X_STAGING_METALOG_MFSROOT} -D ${X_STAGING_FSROOT}"
+INSTALL_PROG="install -v -U -M ${X_STAGING_METALOG_MFSROOT} -D ${X_STAGING_FSROOT}"
 
 INSTALL_DEF_BIN="${INSTALL_PROG} -o root -g wheel -m 0755"
 INSTALL_SUID_BIN="${INSTALL_PROG} -o root -g wheel -m 4711"
