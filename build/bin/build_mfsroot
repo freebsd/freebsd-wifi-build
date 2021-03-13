@@ -420,6 +420,9 @@ ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/protocols ${X_STAGING_FSROOT}/c/etc/
 # this is needed for inetd
 ${INSTALL_DEF_FILE} ${X_DESTDIR}/etc/netconfig ${X_STAGING_FSROOT}/c/etc/
 
+# monitoring
+${INSTALL_DEF_BIN} ${X_DESTDIR}/usr/sbin/prometheus_sysctl_exporter ${X_STAGING_FSROOT}/usr/sbin/
+
 # Local board setup
 echo "# Configuration for: ${KERNCONF}" > ${X_STAGING_TMPDIR}/board.cfg
 echo "CFG_PATH=\"${BIN_CFG_PARTITION}\"" >> ${X_STAGING_TMPDIR}/board.cfg
