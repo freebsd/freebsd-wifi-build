@@ -322,7 +322,7 @@ int main(int argc, char *argv[]) {
         close(sock);
         exit(7);
     }
-recvbuf[0] = 0;
+    recvbuf[0] = 0;
     recvlen = recv(sock, &recvbuf[0], 512, MSG_WAITALL);
     if (debug) {
         fprintf(stderr, "Got %d bytes\n", recvlen);
